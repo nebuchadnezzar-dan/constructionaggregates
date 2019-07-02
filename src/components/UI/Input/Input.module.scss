@@ -1,11 +1,47 @@
 @import '../../../styles/colors.scss';
 
+.formWrapper {
+  width: 100%;
+  display: flex;
+  margin-bottom: 1rem;
+  // &:not(:last-child) {
+  //   margin-bottom: 1rem;
+  // }
+}
+
+.noWrap {
+  margin-right: -30%;
+}
+
+.inputWrapper {
+  width: 60%;
+}
+
 .inputElement {
   padding: 1rem;
   border-radius: 3px;
   font-size: inherit;
   font-family: inherit;
-  border: 1px solid $grey;
+  border: 1px solid $cat-light-green;
+  width: 100%;
+  &:focus {
+    outline-color: $cat-light-blue;
+  }
+}
+
+.labelWrapper {
+  width: 30%;
+}
+
+.WrapnoLabel {
+  width: 0;
+  display: none;
+}
+
+.label {
+  text-transform: uppercase;
+  font-weight: 500;
+  color: $darkslategrey;
 }
 
 .select {
@@ -13,7 +49,8 @@
   border-radius: 3px;
   font-family: inherit;
   font-size: inherit;
-  border: 1px solid $grey;
+  border: 1px solid $cat-light-green;
+  color: $darkslategrey;
   padding-right: 6rem;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -23,4 +60,7 @@
   background-repeat: no-repeat, repeat;
   background-position: right 0.7em top 50%, 0 0;
   background-size: 0.65em auto, 100%;
+  &:focus {
+    outline-color: $cat-light-blue;
+  }
 }

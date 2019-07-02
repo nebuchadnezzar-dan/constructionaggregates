@@ -9,7 +9,16 @@
   &Main {
     background-color: $cat-yellow;
   }
-  &Secondary {
-    background-color: $cat-brown;
+  &Close {
+    position: absolute;
+    background: $cat-brown;
+    color: white;
+    padding: 0.5rem;
+    width: 3rem;
+    height: 3rem;
+    top: -10px;
+    right: -10px;
+    border-radius: 50%;
+    // border: none;
   }
 }

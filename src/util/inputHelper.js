@@ -1,4 +1,4 @@
-export const orderSelect = (value, displayValue) => ({
+export const selectOptions = (value, displayValue) => ({
   value,
   displayValue
 });

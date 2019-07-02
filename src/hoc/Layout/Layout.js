@@ -2,6 +2,8 @@ import React from 'react';
 
 import Auxillary from '../Auxillary/Auxillary';
 
+import './Layout.module.scss';
+
 const layout = ({ children }) => {
   return (
     <Auxillary>

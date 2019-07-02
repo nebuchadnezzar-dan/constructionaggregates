@@ -39,7 +39,18 @@ const input = props => {
       inputElement = null;
   }
 
-  return inputElement;
+  return (
+    <div className={[styles.formWrapper, styles[props.nowrap]].join(' ')}>
+      <div
+        className={[styles.labelWrapper, styles['Wrap' + props.label]].join(
+          ' '
+        )}
+      >
+        <label className={styles.label}>{props.name}</label>
+      </div>
+      <div className={styles.inputWrapper}>{inputElement}</div>
+    </div>
+  );
 };
 
 export default input;

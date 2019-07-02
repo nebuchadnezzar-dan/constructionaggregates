@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Auxillary from '../../hoc/Auxillary/Auxillary';
 import TruckBuilder from './TruckBuilder/TruckBuilder';
+import Supply from './Supply/Supply';
 
 class Settings extends Component {
   render() {
@@ -9,6 +10,7 @@ class Settings extends Component {
       <Auxillary>
         <TruckBuilder />
         <div>SUPPLY</div>
+        <Supply />
       </Auxillary>
     );
   }
