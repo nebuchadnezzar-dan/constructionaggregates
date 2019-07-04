@@ -7,14 +7,7 @@
   // &:not(:last-child) {
   //   margin-bottom: 1rem;
   // }
-}
-
-.noWrap {
-  margin-right: -30%;
-}
-
-.inputWrapper {
-  width: 60%;
+  align-items: center;
 }
 
 .inputElement {
@@ -36,6 +29,10 @@
 .WrapnoLabel {
   width: 0;
   display: none;
+}
+
+.labelWrapSupply {
+  width: 20%;
 }
 
 .label {
@@ -63,4 +60,13 @@
   &:focus {
     outline-color: $cat-light-blue;
   }
+}
+
+// FROM SUPPLY
+.formWrapperSupply {
+  margin-right: -50%;
+}
+
+.inputWrapSupply {
+  width: 40%;
 }

@@ -40,15 +40,21 @@ const input = props => {
   }
 
   return (
-    <div className={[styles.formWrapper, styles[props.nowrap]].join(' ')}>
+    <div
+      className={[styles.formWrapper, styles[props.formWrapperSupply]].join(
+        ' '
+      )}
+    >
       <div
-        className={[styles.labelWrapper, styles['Wrap' + props.label]].join(
+        className={[styles.labelWrapper, styles[props.labelWrapSupply]].join(
           ' '
         )}
       >
         <label className={styles.label}>{props.name}</label>
       </div>
-      <div className={styles.inputWrapper}>{inputElement}</div>
+      <div className={[styles.inputWrapper, styles[props.inputWrapSupply]]}>
+        {inputElement}
+      </div>
     </div>
   );
 };

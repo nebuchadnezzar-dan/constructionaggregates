@@ -21,4 +21,28 @@
     border-radius: 50%;
     // border: none;
   }
+  &SupplyLink {
+    background-color: $superlightgrey;
+    color: $dimgrey;
+    width: 100%;
+    text-transform: uppercase;
+    border-radius: 0;
+    text-align: justify;
+    &:active,
+    &active {
+      background-color: $cat-light-blue;
+      outline: none;
+      color: $darkslategrey;
+      font-weight: 600;
+    }
+    &available {
+      background-color: $cat-light-green;
+    }
+  }
+  &checkMark {
+    background-color: $cat-yellow;
+    border-radius: 50%;
+    height: 4rem;
+    width: 4rem;
+  }
 }

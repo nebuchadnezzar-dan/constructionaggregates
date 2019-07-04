@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { formFunction, selectOptions } from '../../../util/inputHelper';
 
 import Input from '../../../components/UI/Input/Input';
+import Button from '../../../components/UI/Button/Button';
+import Unordered from '../../../components/UI/Unordered/Unordered';
 
 import styles from './Supply.module.scss';
 
@@ -18,85 +20,33 @@ const supplies = [
 
 class Supply extends Component {
   state = {
-    supplyForm: {},
-    supplyForms: [{ supply: 'gravel' }],
-    // refactor this later
-    suppliesConf: {
+    activeSupp: '',
+    supplies: {
       gravel: {
-        elementConfig: {
-          type: 'number',
-          placeholder: '0',
-          disabled: true
-        },
-        value: ''
+        active: false
       },
       riverMixed: {
-        elementConfig: {
-          type: 'number',
-          placeholder: '0',
-          disabled: true
-        },
-        value: ''
+        active: false
       },
       crushedSand: {
-        elementConfig: {
-          type: 'number',
-          placeholder: '0',
-          disabled: true
-        },
-        value: ''
+        active: false
       },
       riverSand: {
-        elementConfig: {
-          type: 'number',
-          placeholder: '0',
-          disabled: true
-        },
-        value: ''
+        active: false
       },
       boulder: {
-        elementConfig: {
-          type: 'number',
-          placeholder: '0',
-          disabled: true
-        },
-        value: ''
+        active: false
       },
       hollowBlocks: {
-        elementConfig: {
-          type: 'number',
-          placeholder: '0',
-          disabled: true
-        },
-        value: ''
+        active: false
       },
       cement: {
-        elementConfig: {
-          type: 'number',
-          placeholder: '0',
-          disabled: true
-        },
-        value: ''
+        active: false
       }
     },
-    hollowBlocksForm: {
-      fourInches: {
-        elementConfig: {
-          type: 'number',
-          placeholder: '0',
-          disabled: true
-        },
-        value: ''
-      },
-      fiveInches: {
-        elementConfig: {
-          type: 'number',
-          placeholder: '0',
-          disabled: true
-        },
-        value: ''
-      }
-    }
+    suppliesInput: {},
+    supplyForm: {},
+    supplyForms: [{ supply: 'gravel' }]
   };
   onChangeValueHandler = (index, name, e) => {
     console.log(index, name);
@@ -105,93 +55,60 @@ class Supply extends Component {
       .disabled;
     this.setState({ suppliesConf: newSuppConf });
   };
+  onSupplyClickHandler = (name, e) => {
+    const newSuppInput = JSON.parse(JSON.stringify(this.state.supplies));
+    for (let newSuppKey in newSuppInput) {
+      newSuppInput[newSuppKey].active = false;
+    }
+    newSuppInput[name].active = true;
+    this.setState({ supplies: newSuppInput, activeSupp: name });
+  };
+  onAddSupplyHandler = () => {
+    console.log('clicked');
+  };
 
   render() {
     // add an add button that adds the supply to one of the stacks available
     // or add status on them
-    let input = [];
-    let i = 0;
-    for (let supply in this.state.suppliesConf) {
-      input.push(
-        <div key={supply} className={styles.supplyRow}>
-          <Input
-            name={supply}
-            nowrap="noWrap"
-            elementInputType="select"
-            elementConfig={{
-              options: [
-                selectOptions('notAvailable', 'N/A'),
-                selectOptions('available', 'Available')
-              ]
-            }}
-            change={this.onChangeValueHandler}
-            ind={i}
-          />
-          <Input
-            name={supply}
-            label="noLabel"
-            elementInputType="input"
-            elementConfig={this.state.suppliesConf[supply].elementConfig}
-            change={this.onChangeValueHandler}
-            ind={i}
-          />
-        </div>
-      );
-      i++;
-    }
-    for (let hollow in this.state.hollowBlocksForm) {
-      input.push(
-        <div key={hollow} className={styles.supplyRow}>
-          <Input
-            name={hollow}
-            nowrap="noWrap"
-            elementInputType="select"
-            elementConfig={{
-              options: [
-                selectOptions('notAvailable', 'N/A'),
-                selectOptions('available', 'Available')
-              ]
-            }}
-            change={this.onChangeValueHandler}
-            ind={i}
-          />
-          <Input
-            name={hollow}
-            label="noLabel"
-            elementInputType="input"
-            elementConfig={this.state.hollowBlocksForm[hollow].elementConfig}
-            change={this.onChangeValueHandler}
-            ind={i}
-          />
-        </div>
+    let inputList = [];
+    for (let supplyKey in this.state.supplies) {
+      inputList.push(
+        <li key={supplyKey}>
+          <Button
+            cName="SupplyLink"
+            active={
+              this.state.supplies[supplyKey].active ? 'SupplyLinkactive' : null
+            }
+            click={this.onSupplyClickHandler.bind(null, supplyKey)}
+          >
+            {supplyKey}
+          </Button>
+        </li>
       );
     }
-    // input = supplies.map((supply, i) => (
-    //   <div key={supply} className={styles.supplyRow}>
-    //     <Input
-    //       name={supply}
-    //       nowrap="noWrap"
-    //       elementInputType="select"
-    //       elementConfig={{
-    //         options: [
-    //           selectOptions('notAvailable', 'N/A'),
-    //           selectOptions('available', 'Available')
-    //         ]
-    //       }}
-    //       change={this.onChangeValueHandler}
-    //       ind={i}
-    //     />
-    //     <Input
-    //       name={supply}
-    //       label="noLabel"
-    //       elementInputType="input"
-    //       elementConfig={{ type: 'number', placeholder: '0', disabled: true }}
-    //       change={this.onChangeValueHandler}
-    //       ind={i}
-    //     />
-    //   </div>
-    // ));
-    return input;
+    let supplyInput = this.state.activeSupp ? (
+      <div className={styles.inputSupplyFlex}>
+        <Input
+          name={this.state.activeSupp}
+          inputWrapSupply="inputWrapSupply"
+          labelWrapSupply="labelWrapSupply"
+          formWrapperSupply="formWrapperSupply"
+          elementInputType="input"
+          elementConfig={{ type: 'number', placeholder: '0' }}
+          change={this.onChangeValueHandler}
+          ind={0}
+        />
+        <Button click={this.onAddSupplyHandler} cName="checkMark">
+          &#10004;
+        </Button>
+      </div>
+    ) : null;
+    return (
+      <div style={{ display: 'flex' }}>
+        <Unordered>{inputList}</Unordered>
+        <div className={styles.inputWrap}>{supplyInput}</div>
+      </div>
+    );
   }
 }
 
