@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
+import * as actions from '../../../store/actions/index';
+
 import { formFunction, selectOptions } from '../../../util/inputHelper';
 
 import Input from '../../../components/UI/Input/Input';
@@ -70,7 +74,7 @@ class TruckBuilder extends Component {
         <label>TRUCK</label>{' '}
         <div className={styles.truckForm}>
           {' '}
-          {this.state.truckForms.map((el, i) => {
+          {this.props.truckForm.map((el, i) => {
             let input = [];
             for (let formKey in this.state.truckForm) {
               input.push(
@@ -89,7 +93,7 @@ class TruckBuilder extends Component {
               <div key={i} className={styles.rowForm}>
                 <Button
                   cName="Close"
-                  click={this.removeTruckHandler.bind(null, i)}
+                  click={this.props.removeTruckDispatch.bind(null, i)}
                 >
                   X
                 </Button>
@@ -99,7 +103,7 @@ class TruckBuilder extends Component {
           })}
         </div>
         <div className={styles.buttonPosition}>
-          <Button cName="Main" click={this.addTruckHandler}>
+          <Button cName="Main" click={this.props.addTruckDispatch}>
             Add More Truck
           </Button>
         </div>
@@ -108,4 +112,16 @@ class TruckBuilder extends Component {
   }
 }
 
-export default TruckBuilder;
+const mapStateToProps = state => ({
+  truckForm: state.trucks
+});
+
+const mapDispatchToProps = dispatch => ({
+  addTruckDispatch: () => dispatch(actions.addTruck()),
+  removeTruckDispatch: index => dispatch(actions.removeTruck(index))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TruckBuilder);
