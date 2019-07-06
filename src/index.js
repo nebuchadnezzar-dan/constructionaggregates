@@ -4,26 +4,27 @@ import './index.scss';
 import App from './App';
 
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 
-import settingsReducer from './store/reducers/settings';
+import truckSettings from './store/reducers/truckSettings';
+import supplySettings from './store/reducers/supplySettings';
 
 import * as serviceWorker from './serviceWorker';
 
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const basicDevtools =
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-// const rootReducers = combineReducers({
-//   burgerBuild: burgerBuilder,
-//   order: order
-// });
+const rootReducers = combineReducers({
+  truckSettings: truckSettings,
+  supplySettings: supplySettings
+});
 
 // const store = createStore(
 //   rootReducers,
 //   composeEnhancers(applyMiddleware(thunk))
 // );
 
-const store = createStore(settingsReducer, basicDevtools);
+const store = createStore(rootReducers, basicDevtools);
 
 const app = (
   <Provider store={store}>

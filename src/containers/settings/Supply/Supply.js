@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { formFunction, selectOptions } from '../../../util/inputHelper';
 
@@ -6,48 +7,12 @@ import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import Unordered from '../../../components/UI/Unordered/Unordered';
 
+import * as actions from '../../../store/actions/index';
+
 import styles from './Supply.module.scss';
 
-const supplies = [
-  'gravel',
-  'riverMixed',
-  'crushedSand',
-  'riverSand',
-  'boulder',
-  'hollowBlocks',
-  'cement'
-];
-
 class Supply extends Component {
-  state = {
-    activeSupp: '',
-    supplies: {
-      gravel: {
-        active: false
-      },
-      riverMixed: {
-        active: false
-      },
-      crushedSand: {
-        active: false
-      },
-      riverSand: {
-        active: false
-      },
-      boulder: {
-        active: false
-      },
-      hollowBlocks: {
-        active: false
-      },
-      cement: {
-        active: false
-      }
-    },
-    suppliesInput: {},
-    supplyForm: {},
-    supplyForms: [{ supply: 'gravel' }]
-  };
+  state = {};
   onChangeValueHandler = (index, name, e) => {
     console.log(index, name);
     const newSuppConf = JSON.parse(JSON.stringify(this.state.suppliesConf));
@@ -55,14 +20,7 @@ class Supply extends Component {
       .disabled;
     this.setState({ suppliesConf: newSuppConf });
   };
-  onSupplyClickHandler = (name, e) => {
-    const newSuppInput = JSON.parse(JSON.stringify(this.state.supplies));
-    for (let newSuppKey in newSuppInput) {
-      newSuppInput[newSuppKey].active = false;
-    }
-    newSuppInput[name].active = true;
-    this.setState({ supplies: newSuppInput, activeSupp: name });
-  };
+
   onAddSupplyHandler = () => {
     console.log('clicked');
   };
@@ -71,25 +29,25 @@ class Supply extends Component {
     // add an add button that adds the supply to one of the stacks available
     // or add status on them
     let inputList = [];
-    for (let supplyKey in this.state.supplies) {
+    for (let supplyKey in this.props.supplies) {
       inputList.push(
         <li key={supplyKey}>
           <Button
             cName="SupplyLink"
             active={
-              this.state.supplies[supplyKey].active ? 'SupplyLinkactive' : null
+              this.props.supplies[supplyKey].active ? 'SupplyLinkactive' : null
             }
-            click={this.onSupplyClickHandler.bind(null, supplyKey)}
+            click={this.props.supplyActiveDispatch.bind(null, supplyKey)}
           >
             {supplyKey}
           </Button>
         </li>
       );
     }
-    let supplyInput = this.state.activeSupp ? (
+    let supplyInput = this.props.activeSupp ? (
       <div className={styles.inputSupplyFlex}>
         <Input
-          name={this.state.activeSupp}
+          name={this.props.activeSupp}
           inputWrapSupply="inputWrapSupply"
           labelWrapSupply="labelWrapSupply"
           formWrapperSupply="formWrapperSupply"
@@ -112,4 +70,16 @@ class Supply extends Component {
   }
 }
 
-export default Supply;
+const mapStateToProps = state => ({
+  activeSupp: state.supplySettings.activeSupp,
+  supplies: state.supplySettings.supplies
+});
+
+const mapDispatchToProps = dispatch => ({
+  supplyActiveDispatch: name => dispatch(actions.activeSupply(name))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Supply);

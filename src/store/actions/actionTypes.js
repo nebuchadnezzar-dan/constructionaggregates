@@ -1,2 +1,5 @@
 export const ADD_TRUCK = 'ADD_TRUCK';
 export const REMOVE_TRUCK = 'REMOVE_TRUCK';
+export const VALUE_CHANGE_TRUCK = 'VALUE_CHANGE_TRUCK';
+
+export const ACTIVE_SUPPLY = 'ACTIVE_SUPPLY';

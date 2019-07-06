@@ -34,3 +34,8 @@ export const formFunction = (
     value
   };
 };
+
+export const supplySet = () => ({
+  active: false,
+  amount: 0
+});

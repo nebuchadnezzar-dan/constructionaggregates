@@ -8,3 +8,8 @@ export const removeTruck = index => ({
   type: actionTypes.REMOVE_TRUCK,
   payload: index
 });
+
+export const valueChangeTruck = (index, name, value) => ({
+  type: actionTypes.VALUE_CHANGE_TRUCK,
+  payload: { index, name, value }
+});

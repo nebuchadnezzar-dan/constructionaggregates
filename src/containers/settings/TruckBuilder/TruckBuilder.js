@@ -21,51 +21,19 @@ class TruckBuilder extends Component {
         selectOptions('delivering', 'Delivering'),
         selectOptions('other', 'Other')
       ])
-    },
-    truckForms: [{ maxLoad: '', plateNo: '', status: 'maintenance' }]
+    }
   };
 
-  inputParser = value => {
-    let input = [];
-    for (let formKey in this.state.truckForm) {
-      input.push(
-        <Input
-          key={formKey + Date.now()}
-          name={formKey}
-          elementInputType={this.state.truckForm[formKey].elementType}
-          elementConfig={this.state.truckForm[formKey].elementConfig}
-          change={this.onChangeValueHandler}
-          value={value}
-        />
-      );
-    }
-    return input;
-  };
-  addTruckHandler = () => {
-    this.setState({
-      truckForms: [
-        ...this.state.truckForms,
-        { maxLoad: '', plateNo: '', status: 'maintenance' }
-      ]
-    });
-    console.log(this.state.truckForms);
-  };
-  removeTruckHandler = async index => {
-    console.log(index);
-    await this.setState({
-      truckForms: this.state.truckForms.filter((_, i) => i !== index)
-    });
-    console.log(this.state.truckForms);
-  };
   onChangeValueHandler = async (index, name, event) => {
     // an index should be able to handle an object that holds the value of each field in an array
-    const copiedState = [...this.state.truckForms];
-    copiedState[index] = {
-      ...copiedState[index],
-      [name]: event.target.value
-    };
+    this.props.valueChangeDispatch(index, name, event.target.value);
+    // const copiedState = [...this.state.truckForms];
+    // copiedState[index] = {
+    //   ...copiedState[index],
+    //   [name]: event.target.value
+    // };
 
-    this.setState({ truckForms: copiedState });
+    // this.setState({ truckForms: copiedState });
   };
 
   render() {
@@ -113,12 +81,14 @@ class TruckBuilder extends Component {
 }
 
 const mapStateToProps = state => ({
-  truckForm: state.trucks
+  truckForm: state.truckSettings.trucks
 });
 
 const mapDispatchToProps = dispatch => ({
   addTruckDispatch: () => dispatch(actions.addTruck()),
-  removeTruckDispatch: index => dispatch(actions.removeTruck(index))
+  removeTruckDispatch: index => dispatch(actions.removeTruck(index)),
+  valueChangeDispatch: (index, name, value) =>
+    dispatch(actions.valueChangeTruck(index, name, value))
 });
 
 export default connect(

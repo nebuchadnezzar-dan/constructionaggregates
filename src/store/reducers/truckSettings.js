@@ -24,6 +24,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         trucks: state.trucks.filter((_, i) => i !== action.payload)
       };
+    case actionTypes.VALUE_CHANGE_TRUCK:
+      const copiedTrucks = [...state.trucks];
+      copiedTrucks[action.payload.index] = {
+        ...copiedTrucks[action.payload.index],
+        [action.payload.name]: action.payload.value
+      };
+      return {
+        ...state,
+        trucks: copiedTrucks
+      };
     default:
       return state;
   }
