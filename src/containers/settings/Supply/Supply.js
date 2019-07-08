@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { formFunction, selectOptions } from '../../../util/inputHelper';
-
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import Unordered from '../../../components/UI/Unordered/Unordered';
@@ -16,18 +14,14 @@ class Supply extends Component {
   state = {};
   // parameters _ is not needed
   onChangeValueHandler = (name, _, __, event) => {
-    // console.log(name, event);
     this.props.supplyChangeValueDispatch(name, event.target.value);
   };
 
   onAddSupplyHandler = name => {
-    // console.log(name);
     this.props.supplyOnClickSupplyButtonDispatch(name);
   };
 
   render() {
-    // add an add button that adds the supply to one of the stacks available
-    // or add status on them
     let inputList = [];
     for (let supplyKey in this.props.supplies) {
       inputList.push(
@@ -69,7 +63,7 @@ class Supply extends Component {
       <Auxillary>
         <label>SUPPLY</label>{' '}
         <div className={styles.supplyWrapper}>
-          <Unordered>{inputList}</Unordered>
+          <Unordered classname="ulDefault">{inputList}</Unordered>
           <div className={styles.inputWrap}>{supplyInput}</div>
         </div>
       </Auxillary>

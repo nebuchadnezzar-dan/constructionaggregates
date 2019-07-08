@@ -8,3 +8,12 @@
   overflow: hidden;
   box-shadow: $box-shadows-2;
 }
+
+.ulNavigation {
+  width: 100%;
+  overflow: auto;
+  & a {
+    text-decoration: none;
+    color: white;
+  }
+}

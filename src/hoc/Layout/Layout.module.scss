@@ -1,3 +1,4 @@
+@import '../../styles/colors.scss';
 main {
   // max-width: 100rem;
   margin: 0 auto;
@@ -9,7 +10,8 @@ main {
   height: 100%;
   float: left;
   position: fixed;
-  background-color: azure;
+  background-color: $dimgrey;
+  overflow: auto;
   // flex: 0 0 26rem;
 }
 
