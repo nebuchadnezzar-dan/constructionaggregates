@@ -1,3 +1,5 @@
+@import '../../../styles/colors.scss';
+
 .supplyRow {
   display: flex;
 }
@@ -8,5 +10,11 @@
 }
 .inputSupplyFlex {
   display: flex;
-  // align-content: center;
+}
+.supplyWrapper {
+  display: flex;
+  padding: 2rem 2.5rem;
+  background-color: $util-background1;
+  border-radius: 0.6rem;
+  box-shadow: $box-shadows-1;
 }

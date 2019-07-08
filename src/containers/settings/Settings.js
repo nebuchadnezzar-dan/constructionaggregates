@@ -9,7 +9,6 @@ class Settings extends Component {
     return (
       <Auxillary>
         <TruckBuilder />
-        <div>SUPPLY</div>
         <Supply />
       </Auxillary>
     );

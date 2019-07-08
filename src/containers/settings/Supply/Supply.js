@@ -6,6 +6,7 @@ import { formFunction, selectOptions } from '../../../util/inputHelper';
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import Unordered from '../../../components/UI/Unordered/Unordered';
+import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
 import * as actions from '../../../store/actions/index';
 
@@ -13,16 +14,15 @@ import styles from './Supply.module.scss';
 
 class Supply extends Component {
   state = {};
-  onChangeValueHandler = (index, name, e) => {
-    console.log(index, name);
-    const newSuppConf = JSON.parse(JSON.stringify(this.state.suppliesConf));
-    newSuppConf[name].elementConfig.disabled = !newSuppConf[name].elementConfig
-      .disabled;
-    this.setState({ suppliesConf: newSuppConf });
+  // parameters _ is not needed
+  onChangeValueHandler = (name, _, __, event) => {
+    // console.log(name, event);
+    this.props.supplyChangeValueDispatch(name, event.target.value);
   };
 
-  onAddSupplyHandler = () => {
-    console.log('clicked');
+  onAddSupplyHandler = name => {
+    // console.log(name);
+    this.props.supplyOnClickSupplyButtonDispatch(name);
   };
 
   render() {
@@ -53,19 +53,26 @@ class Supply extends Component {
           formWrapperSupply="formWrapperSupply"
           elementInputType="input"
           elementConfig={{ type: 'number', placeholder: '0' }}
-          change={this.onChangeValueHandler}
+          change={this.onChangeValueHandler.bind(null, this.props.activeSupp)}
+          value={this.props.supplies[this.props.activeSupp].value}
           ind={0}
         />
-        <Button click={this.onAddSupplyHandler} cName="checkMark">
+        <Button
+          click={this.onAddSupplyHandler.bind(null, this.props.activeSupp)}
+          cName="checkMark"
+        >
           &#10004;
         </Button>
       </div>
     ) : null;
     return (
-      <div style={{ display: 'flex' }}>
-        <Unordered>{inputList}</Unordered>
-        <div className={styles.inputWrap}>{supplyInput}</div>
-      </div>
+      <Auxillary>
+        <label>SUPPLY</label>{' '}
+        <div className={styles.supplyWrapper}>
+          <Unordered>{inputList}</Unordered>
+          <div className={styles.inputWrap}>{supplyInput}</div>
+        </div>
+      </Auxillary>
     );
   }
 }
@@ -76,7 +83,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  supplyActiveDispatch: name => dispatch(actions.activeSupply(name))
+  supplyActiveDispatch: name => dispatch(actions.activeSupply(name)),
+  supplyChangeValueDispatch: (name, value) =>
+    dispatch(actions.valueChangeSupply(name, value)),
+  supplyOnClickSupplyButtonDispatch: name =>
+    dispatch(actions.addSupplyValue(name))
 });
 
 export default connect(

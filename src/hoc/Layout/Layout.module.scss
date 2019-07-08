@@ -1,4 +1,22 @@
 main {
-  max-width: 100rem;
+  // max-width: 100rem;
   margin: 0 auto;
+  padding: 2rem;
+}
+
+.sideBar {
+  width: 26rem;
+  height: 100%;
+  float: left;
+  position: fixed;
+  background-color: azure;
+  // flex: 0 0 26rem;
+}
+
+.mainContent {
+  width: calc(100% - 26rem);
+  float: right;
+  max-height: 100%;
+  // flex: 1;
+  // align-self: center;
 }

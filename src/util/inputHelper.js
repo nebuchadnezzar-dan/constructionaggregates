@@ -37,5 +37,6 @@ export const formFunction = (
 
 export const supplySet = () => ({
   active: false,
-  amount: 0
+  amount: 0,
+  value: ''
 });

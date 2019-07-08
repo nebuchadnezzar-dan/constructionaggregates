@@ -8,6 +8,7 @@ import { formFunction, selectOptions } from '../../../util/inputHelper';
 
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
+import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
 import styles from './TruckBuilder.module.scss';
 
@@ -38,44 +39,46 @@ class TruckBuilder extends Component {
 
   render() {
     return (
-      <div className={styles.truckComponent}>
+      <Auxillary>
         <label>TRUCK</label>{' '}
-        <div className={styles.truckForm}>
-          {' '}
-          {this.props.truckForm.map((el, i) => {
-            let input = [];
-            for (let formKey in this.state.truckForm) {
-              input.push(
-                <Input
-                  key={formKey}
-                  name={formKey}
-                  elementInputType={this.state.truckForm[formKey].elementType}
-                  elementConfig={this.state.truckForm[formKey].elementConfig}
-                  change={this.onChangeValueHandler}
-                  value={el[formKey]}
-                  ind={i}
-                />
+        <div className={styles.truckComponent}>
+          <div className={styles.truckForm}>
+            {' '}
+            {this.props.truckForm.map((el, i) => {
+              let input = [];
+              for (let formKey in this.state.truckForm) {
+                input.push(
+                  <Input
+                    key={formKey}
+                    name={formKey}
+                    elementInputType={this.state.truckForm[formKey].elementType}
+                    elementConfig={this.state.truckForm[formKey].elementConfig}
+                    change={this.onChangeValueHandler}
+                    value={el[formKey]}
+                    ind={i}
+                  />
+                );
+              }
+              return (
+                <div key={i} className={styles.rowForm}>
+                  <Button
+                    cName="Close"
+                    click={this.props.removeTruckDispatch.bind(null, i)}
+                  >
+                    X
+                  </Button>
+                  {input}
+                </div>
               );
-            }
-            return (
-              <div key={i} className={styles.rowForm}>
-                <Button
-                  cName="Close"
-                  click={this.props.removeTruckDispatch.bind(null, i)}
-                >
-                  X
-                </Button>
-                {input}
-              </div>
-            );
-          })}
+            })}
+          </div>
+          <div className={styles.buttonPosition}>
+            <Button cName="Main" click={this.props.addTruckDispatch}>
+              Add More Truck
+            </Button>
+          </div>
         </div>
-        <div className={styles.buttonPosition}>
-          <Button cName="Main" click={this.props.addTruckDispatch}>
-            Add More Truck
-          </Button>
-        </div>
-      </div>
+      </Auxillary>
     );
   }
 }

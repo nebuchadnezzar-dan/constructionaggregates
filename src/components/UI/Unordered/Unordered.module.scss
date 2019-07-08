@@ -1,7 +1,10 @@
+@import '../../../styles/colors.scss';
+
 .ulDefault {
   list-style-type: none;
   width: 20%;
   border: 1px solid rgb(182, 182, 182);
   border-radius: 5px;
   overflow: hidden;
+  box-shadow: $box-shadows-2;
 }
