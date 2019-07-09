@@ -1,4 +1,10 @@
-export { addTruck, removeTruck, valueChangeTruck } from './truckSettings';
+export {
+  addTruck,
+  removeTruck,
+  valueChangeTruck,
+  saveTruck,
+  toggleViewTruck
+} from './truckSettings';
 export {
   activeSupply,
   valueChangeSupply,

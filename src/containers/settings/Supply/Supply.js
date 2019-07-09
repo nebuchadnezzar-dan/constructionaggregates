@@ -5,6 +5,7 @@ import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import Unordered from '../../../components/UI/Unordered/Unordered';
 import Head from '../../../components/UI/Head/Head';
+import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 
 import * as actions from '../../../store/actions/index';
 
@@ -63,7 +64,7 @@ class Supply extends Component {
     return (
       <div className={styles.supplyWrapperHead}>
         <Head classname="orange" svgname="supply">
-          SUPPLY
+          <HeadChild>SUPPLY</HeadChild>
         </Head>
         <div className={styles.supplyWrapper}>
           <Unordered classname="ulDefault">{inputList}</Unordered>

@@ -1,0 +1,25 @@
+header {
+  //   background-color: rgba(255, 255, 255, 0.5);
+}
+
+.headNavWrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  align-items: center;
+}
+
+.svgWrapper {
+  display: flex;
+}
+
+a {
+  text-decoration: none;
+  color: #555;
+  font-size: 1.8rem;
+}
+
+svg {
+  fill: #555;
+  height: 1.8rem;
+}

@@ -7,11 +7,11 @@
   margin-top: -3rem;
   margin-bottom: 1rem;
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
   text-align: center;
   font-size: 2rem;
-  letter-spacing: 2rem;
+  // letter-spacing: 2rem;
   font-weight: bold;
   line-height: 1;
   color: #fff;
@@ -41,4 +41,9 @@
 .blue {
   background: $blue-head;
   @include head-shadows($blue-head-shadows);
+}
+
+span {
+  // letter-spacing: 0;
+  // margin-left: -2rem;
 }

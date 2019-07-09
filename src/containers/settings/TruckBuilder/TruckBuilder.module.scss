@@ -6,7 +6,7 @@
   border-radius: 0.6rem;
   box-shadow: $box-shadows-1;
   padding: 1rem 1.5rem;
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 
 .rowForm {
@@ -43,6 +43,10 @@
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: $green-light;
   }
+}
+
+.view {
+  padding: 2rem;
 }
 
 .buttonPosition {

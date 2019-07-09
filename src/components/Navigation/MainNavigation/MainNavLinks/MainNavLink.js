@@ -21,7 +21,6 @@ const mainNavLinks = ({ children, name, active }) => {
     support: <Support />
   };
   const SVGComponent = svgName[name];
-  console.log(active);
   return (
     <div className={[styles.linkWrapper, styles[active]].join(' ')}>
       <div className={styles.svgWrap}>{SVGComponent}</div>
