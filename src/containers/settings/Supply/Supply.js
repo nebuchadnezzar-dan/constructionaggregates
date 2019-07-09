@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import Unordered from '../../../components/UI/Unordered/Unordered';
-import Auxillary from '../../../hoc/Auxillary/Auxillary';
+import Head from '../../../components/UI/Head/Head';
 
 import * as actions from '../../../store/actions/index';
 
@@ -50,6 +50,7 @@ class Supply extends Component {
           change={this.onChangeValueHandler.bind(null, this.props.activeSupp)}
           value={this.props.supplies[this.props.activeSupp].value}
           ind={0}
+          color="orange"
         />
         <Button
           click={this.onAddSupplyHandler.bind(null, this.props.activeSupp)}
@@ -60,13 +61,15 @@ class Supply extends Component {
       </div>
     ) : null;
     return (
-      <Auxillary>
-        <label>SUPPLY</label>{' '}
+      <div className={styles.supplyWrapperHead}>
+        <Head classname="orange" svgname="supply">
+          SUPPLY
+        </Head>
         <div className={styles.supplyWrapper}>
           <Unordered classname="ulDefault">{inputList}</Unordered>
           <div className={styles.inputWrap}>{supplyInput}</div>
         </div>
-      </Auxillary>
+      </div>
     );
   }
 }

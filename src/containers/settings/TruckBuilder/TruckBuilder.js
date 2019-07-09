@@ -9,6 +9,7 @@ import { formFunction, selectOptions } from '../../../util/inputHelper';
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
+import Head from '../../../components/UI/Head/Head';
 
 import styles from './TruckBuilder.module.scss';
 
@@ -26,22 +27,16 @@ class TruckBuilder extends Component {
   };
 
   onChangeValueHandler = async (index, name, event) => {
-    // an index should be able to handle an object that holds the value of each field in an array
     this.props.valueChangeDispatch(index, name, event.target.value);
-    // const copiedState = [...this.state.truckForms];
-    // copiedState[index] = {
-    //   ...copiedState[index],
-    //   [name]: event.target.value
-    // };
-
-    // this.setState({ truckForms: copiedState });
   };
 
   render() {
     return (
       <Auxillary>
-        <label>TRUCK</label>{' '}
         <div className={styles.truckComponent}>
+          <Head classname="green" svgname="truck">
+            TRUCK
+          </Head>
           <div className={styles.truckForm}>
             {' '}
             {this.props.truckForm.map((el, i) => {
@@ -56,6 +51,7 @@ class TruckBuilder extends Component {
                     change={this.onChangeValueHandler}
                     value={el[formKey]}
                     ind={i}
+                    color="green"
                   />
                 );
               }

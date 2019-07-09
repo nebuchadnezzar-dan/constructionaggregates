@@ -24,3 +24,43 @@ $util-background1: #ffffff;
 //BOX SHADOWS
 $box-shadows-1: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 $box-shadows-2: 0 5px 3px 1px rgba(0, 0, 0, 0.11);
+
+// HEAD SOLID
+$green-solid: #43a047;
+$orange-solid: #fb8c00;
+$red-solid: #e53935;
+$violet-solid: #8e24aa;
+$blue-solid: #00acc1;
+
+// HEAD LIGHT
+$green-light: #66bb6a;
+$orange-light: #ffa726;
+$red-light: #ef5350;
+$violet-light: #ab47bc;
+$blue-light: #26c6da;
+
+// HEAD
+$green-head: linear-gradient(60deg, $green-light, $green-solid);
+$orange-head: linear-gradient(60deg, $orange-light, $orange-solid);
+$red-head: linear-gradient(60deg, $red-light, $red-solid);
+$violet-head: linear-gradient(60deg, $violet-light, $violet-solid);
+$blue-head: linear-gradient(60deg, $blue-light, $blue-solid);
+
+//HEAD SHADOWS:
+$green-head-shadows: rgba(76, 175, 80, 0.4);
+$orange-head-shadows: rgba(255, 152, 0, 0.4);
+$red-head-shadows: rgba(244, 67, 54, 0.4);
+$violet-head-shadows: rgba(156, 39, 176, 0.4);
+$blue-head-shadows: rgba(0, 172, 193, 0.4);
+
+@mixin head-shadows($color) {
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px $color;
+}
+
+@mixin input-color($solid, $light) {
+  border: 1px solid $light;
+  width: 100%;
+  &:focus {
+    outline-color: $solid;
+  }
+}

@@ -28,6 +28,8 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ACTIVE_SUPPLY:
       newSuppInput = copyState(state.supplies);
+      //get back on this
+      // must set the first value to provide more flexibility than hardcode
       const active = state.activeSupp === '' ? 'gravel' : state.activeSupp;
       newSuppInput[active].active = false;
       newSuppInput[active].value = '';

@@ -7,7 +7,7 @@
   border: none;
   cursor: pointer;
   &Main {
-    background-color: $cat-yellow;
+    background-color: $green-solid;
   }
   &Close {
     position: absolute;
@@ -30,9 +30,9 @@
     text-align: justify;
     &:active,
     &active {
-      background-color: $cat-light-blue;
+      background-color: $orange-solid;
       outline: none;
-      color: $darkslategrey;
+      color: $superlightgrey;
       font-weight: 600;
     }
     &available {
@@ -40,9 +40,10 @@
     }
   }
   &checkMark {
-    background-color: $cat-yellow;
+    background-color: $orange-solid;
     border-radius: 50%;
     height: 4rem;
     width: 4rem;
+    color: #fff;
   }
 }

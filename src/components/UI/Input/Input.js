@@ -8,7 +8,7 @@ const input = props => {
       // console.log(['INPUT'], props.value);
       inputElement = (
         <input
-          className={styles.inputElement}
+          className={[styles.inputElement, styles[props.color]].join(' ')}
           name={props.name}
           value={props.value}
           {...props.elementConfig}

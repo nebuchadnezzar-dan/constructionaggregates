@@ -15,11 +15,22 @@
   border-radius: 3px;
   font-size: inherit;
   font-family: inherit;
-  border: 1px solid $cat-light-green;
-  width: 100%;
-  &:focus {
-    outline-color: $cat-light-blue;
-  }
+}
+
+.orange {
+  @include input-color($orange-light, $orange-solid);
+}
+.green {
+  @include input-color($green-light, $green-solid);
+}
+.red {
+  @include input-color($red-light, $red-solid);
+}
+.blue {
+  @include input-color($blue-light, $blue-solid);
+}
+.violet {
+  @include input-color($violet-light, $violet-solid);
 }
 
 .labelWrapper {

@@ -1,0 +1,44 @@
+@import '../../../styles/colors.scss';
+.head {
+  padding: 1.5rem;
+  border-radius: 5px;
+
+  margin: 0 1.5rem;
+  margin-top: -3rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 2rem;
+  letter-spacing: 2rem;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  & svg {
+    fill: #fff;
+    margin-right: 2rem;
+  }
+}
+
+.green {
+  background: $green-head;
+  @include head-shadows($green-head-shadows);
+}
+.orange {
+  background: $orange-head;
+  @include head-shadows($orange-head-shadows);
+  margin-top: -4rem;
+}
+.red {
+  background: $red-head;
+  @include head-shadows($red-head-shadows);
+}
+.violet {
+  background: $violet-head;
+  @include head-shadows($violet-head-shadows);
+}
+.blue {
+  background: $blue-head;
+  @include head-shadows($blue-head-shadows);
+}
