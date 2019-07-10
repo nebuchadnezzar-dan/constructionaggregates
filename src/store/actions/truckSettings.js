@@ -16,7 +16,3 @@ export const valueChangeTruck = (index, name, value) => ({
 export const saveTruck = () => ({
   type: actionTypes.SAVE_TRUCK
 });
-export const toggleViewTruck = val => ({
-  type: actionTypes.TOGGLE_VIEW_TRUCK,
-  payload: val
-});

@@ -2,8 +2,7 @@ export {
   addTruck,
   removeTruck,
   valueChangeTruck,
-  saveTruck,
-  toggleViewTruck
+  saveTruck
 } from './truckSettings';
 export {
   activeSupply,

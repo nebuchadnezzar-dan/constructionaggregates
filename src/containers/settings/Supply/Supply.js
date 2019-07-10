@@ -6,13 +6,16 @@ import Button from '../../../components/UI/Button/Button';
 import Unordered from '../../../components/UI/Unordered/Unordered';
 import Head from '../../../components/UI/Head/Head';
 import HeadChild from '../../../components/UI/HeadChild/HeadChild';
+import Table from '../../../components/UI/Table/Table';
 
 import * as actions from '../../../store/actions/index';
 
 import styles from './Supply.module.scss';
 
 class Supply extends Component {
-  state = {};
+  state = {
+    view: 'form'
+  };
   // parameters _ is not needed
   onChangeValueHandler = (name, _, __, event) => {
     this.props.supplyChangeValueDispatch(name, event.target.value);
@@ -21,9 +24,12 @@ class Supply extends Component {
   onAddSupplyHandler = name => {
     this.props.supplyOnClickSupplyButtonDispatch(name);
   };
+  onToggleView = value => {
+    this.setState({ view: value });
+  };
 
   render() {
-    let inputList = [];
+    let inputList = [<li className={styles.listHead}>Materials</li>];
     for (let supplyKey in this.props.supplies) {
       inputList.push(
         <li key={supplyKey}>
@@ -61,15 +67,32 @@ class Supply extends Component {
         </Button>
       </div>
     ) : null;
-    return (
-      <div className={styles.supplyWrapperHead}>
-        <Head classname="orange" svgname="supply">
-          <HeadChild>SUPPLY</HeadChild>
-        </Head>
+    let view = (
+      <div className={styles.view}>
+        {' '}
+        <Table data={this.props.activeSupplies} cName="orange" />
+      </div>
+    );
+    let tobeShown =
+      this.state.view === 'form' ? (
         <div className={styles.supplyWrapper}>
           <Unordered classname="ulDefault">{inputList}</Unordered>
           <div className={styles.inputWrap}>{supplyInput}</div>
         </div>
+      ) : (
+        view
+      );
+    return (
+      <div className={styles.supplyWrapperHead}>
+        <Head classname="orange" svgname="supply">
+          <HeadChild
+            dispatchClickView={this.onToggleView.bind(null, 'view')}
+            dispatchClickForm={this.onToggleView.bind(null, 'form')}
+          >
+            SUPPLY
+          </HeadChild>
+        </Head>
+        {tobeShown}
       </div>
     );
   }
@@ -77,7 +100,8 @@ class Supply extends Component {
 
 const mapStateToProps = state => ({
   activeSupp: state.supplySettings.activeSupp,
-  supplies: state.supplySettings.supplies
+  supplies: state.supplySettings.supplies,
+  activeSupplies: state.supplySettings.activeSupplies
 });
 
 const mapDispatchToProps = dispatch => ({

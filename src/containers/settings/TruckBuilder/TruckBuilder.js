@@ -8,9 +8,9 @@ import { formFunction, selectOptions } from '../../../util/inputHelper';
 
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
-import Auxillary from '../../../hoc/Auxillary/Auxillary';
 import Head from '../../../components/UI/Head/Head';
 import HeadChild from '../../../components/UI/HeadChild/HeadChild';
+import Table from '../../../components/UI/Table/Table';
 
 import styles from './TruckBuilder.module.scss';
 
@@ -31,24 +31,19 @@ class TruckBuilder extends Component {
   onChangeValueHandler = async (index, name, event) => {
     this.props.valueChangeDispatch(index, name, event.target.value);
   };
+  onToggleView = value => {
+    this.setState({ view: value });
+  };
 
   render() {
     const view = (
       <div className={styles.view}>
-        <div>
-          {this.props.availableTrucks.map((truck, i) => (
-            <div style={{ display: 'flex' }} key={i}>
-              <div>Plate No: {truck.plateNo}</div>
-              <div>Max Load: {truck.maxLoad}</div>
-              <div>Status: {truck.status}</div>
-            </div>
-          ))}
-        </div>
+        <Table data={this.props.availableTrucks} cName="green" />
       </div>
     );
 
     let toBeShown =
-      this.props.view === 'form' ? (
+      this.state.view === 'form' ? (
         <div className={styles.truckForm}>
           {' '}
           {this.props.truckForm.map((el, i) => {
@@ -84,7 +79,7 @@ class TruckBuilder extends Component {
         view
       );
     let button =
-      this.props.view === 'form' ? (
+      this.state.view === 'form' ? (
         <div className={styles.buttonPosition}>
           <Button cName="Main" click={this.props.addTruckDispatch}>
             &#9951; Add More Truck
@@ -98,7 +93,12 @@ class TruckBuilder extends Component {
     return (
       <div className={styles.truckComponent}>
         <Head classname="green" svgname="truck">
-          <HeadChild>TRUCK</HeadChild>
+          <HeadChild
+            dispatchClickView={this.onToggleView.bind(null, 'view')}
+            dispatchClickForm={this.onToggleView.bind(null, 'form')}
+          >
+            TRUCK
+          </HeadChild>
         </Head>
         {toBeShown}
         {button}
@@ -109,8 +109,7 @@ class TruckBuilder extends Component {
 
 const mapStateToProps = state => ({
   truckForm: state.truckSettings.trucks,
-  availableTrucks: state.truckSettings.availableTrucks,
-  view: state.truckSettings.view
+  availableTrucks: state.truckSettings.availableTrucks
 });
 
 const mapDispatchToProps = dispatch => ({

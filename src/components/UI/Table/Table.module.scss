@@ -1,0 +1,59 @@
+@import '../../../styles/colors.scss';
+.table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  // margin: 20px;
+}
+
+@mixin color-pick($color) {
+  & thead {
+    border-bottom: 1px solid $color;
+  }
+  & th {
+    font-size: 1.8rem;
+    color: $color;
+  }
+}
+
+thead tr {
+  text-transform: capitalize;
+}
+
+.green {
+  @include color-pick($green-solid);
+}
+.red {
+  @include color-pick($red-solid);
+}
+.orange {
+  @include color-pick($orange-solid);
+}
+.blue {
+  @include color-pick($blue-solid);
+}
+.violet {
+  @include color-pick($violet-solid);
+}
+
+td {
+  padding: 1rem;
+}
+.oddgreen {
+  background: $green-solid;
+}
+.oddred {
+  background: $red-solid;
+}
+.oddblue {
+  background: $blue-solid;
+}
+.oddviolet {
+  background: $violet-solid;
+}
+.oddorange {
+  background: $orange-solid;
+}
+.even {
+  background: #f5f5f5;
+}

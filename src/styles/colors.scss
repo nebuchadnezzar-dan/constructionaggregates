@@ -40,11 +40,11 @@ $violet-light: #ab47bc;
 $blue-light: #26c6da;
 
 // HEAD
-$green-head: linear-gradient(60deg, $green-light, $green-solid);
-$orange-head: linear-gradient(60deg, $orange-light, $orange-solid);
-$red-head: linear-gradient(60deg, $red-light, $red-solid);
-$violet-head: linear-gradient(60deg, $violet-light, $violet-solid);
-$blue-head: linear-gradient(60deg, $blue-light, $blue-solid);
+$green-head: linear-gradient(60deg, $green-solid, $green-light);
+$orange-head: linear-gradient(60deg, $orange-solid, $orange-light);
+$red-head: linear-gradient(60deg, $red-solid, $red-light);
+$violet-head: linear-gradient(60deg, $violet-solid, $violet-light);
+$blue-head: linear-gradient(60deg, $blue-solid, $blue-light);
 
 //HEAD SHADOWS:
 $green-head-shadows: rgba(76, 175, 80, 0.4);

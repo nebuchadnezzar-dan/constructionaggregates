@@ -2,8 +2,12 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   trucks: [{ maxLoad: '', plateNo: '', status: 'maintenance' }],
-  availableTrucks: [],
-  view: 'form'
+  availableTrucks: [
+    { maxLoad: '2', plateNo: 'abc', status: 'maintenance' },
+    { maxLoad: '3', plateNo: 'def', status: 'maintenance' },
+    { maxLoad: '1', plateNo: 'gfh', status: 'maintenance' },
+    { maxLoad: '1', plateNo: 'gfh', status: 'maintenance' }
+  ]
 };
 
 const reducer = (state = initialState, action) => {
@@ -41,11 +45,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         availableTrucks: state.availableTrucks.concat(state.trucks),
         trucks: initialState.trucks
-      };
-    case actionTypes.TOGGLE_VIEW_TRUCK:
-      return {
-        ...state,
-        view: action.payload
       };
     default:
       return state;
