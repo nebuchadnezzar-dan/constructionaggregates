@@ -56,9 +56,24 @@
   }
   &headButton {
     color: $superlightgrey;
+    &Active {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: $superlightgrey;
+    }
   }
   &mainSave {
     background-color: $orange-solid;
     color: #fff;
+  }
+  &delete,
+  &edit {
+    // padding: 0.5rem;
+    color: #fff;
+  }
+  &delete {
+    background-color: $red-light;
+  }
+  &edit {
+    background-color: $blue-light;
   }
 }

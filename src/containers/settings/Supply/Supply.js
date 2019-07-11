@@ -29,7 +29,11 @@ class Supply extends Component {
   };
 
   render() {
-    let inputList = [<li className={styles.listHead}>Materials</li>];
+    let inputList = [
+      <li key="first" className={styles.listHead}>
+        Materials
+      </li>
+    ];
     for (let supplyKey in this.props.supplies) {
       inputList.push(
         <li key={supplyKey}>
@@ -86,6 +90,7 @@ class Supply extends Component {
       <div className={styles.supplyWrapperHead}>
         <Head classname="orange" svgname="supply">
           <HeadChild
+            forClassName={this.state.view}
             dispatchClickView={this.onToggleView.bind(null, 'view')}
             dispatchClickForm={this.onToggleView.bind(null, 'form')}
           >

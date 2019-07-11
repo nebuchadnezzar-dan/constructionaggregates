@@ -38,7 +38,11 @@ class TruckBuilder extends Component {
   render() {
     const view = (
       <div className={styles.view}>
-        <Table data={this.props.availableTrucks} cName="green" />
+        <Table
+          data={this.props.availableTrucks}
+          cName="green"
+          from="truckSettings"
+        />
       </div>
     );
 
@@ -94,6 +98,7 @@ class TruckBuilder extends Component {
       <div className={styles.truckComponent}>
         <Head classname="green" svgname="truck">
           <HeadChild
+            forClassName={this.state.view}
             dispatchClickView={this.onToggleView.bind(null, 'view')}
             dispatchClickForm={this.onToggleView.bind(null, 'form')}
           >
