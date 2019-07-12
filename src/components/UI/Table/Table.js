@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
+
+import { connect } from 'react-redux';
+
+import * as actions from '../../../store/actions/index';
+
 import styles from './Table.module.scss';
+
 import Button from '../Button/Button';
-import Auxillary from '../../../hoc/Auxillary/Auxillary';
+
 class Table extends Component {
   state = {
     data: [],
@@ -14,25 +20,8 @@ class Table extends Component {
     }));
     this.setState({ data: copyProps, dataValue: this.props.data });
   }
-  actionButtons = i => (
-    <Auxillary>
-      <Button
-        cName="delete"
-        click={this.onButtonClick.bind(null, this.props.from, 'delete', i)}
-      >
-        &#128465;
-      </Button>
-      <Button
-        cName="edit"
-        click={this.onButtonClick.bind(null, this.props.from, 'edit', i)}
-      >
-        &#9998;
-      </Button>
-    </Auxillary>
-  );
 
   onTouchEdit = (index, toBeEdited, e) => {
-    console.log(toBeEdited);
     const copyData = [...this.state.data];
     copyData[index] = {
       ...copyData[index],
@@ -41,6 +30,16 @@ class Table extends Component {
           value={e.target.value}
           onChange={this.onTouchEdit.bind(this, index, toBeEdited)}
         />
+      ),
+      status: (
+        <select
+          value={e.target.value}
+          onChange={this.onTouchEdit.bind(this, index, 'status')}
+        >
+          <option value="maintenance">Maintenance</option>
+          <option value="delivering">Delivering</option>
+          <option value="other">Other</option>
+        </select>
       )
     };
     const copyValue = [...this.state.dataValue];
@@ -57,6 +56,8 @@ class Table extends Component {
       actions: 'view'
     };
     this.setState({ data: copyData });
+
+    this.props.onEditTrucksDispatch(index, copyValue[index]);
   };
 
   onButtonClick = (from, button, index, _) => {
@@ -72,37 +73,24 @@ class Table extends Component {
           />
         );
       }
+      copyDataIndex.status = (
+        <select
+          value={this.state.data[index].status}
+          onChange={this.onTouchEdit.bind(this, index, 'status')}
+        >
+          <option value="maintenance">Maintenance</option>
+          <option value="delivering">Delivering</option>
+          <option value="other">Other</option>
+        </select>
+      );
       // copyDataIndex.actions = (
       //   <Button click={this.onSaveEdit.bind(null, index)}> &#10004;</Button>
       // );
       copyDataIndex.actions = 'save';
     } else {
+      this.props.deleteTruckDispatch(index);
       copyData = this.state.data.filter((_, i) => i !== index);
     }
-
-    // copyData[index] = {
-    //   maxLoad: (
-    //     <input
-    //       type="number"
-    //       value={this.state.data[index].maxLoad}
-    //       onChange={this.onTouchEdit.bind(this, index, 'maxLoad')}
-    //     />
-    //   ),
-    //   plateNo: (
-    //     <input
-    //       value={this.state.data[index].plateNo}
-    //       onChange={this.onTouchEdit.bind(this, index, 'plateNo')}
-    //     />
-    //   ),
-    //   status: (
-    //     <input
-    //       value={this.state.data[index].status}
-    //       onChange={this.onTouchEdit.bind(this, index, 'status')}
-    //     />
-    //   ),
-    //   actions: <Button> &#10004;</Button>
-    // };
-    console.log(this.state.data);
     this.setState({ data: copyData });
   };
   render() {
@@ -153,7 +141,10 @@ class Table extends Component {
                   </td>
                 ) : (
                   <td key={'actions' + i}>
-                    <Button click={this.onSaveEdit.bind(null, i)}>
+                    <Button
+                      cName="saveEdit"
+                      click={this.onSaveEdit.bind(null, i)}
+                    >
                       {' '}
                       &#10004;
                     </Button>
@@ -214,4 +205,13 @@ class Table extends Component {
   }
 }
 
-export default Table;
+const mapDispatchToProps = dispatch => ({
+  onEditTrucksDispatch: (index, value) =>
+    dispatch(actions.editTruckSettings(index, value)),
+  deleteTruckDispatch: index => dispatch(actions.deleteTruckSettings(index))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Table);

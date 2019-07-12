@@ -46,6 +46,20 @@ const reducer = (state = initialState, action) => {
         availableTrucks: state.availableTrucks.concat(state.trucks),
         trucks: initialState.trucks
       };
+    case actionTypes.EDIT_TRUCK_SETTINGS:
+      const copyTrucksFromState = [...state.availableTrucks];
+      copyTrucksFromState[action.payload.index] = action.payload.value;
+      return {
+        ...state,
+        availableTrucks: copyTrucksFromState
+      };
+    case actionTypes.DELETE_TRUCK_SETTINGS:
+      return {
+        ...state,
+        availableTrucks: state.availableTrucks.filter(
+          (_, i) => i !== action.payload
+        )
+      };
     default:
       return state;
   }
