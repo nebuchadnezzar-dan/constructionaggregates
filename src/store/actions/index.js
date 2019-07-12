@@ -9,5 +9,7 @@ export {
 export {
   activeSupply,
   valueChangeSupply,
-  addSupplyValue
+  addSupplyValue,
+  editSupplySettings,
+  deleteSupplySettings
 } from './supplySettings';

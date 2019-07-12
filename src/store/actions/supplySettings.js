@@ -13,3 +13,13 @@ export const valueChangeSupply = (name, value) => ({
   type: actionTypes.VALUE_CHANGE_SUPPLY,
   payload: { name, value }
 });
+
+export const editSupplySettings = (index, value) => ({
+  type: actionTypes.EDIT_SUPPLY_SETTINGS,
+  payload: { index, value }
+});
+
+export const deleteSupplySettings = index => ({
+  type: actionTypes.DELETE_SUPPLY_SETTINGS,
+  payload: index
+});

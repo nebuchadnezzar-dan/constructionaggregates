@@ -1,7 +1,8 @@
-export const selectOptions = (value, displayValue) => ({
-  value,
-  displayValue
-});
+export const status = [
+  { value: 'maintenance', displayValue: 'Maintenance' },
+  { value: 'delivering', displayValue: 'Delivering' },
+  { value: 'other', displayValue: 'Other' }
+];
 
 export const formFunction = (
   elementType,
@@ -36,7 +37,6 @@ export const formFunction = (
 };
 
 export const supplySet = () => ({
-  active: false,
   amount: 0,
   value: ''
 });

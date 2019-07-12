@@ -52,7 +52,11 @@ const input = props => {
       >
         <label className={styles.label}>{props.name}</label>
       </div>
-      <div className={[styles.inputWrapper, styles[props.inputWrapSupply]]}>
+      <div
+        className={[styles.inputWrapper, styles[props.inputWrapSupply]].join(
+          ' '
+        )}
+      >
         {inputElement}
       </div>
     </div>

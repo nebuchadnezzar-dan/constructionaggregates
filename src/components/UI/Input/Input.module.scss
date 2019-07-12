@@ -8,6 +8,8 @@
   //   margin-bottom: 1rem;
   // }
   align-items: center;
+  // justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .inputElement {
@@ -33,17 +35,19 @@
   @include input-color($violet-light, $violet-solid);
 }
 
+.inputWrapper {
+  // justify-self: start;
+  flex: 0 0 60%;
+}
+
 .labelWrapper {
-  width: 30%;
+  // width: 30%;
+  flex: 0 0 30%;
 }
 
 .WrapnoLabel {
   width: 0;
   display: none;
-}
-
-.labelWrapSupply {
-  width: 20%;
 }
 
 .label {
@@ -71,13 +75,4 @@
   &:focus {
     outline-color: $cat-light-blue;
   }
-}
-
-// FROM SUPPLY
-.formWrapperSupply {
-  margin-right: -50%;
-}
-
-.inputWrapSupply {
-  width: 40%;
 }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../../store/actions/index';
 
-import { formFunction, selectOptions } from '../../../util/inputHelper';
+import { formFunction, status } from '../../../util/inputHelper';
 
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
@@ -19,11 +19,7 @@ class TruckBuilder extends Component {
     truckForm: {
       maxLoad: formFunction('input', 'number', '0', null, null, null),
       plateNo: formFunction('input', 'text', 'Plate Numer', null, null, null),
-      status: formFunction('select', null, null, [
-        selectOptions('maintenance', 'Maintenance'),
-        selectOptions('delivering', 'Delivering'),
-        selectOptions('other', 'Other')
-      ])
+      status: formFunction('select', null, null, status)
     },
     view: 'form'
   };

@@ -25,7 +25,8 @@
     border-radius: 50%;
     // border: none;
   }
-  &SupplyLink {
+  &SupplyLink,
+  &SupplyLinkAdd {
     background-color: $superlightgrey;
     color: $dimgrey;
     width: 100%;
@@ -42,6 +43,15 @@
     &available {
       background-color: $cat-light-green;
     }
+    &:disabled {
+      background-color: $grey;
+      cursor: no-drop;
+    }
+  }
+  &SupplyLinkAdd {
+    border-top: 1px solid $dimgrey;
+    text-align: center;
+    // background: $orange-head;
   }
   &checkMark {
     background-color: $orange-solid;

@@ -7,6 +7,7 @@ import Unordered from '../../../components/UI/Unordered/Unordered';
 import Head from '../../../components/UI/Head/Head';
 import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
+import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
 import * as actions from '../../../store/actions/index';
 
@@ -14,7 +15,8 @@ import styles from './Supply.module.scss';
 
 class Supply extends Component {
   state = {
-    view: 'form'
+    view: 'form',
+    activeSupp: ''
   };
   // parameters _ is not needed
   onChangeValueHandler = (name, _, __, event) => {
@@ -27,6 +29,9 @@ class Supply extends Component {
   onToggleView = value => {
     this.setState({ view: value });
   };
+  addNewMatt = active => {
+    this.setState({ activeSupp: active });
+  };
 
   render() {
     let inputList = [
@@ -35,12 +40,16 @@ class Supply extends Component {
       </li>
     ];
     for (let supplyKey in this.props.supplies) {
+      const matExist = this.props.activeSupplies.find(
+        supp => supp.materials === supplyKey
+      );
       inputList.push(
         <li key={supplyKey}>
           <Button
+            disabled={matExist}
             cName="SupplyLink"
             active={
-              this.props.supplies[supplyKey].active ? 'SupplyLinkactive' : null
+              this.props.activeSupp === supplyKey ? 'SupplyLinkactive' : null
             }
             click={this.props.supplyActiveDispatch.bind(null, supplyKey)}
           >
@@ -49,6 +58,13 @@ class Supply extends Component {
         </li>
       );
     }
+    inputList.push(
+      <li key="addMats">
+        <Button cName="SupplyLinkAdd" click={this.addNewMatt.bind(null, 'add')}>
+          New Materials
+        </Button>
+      </li>
+    );
     let supplyInput = this.props.activeSupp ? (
       <div className={styles.inputSupplyFlex}>
         <Input
@@ -71,17 +87,31 @@ class Supply extends Component {
         </Button>
       </div>
     ) : null;
+    const supplyAdd =
+      this.state.activeSupp === 'add' ? (
+        <div className={styles.inputSupplyFlex}>
+          <input />
+          <input />
+        </div>
+      ) : null;
     let view = (
       <div className={styles.view}>
         {' '}
-        <Table data={this.props.activeSupplies} cName="orange" />
+        <Table
+          data={this.props.activeSupplies}
+          cName="orange"
+          from="supplySettings"
+        />
       </div>
     );
     let tobeShown =
       this.state.view === 'form' ? (
         <div className={styles.supplyWrapper}>
           <Unordered classname="ulDefault">{inputList}</Unordered>
-          <div className={styles.inputWrap}>{supplyInput}</div>
+          <div className={styles.inputWrap}>
+            {supplyInput}
+            {supplyAdd}
+          </div>
         </div>
       ) : (
         view
