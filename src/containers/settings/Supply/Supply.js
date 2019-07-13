@@ -60,40 +60,46 @@ class Supply extends Component {
     }
     inputList.push(
       <li key="addMats">
-        <Button cName="SupplyLinkAdd" click={this.addNewMatt.bind(null, 'add')}>
+        <Button
+          cName="SupplyLinkAdd"
+          click={this.props.supplyActiveDispatch.bind(null, 'add')}
+        >
           New Materials
         </Button>
       </li>
     );
-    let supplyInput = this.props.activeSupp ? (
-      <div className={styles.inputSupplyFlex}>
-        <Input
-          name={this.props.activeSupp}
-          inputWrapSupply="inputWrapSupply"
-          labelWrapSupply="labelWrapSupply"
-          formWrapperSupply="formWrapperSupply"
-          elementInputType="input"
-          elementConfig={{ type: 'number', placeholder: '0' }}
-          change={this.onChangeValueHandler.bind(null, this.props.activeSupp)}
-          value={this.props.supplies[this.props.activeSupp].value}
-          ind={0}
-          color="orange"
-        />
-        <Button
-          click={this.onAddSupplyHandler.bind(null, this.props.activeSupp)}
-          cName="checkMark"
-        >
-          &#10004;
-        </Button>
-      </div>
-    ) : null;
-    const supplyAdd =
-      this.state.activeSupp === 'add' ? (
+    let supplyInput =
+      this.props.activeSupp && this.props.activeSupp !== 'add' ? (
+        <div className={styles.inputSupplyFlex}>
+          <Input
+            name={this.props.activeSupp}
+            inputWrapSupply="inputWrapSupply"
+            labelWrapSupply="labelWrapSupply"
+            formWrapperSupply="formWrapperSupply"
+            elementInputType="input"
+            elementConfig={{ type: 'number', placeholder: '0' }}
+            change={this.onChangeValueHandler.bind(null, this.props.activeSupp)}
+            value={this.props.supplies[this.props.activeSupp].value}
+            ind={0}
+            color="orange"
+          />
+          <Button
+            click={this.onAddSupplyHandler.bind(null, this.props.activeSupp)}
+            cName="checkMark"
+          >
+            &#10004;
+          </Button>
+        </div>
+      ) : null;
+    supplyInput =
+      this.props.activeSupp === 'add' ? (
         <div className={styles.inputSupplyFlex}>
           <input />
           <input />
         </div>
-      ) : null;
+      ) : (
+        supplyInput
+      );
     let view = (
       <div className={styles.view}>
         {' '}
@@ -108,10 +114,7 @@ class Supply extends Component {
       this.state.view === 'form' ? (
         <div className={styles.supplyWrapper}>
           <Unordered classname="ulDefault">{inputList}</Unordered>
-          <div className={styles.inputWrap}>
-            {supplyInput}
-            {supplyAdd}
-          </div>
+          <div className={styles.inputWrap}>{supplyInput}</div>
         </div>
       ) : (
         view
