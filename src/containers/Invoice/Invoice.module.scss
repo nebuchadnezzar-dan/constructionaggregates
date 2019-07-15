@@ -1,0 +1,32 @@
+@import '../../styles/colors.scss';
+
+.invoiceMain {
+  padding: 1.5rem 2rem;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: $box-shadows-1;
+  margin-top: 2rem;
+}
+
+.form {
+  display: none;
+}
+
+.sales {
+  margin-top: 2rem;
+}
+
+.table {
+  width: 100%;
+  & thead {
+    background-color: $blue-light;
+    color: #fff;
+    & th {
+      padding: 5px;
+    }
+  }
+  & tfoot {
+    background-color: $cat-light-blue;
+    color: $superlightgrey;
+  }
+}

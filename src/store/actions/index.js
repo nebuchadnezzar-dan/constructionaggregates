@@ -14,3 +14,4 @@ export {
   deleteSupplySettings,
   addMaterialToSupply
 } from './supplySettings';
+export { activeRoute } from './route';

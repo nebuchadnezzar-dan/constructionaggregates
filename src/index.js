@@ -6,8 +6,11 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 
+import { BrowserRouter } from 'react-router-dom';
+
 import truckSettings from './store/reducers/truckSettings';
 import supplySettings from './store/reducers/supplySettings';
+import route from './store/reducers/route';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -16,7 +19,8 @@ const basicDevtools =
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 const rootReducers = combineReducers({
   truckSettings: truckSettings,
-  supplySettings: supplySettings
+  supplySettings: supplySettings,
+  route: route
 });
 
 // const store = createStore(
@@ -28,7 +32,9 @@ const store = createStore(rootReducers, basicDevtools);
 
 const app = (
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>
 );
 

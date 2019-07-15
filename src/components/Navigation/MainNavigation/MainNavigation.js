@@ -10,29 +10,33 @@ const mainNavigation = () => {
       <div>LOGO</div>
       <div>
         <Unordered classname="ulNavigation">
-          <a href="#">
-            <NavLinks name="dashboard" active="active">
-              Dashboard
-            </NavLinks>
-          </a>
-          <a href="#">
-            <NavLinks name="user">User Profile</NavLinks>
-          </a>
-          <a href="#">
-            <NavLinks name="table">Table List</NavLinks>
-          </a>
-          <a href="#">
-            <NavLinks name="typography">Typography</NavLinks>
-          </a>
-          <a href="#">
-            <NavLinks name="icons">Icons</NavLinks>
-          </a>
-          <a href="#">
-            <NavLinks name="notifications">Notifcations</NavLinks>
-          </a>
-          <a href="#">
-            <NavLinks name="support">Support</NavLinks>
-          </a>
+          <NavLinks name="dashboard" link="/" exact>
+            Invoice
+          </NavLinks>
+
+          <NavLinks name="user" link="/user">
+            User Profile
+          </NavLinks>
+
+          <NavLinks name="table" link="/table">
+            Table List
+          </NavLinks>
+
+          <NavLinks name="typography" link="/typography">
+            Typography
+          </NavLinks>
+
+          <NavLinks name="icons" link="/settings">
+            Settings
+          </NavLinks>
+
+          <NavLinks name="notifications" link="/notifications">
+            Notifcations
+          </NavLinks>
+
+          <NavLinks name="support" link="/support">
+            Support
+          </NavLinks>
         </Unordered>
       </div>
     </Auxillary>

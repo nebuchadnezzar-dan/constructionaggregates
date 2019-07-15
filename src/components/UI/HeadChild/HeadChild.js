@@ -3,6 +3,7 @@ import React from 'react';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
 import Button from '../Button/Button';
 
+// make this class to handle the active view/form
 const headChild = props => (
   <Auxillary>
     <span>
