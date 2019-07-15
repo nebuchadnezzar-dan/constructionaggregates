@@ -6,14 +6,14 @@ const initialState = {
   activeSupp: '',
   supplies: {
     gravel: supplySet(),
-    riverMixed: supplySet(),
-    crushedSand: supplySet(),
-    riverSand: supplySet(),
+    'river Mixed': supplySet(),
+    'crushed Sand': supplySet(),
+    'river Sand': supplySet(),
     boulder: supplySet(),
-    hollowBlocks: supplySet(),
+    'hollow Blocks': supplySet(),
     cement: supplySet()
   },
-  activeSupplies: []
+  activeSupplies: [{ materials: 'gravel', amount: '2' }]
 };
 
 const copyState = state => JSON.parse(JSON.stringify(state));
@@ -69,6 +69,11 @@ const reducer = (state = initialState, action) => {
         activeSupplies: state.activeSupplies.filter(
           (_, i) => i !== action.payload
         )
+      };
+    case actionTypes.ADD_MATERIAL_TO_SUPPLY:
+      return {
+        ...state,
+        supplies: { ...state.supplies, [action.payload]: supplySet() }
       };
     default:
       return state;

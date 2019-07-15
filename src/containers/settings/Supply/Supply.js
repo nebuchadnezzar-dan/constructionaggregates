@@ -7,7 +7,6 @@ import Unordered from '../../../components/UI/Unordered/Unordered';
 import Head from '../../../components/UI/Head/Head';
 import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
-import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
 import * as actions from '../../../store/actions/index';
 
@@ -16,15 +15,25 @@ import styles from './Supply.module.scss';
 class Supply extends Component {
   state = {
     view: 'form',
-    activeSupp: ''
+    activeSupp: '',
+    addForm: ''
   };
   // parameters _ is not needed
   onChangeValueHandler = (name, _, __, event) => {
-    this.props.supplyChangeValueDispatch(name, event.target.value);
+    if (name === 'add') {
+      this.setState({ addForm: event.target.value });
+    } else {
+      this.props.supplyChangeValueDispatch(name, event.target.value);
+    }
   };
 
   onAddSupplyHandler = name => {
-    this.props.supplyOnClickSupplyButtonDispatch(name);
+    if (name === 'add') {
+      this.props.supplyAddMaterials(this.state.addForm);
+      this.setState({ addForm: '' });
+    } else {
+      this.props.supplyOnClickSupplyButtonDispatch(name);
+    }
   };
   onToggleView = value => {
     this.setState({ view: value });
@@ -62,6 +71,7 @@ class Supply extends Component {
       <li key="addMats">
         <Button
           cName="SupplyLinkAdd"
+          active={this.props.activeSupp === 'add' ? 'SupplyLinkactive' : null}
           click={this.props.supplyActiveDispatch.bind(null, 'add')}
         >
           New Materials
@@ -94,8 +104,24 @@ class Supply extends Component {
     supplyInput =
       this.props.activeSupp === 'add' ? (
         <div className={styles.inputSupplyFlex}>
-          <input />
-          <input />
+          <Input
+            name="add"
+            inputWrapSupply="inputWrapSupply"
+            labelWrapSupply="labelWrapSupply"
+            formWrapperSupply="formWrapperSupply"
+            elementInputType="input"
+            elementConfig={{ type: 'text', placeholder: 'Material' }}
+            change={this.onChangeValueHandler.bind(null, 'add')}
+            value={this.state.addForm}
+            ind={0}
+            color="orange"
+          />
+          <Button
+            click={this.onAddSupplyHandler.bind(null, 'add')}
+            cName="checkMark"
+          >
+            &#10004;
+          </Button>
         </div>
       ) : (
         supplyInput
@@ -147,7 +173,8 @@ const mapDispatchToProps = dispatch => ({
   supplyChangeValueDispatch: (name, value) =>
     dispatch(actions.valueChangeSupply(name, value)),
   supplyOnClickSupplyButtonDispatch: name =>
-    dispatch(actions.addSupplyValue(name))
+    dispatch(actions.addSupplyValue(name)),
+  supplyAddMaterials: matName => dispatch(actions.addMaterialToSupply(matName))
 });
 
 export default connect(

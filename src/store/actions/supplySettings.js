@@ -23,3 +23,8 @@ export const deleteSupplySettings = index => ({
   type: actionTypes.DELETE_SUPPLY_SETTINGS,
   payload: index
 });
+
+export const addMaterialToSupply = supplyName => ({
+  type: actionTypes.ADD_MATERIAL_TO_SUPPLY,
+  payload: supplyName
+});

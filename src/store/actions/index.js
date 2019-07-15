@@ -11,5 +11,6 @@ export {
   valueChangeSupply,
   addSupplyValue,
   editSupplySettings,
-  deleteSupplySettings
+  deleteSupplySettings,
+  addMaterialToSupply
 } from './supplySettings';
