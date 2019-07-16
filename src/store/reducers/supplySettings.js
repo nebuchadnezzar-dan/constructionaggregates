@@ -13,7 +13,11 @@ const initialState = {
     'hollow Blocks': supplySet(),
     cement: supplySet()
   },
-  activeSupplies: [{ materials: 'gravel', amount: '2' }]
+  activeSupplies: [
+    { materials: 'gravel', amount: '50', price: '2100' },
+    { materials: 'river Mixed', amount: '60', price: '2100' },
+    { materials: 'cement', amount: '150', price: '150' }
+  ]
 };
 
 const copyState = state => JSON.parse(JSON.stringify(state));
@@ -35,7 +39,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.ADD_SUPPLY_VALUE:
       const newMat = {
         materials: action.payload,
-        amount: state.supplies[action.payload].value
+        amount: state.supplies[action.payload].amount,
+        price: state.supplies[action.payload].price
       };
       newSuppInput = {
         ...copyState(state.activeSupplies),
@@ -51,7 +56,8 @@ const reducer = (state = initialState, action) => {
       };
     case actionTypes.VALUE_CHANGE_SUPPLY:
       newSuppInput = copyState(state.supplies);
-      newSuppInput[action.payload.name].value = action.payload.value;
+      newSuppInput[action.payload.name][action.payload.inputMod] =
+        action.payload.value;
       return {
         ...state,
         supplies: newSuppInput

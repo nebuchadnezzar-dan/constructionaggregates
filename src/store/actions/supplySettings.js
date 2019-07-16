@@ -9,9 +9,9 @@ export const addSupplyValue = name => ({
   type: actionTypes.ADD_SUPPLY_VALUE,
   payload: name
 });
-export const valueChangeSupply = (name, value) => ({
+export const valueChangeSupply = (name, inputMod, value) => ({
   type: actionTypes.VALUE_CHANGE_SUPPLY,
-  payload: { name, value }
+  payload: { name, inputMod, value }
 });
 
 export const editSupplySettings = (index, value) => ({

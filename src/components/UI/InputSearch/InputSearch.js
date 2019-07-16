@@ -10,6 +10,8 @@ const inputSearch = props => {
         className={styles.input}
         placeholder={props.elementConfig.placeholder}
         type="text"
+        value={props.value}
+        onChange={props.edit}
       />
     </div>
   );

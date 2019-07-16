@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import styles from './Invoice.module.scss';
 
+import { connect } from 'react-redux';
+
 import Head from '../../components/UI/Head/Head';
 import HeadChild from '../../components/UI/HeadChild/HeadChild';
 import Input from '../../components/UI/Input/Input';
@@ -20,11 +22,19 @@ class Invoice extends Component {
     },
     value: {
       item: ''
-    }
+    },
+    suppliesState: [],
+    searchForm: ''
   };
-
+  componentDidMount() {
+    this.setState({ suppliesState: this.props.supplies });
+  }
   onFormChangeHandler = (_, name, e) => {
     console.log(name, e.target.value);
+  };
+  onSearchFormhandler = e => {
+    // console.log(e.target.value);
+    this.setState({ searchForm: e.target.value });
   };
 
   render() {
@@ -44,6 +54,22 @@ class Invoice extends Component {
           </div>
         );
       });
+
+    let suggestion =
+      this.state.searchForm.length > 0 ? (
+        <div className={styles.autosuggest}>
+          {' '}
+          {this.state.suppliesState
+            .filter(material =>
+              material.materials.includes(this.state.searchForm)
+            )
+            .map(supply => (
+              <div key={supply.materials} className={styles.suggestItem}>
+                {supply.materials}
+              </div>
+            ))}
+        </div>
+      ) : null;
     return (
       <div className={styles.invoiceMain}>
         <Head classname="blue" svgname="invoice">
@@ -53,7 +79,12 @@ class Invoice extends Component {
           <div className={styles.sales}>
             <div className={styles.searchWrapper}>
               <InputSearch elementConfig={{ placeholder: 'Customer' }} />
-              <InputSearch elementConfig={{ placeholder: 'Item' }} />
+              <InputSearch
+                elementConfig={{ placeholder: 'Item' }}
+                value={this.state.searchForm}
+                edit={this.onSearchFormhandler}
+              />
+              {suggestion}
             </div>
             <POSCustomer />
             <div className={styles.summaryWrapper}>
@@ -101,4 +132,8 @@ class Invoice extends Component {
   }
 }
 
-export default Invoice;
+const mapStateToProps = state => ({
+  supplies: state.supplySettings.activeSupplies
+});
+
+export default connect(mapStateToProps)(Invoice);

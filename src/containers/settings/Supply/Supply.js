@@ -7,6 +7,7 @@ import Unordered from '../../../components/UI/Unordered/Unordered';
 import Head from '../../../components/UI/Head/Head';
 import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
+import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
 import * as actions from '../../../store/actions/index';
 
@@ -19,11 +20,12 @@ class Supply extends Component {
     addForm: ''
   };
   // parameters _ is not needed
-  onChangeValueHandler = (name, _, __, event) => {
+  onChangeValueHandler = (name, _, __, value, event) => {
+    // console.log(name, value);
     if (name === 'add') {
       this.setState({ addForm: event.target.value });
     } else {
-      this.props.supplyChangeValueDispatch(name, event.target.value);
+      this.props.supplyChangeValueDispatch(name, value, event.target.value);
     }
   };
 
@@ -80,26 +82,51 @@ class Supply extends Component {
     );
     let supplyInput =
       this.props.activeSupp && this.props.activeSupp !== 'add' ? (
-        <div className={styles.inputSupplyFlex}>
-          <Input
-            name={this.props.activeSupp}
-            inputWrapSupply="inputWrapSupply"
-            labelWrapSupply="labelWrapSupply"
-            formWrapperSupply="formWrapperSupply"
-            elementInputType="input"
-            elementConfig={{ type: 'number', placeholder: '0' }}
-            change={this.onChangeValueHandler.bind(null, this.props.activeSupp)}
-            value={this.props.supplies[this.props.activeSupp].value}
-            ind={0}
-            color="orange"
-          />
-          <Button
-            click={this.onAddSupplyHandler.bind(null, this.props.activeSupp)}
-            cName="checkMark"
-          >
-            &#10004;
-          </Button>
-        </div>
+        <Auxillary>
+          <div className={styles.supplyLabelActive}>
+            {this.props.activeSupp}
+          </div>
+          <div className={styles.inputSupplyFlex}>
+            <Input
+              name="amount"
+              inputWrapSupply="inputWrapSupply"
+              labelWrapSupply="labelWrapSupply"
+              formWrapperSupply="formWrapperSupply"
+              elementInputType="input"
+              elementConfig={{ type: 'number', placeholder: '0' }}
+              change={this.onChangeValueHandler.bind(
+                null,
+                this.props.activeSupp,
+                'amount'
+              )}
+              value={this.props.supplies[this.props.activeSupp].amount}
+              ind={0}
+              color="orange"
+            />
+            <Input
+              name="price"
+              inputWrapSupply="inputWrapSupply"
+              labelWrapSupply="labelWrapSupply"
+              formWrapperSupply="formWrapperSupply"
+              elementInputType="input"
+              elementConfig={{ type: 'number', placeholder: '0' }}
+              change={this.onChangeValueHandler.bind(
+                null,
+                this.props.activeSupp,
+                'price'
+              )}
+              value={this.props.supplies[this.props.activeSupp].price}
+              ind={0}
+              color="orange"
+            />
+            <Button
+              click={this.onAddSupplyHandler.bind(null, this.props.activeSupp)}
+              cName="checkMark"
+            >
+              &#10004;
+            </Button>
+          </div>
+        </Auxillary>
       ) : null;
     supplyInput =
       this.props.activeSupp === 'add' ? (
@@ -170,8 +197,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   supplyActiveDispatch: name => dispatch(actions.activeSupply(name)),
-  supplyChangeValueDispatch: (name, value) =>
-    dispatch(actions.valueChangeSupply(name, value)),
+  supplyChangeValueDispatch: (name, inputMod, value) =>
+    dispatch(actions.valueChangeSupply(name, inputMod, value)),
   supplyOnClickSupplyButtonDispatch: name =>
     dispatch(actions.addSupplyValue(name)),
   supplyAddMaterials: matName => dispatch(actions.addMaterialToSupply(matName))
