@@ -8,25 +8,50 @@
   margin-top: 2rem;
 }
 
+.invoiceWrapper {
+  display: flex;
+  margin-top: 3rem;
+}
+
+.invoiceForm {
+}
+
 .form {
   display: none;
 }
 
 .sales {
-  margin-top: 2rem;
+  flex: 0 0 50%;
+  padding: 0.5px;
 }
 
-.table {
-  width: 100%;
-  & thead {
-    background-color: $blue-light;
-    color: #fff;
-    & th {
-      padding: 5px;
-    }
-  }
-  & tfoot {
-    background-color: $cat-light-blue;
-    color: $superlightgrey;
+.searchWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.summaryWrapper {
+  display: flex;
+  margin-top: 3rem;
+}
+
+.buttonWrapper {
+  display: flex;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+.button {
+  flex: 0 0 50%;
+  text-align: center;
+}
+
+.cashierName {
+  text-align: right;
+  margin-top: 3rem;
+  & p:first-child {
+    font-size: 2rem;
+    font-weight: bold;
   }
 }

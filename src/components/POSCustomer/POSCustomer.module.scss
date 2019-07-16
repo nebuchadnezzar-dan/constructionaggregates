@@ -1,0 +1,25 @@
+@import '../../styles/colors.scss';
+
+.customerWrapper {
+  display: flex;
+}
+
+.customerImgWrapper {
+  flex: 0 0 20%;
+  text-align: center;
+}
+
+.customerImg {
+  height: 8rem;
+  width: 8rem;
+  background-color: brown;
+}
+
+.customerNameWrapper {
+  flex: 0 0 80%;
+}
+
+.customerName {
+  font-size: 3rem;
+  font-weight: bold;
+}

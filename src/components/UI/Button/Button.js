@@ -8,7 +8,8 @@ const button = props => {
       className={[
         styles.button,
         styles['button' + props.cName],
-        styles['button' + props.active]
+        styles['button' + props.active],
+        styles['color' + props.color]
       ].join(' ')}
       onClick={props.click}
     >

@@ -89,4 +89,25 @@
   &saveEdit {
     background-color: $orange-light;
   }
+  &posButton {
+    width: 90%;
+  }
+}
+
+.color {
+  &red {
+    background-color: $red-light;
+  }
+  &orange {
+    background-color: $orange-light;
+  }
+  &blue {
+    background-color: $blue-light;
+  }
+  &violet {
+    background-color: $violet-light;
+  }
+  &green {
+    background-color: $green-light;
+  }
 }

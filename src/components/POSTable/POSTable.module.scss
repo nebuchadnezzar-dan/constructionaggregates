@@ -1,0 +1,16 @@
+@import '../../styles/colors.scss';
+
+.table {
+  width: 100%;
+  & thead {
+    background-color: $blue-light;
+    color: #fff;
+    & th {
+      padding: 5px;
+    }
+  }
+  & tfoot {
+    background-color: $cat-light-blue;
+    color: $superlightgrey;
+  }
+}
