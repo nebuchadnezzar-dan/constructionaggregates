@@ -14,18 +14,14 @@ const posTable = props => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Cement</td>
-          <td>150</td>
-          <td>3</td>
-          <td>450</td>
-        </tr>
-        <tr>
-          <td>Cement</td>
-          <td>150</td>
-          <td>3</td>
-          <td>450</td>
-        </tr>
+        {props.data.map((td, i) => (
+          <tr key={i}>
+            <td>{td.materials}</td>
+            <td>{td.price}</td>
+            <td>2</td>
+            <td>{td.price * 2}</td>
+          </tr>
+        ))}
       </tbody>
       <tfoot>
         <tr>

@@ -12,6 +12,7 @@ const inputSearch = props => {
         type="text"
         value={props.value}
         onChange={props.edit}
+        onKeyDown={props.keydown}
       />
     </div>
   );

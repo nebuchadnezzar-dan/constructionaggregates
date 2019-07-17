@@ -11,6 +11,7 @@ import { BrowserRouter } from 'react-router-dom';
 import truckSettings from './store/reducers/truckSettings';
 import supplySettings from './store/reducers/supplySettings';
 import route from './store/reducers/route';
+import invoicePOS from './store/reducers/invoicePOS';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -20,7 +21,8 @@ const basicDevtools =
 const rootReducers = combineReducers({
   truckSettings: truckSettings,
   supplySettings: supplySettings,
-  route: route
+  route: route,
+  invoicePOS: invoicePOS
 });
 
 // const store = createStore(

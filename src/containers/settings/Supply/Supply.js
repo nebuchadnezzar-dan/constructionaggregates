@@ -138,7 +138,7 @@ class Supply extends Component {
             formWrapperSupply="formWrapperSupply"
             elementInputType="input"
             elementConfig={{ type: 'text', placeholder: 'Material' }}
-            change={this.onChangeValueHandler.bind(null, 'add')}
+            change={this.onChangeValueHandler.bind(null, 'add', null)}
             value={this.state.addForm}
             ind={0}
             color="orange"
