@@ -27,3 +27,35 @@
     outline-color: $blue-solid;
   }
 }
+
+.autosuggest {
+  border: 1px solid $blue-light;
+  position: absolute;
+  top: 3.7rem;
+  right: 1.2rem;
+  width: 90%;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.suggestItem {
+  padding: 1rem;
+  cursor: pointer;
+  background-color: #fff;
+  // border-bottom: 1px solid #d4d4d4;
+  text-transform: capitalize;
+  overflow: hidden;
+  &:hover,
+  .isActive {
+    background-color: $blue-light;
+  }
+  &:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+}
+
+.isActive {
+  background-color: $blue-light;
+}
