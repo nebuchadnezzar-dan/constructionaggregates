@@ -68,12 +68,27 @@ class InputSearch extends Component {
       }
     }
     if (e.keyCode === 13) {
-      // console.log(
-      //   this.state.filteredSuppliesState[this.state.focusedItemIndex]
-      // );
-      this.props.onAddItemsToBuyDispatch(
-        this.state.filteredSuppliesState[this.state.focusedItemIndex]
-      );
+      if (
+        copyFiltered.findIndex(
+          item => item.materials.toLowerCase() === e.target.value.toLowerCase()
+        ) === -1
+      ) {
+        // console.log(
+        //   e.target.value.toLowerCase(),
+        //   copyFiltered[this.state.focusedItemIndex].materials.toLowerCase()
+        // );
+        this.props.onPopUpShowDispatch();
+      } else if (
+        copyFiltered.length > 0 &&
+        this.state.focusedItemIndex !== ''
+      ) {
+        // console.log(
+        //   this.state.filteredSuppliesState[this.state.focusedItemIndex]
+        // );
+        this.props.onAddItemsToBuyDispatch(
+          this.state.filteredSuppliesState[this.state.focusedItemIndex]
+        );
+      }
     }
   };
 
@@ -108,6 +123,7 @@ class InputSearch extends Component {
       ) : null;
     return (
       <div className={styles.search}>
+        <div />
         <span className={styles.searchIcon}>&#9906;</span>
         <input
           className={styles.input}
@@ -124,7 +140,8 @@ class InputSearch extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onAddItemsToBuyDispatch: item => dispatch(actions.addItemsToSales(item))
+  onAddItemsToBuyDispatch: item => dispatch(actions.addItemsToSales(item)),
+  onPopUpShowDispatch: () => dispatch(actions.togglePopup(true))
 });
 
 export default connect(

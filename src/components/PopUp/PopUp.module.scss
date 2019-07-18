@@ -1,0 +1,27 @@
+@import '../../styles/colors.scss';
+
+.popupWrapper {
+  position: relative;
+  padding: 2rem 3rem;
+  font-size: 3rem;
+  text-transform: uppercase;
+  border: 1px solid $dimgrey;
+  border-radius: 5px;
+  box-shadow: $box-shadows-2;
+  font-weight: bold;
+  z-index: 3000;
+  background-color: #fff;
+}
+
+.content {
+  animation: blink 0.5s infinite;
+}
+
+@keyframes blink {
+  0% {
+    color: black;
+  }
+  100% {
+    color: #fff;
+  }
+}

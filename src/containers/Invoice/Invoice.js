@@ -4,7 +4,7 @@ import styles from './Invoice.module.scss';
 
 import { connect } from 'react-redux';
 
-// import * as actions from '../../store/actions/index';
+import * as actions from '../../store/actions/index';
 
 import Head from '../../components/UI/Head/Head';
 import HeadChild from '../../components/UI/HeadChild/HeadChild';
@@ -13,6 +13,8 @@ import InputSearch from '../../components/UI/InputSearch/InputSearch';
 import POSCustomer from '../../components/POSCustomer/POSCustomer';
 import POSSummary from '../../components/POSSummary/POSSummary';
 import Button from '../../components/UI/Button/Button';
+import PopUp from '../../components/PopUp/PopUp';
+import Auxillary from '../../hoc/Auxillary/Auxillary';
 
 class Invoice extends Component {
   state = {
@@ -35,8 +37,22 @@ class Invoice extends Component {
   onFormChangeHandler = (_, name, e) => {
     console.log(name, e.target.value);
   };
+  onClosePopUp = () => {
+    this.props.onPopUpShowDispatch();
+  };
 
   render() {
+    const popupShow = this.props.popup ? (
+      <Auxillary>
+        <div className={styles.popup}>
+          <PopUp />
+        </div>
+        <div
+          className={styles.popupBack}
+          onClick={this.props.onPopUpShowDispatch.bind(null)}
+        />
+      </Auxillary>
+    ) : null;
     return (
       <div className={styles.invoiceMain}>
         <Head classname="blue" svgname="invoice">
@@ -74,6 +90,11 @@ class Invoice extends Component {
               <p>Mia Khalifa</p>
               <p>Employee</p>
             </div>
+            {popupShow}
+            {/* <div className={styles.popup}>
+              <PopUp />
+            </div>
+            <div className={styles.popupBack} /> */}
           </div>
           <div className={styles.invoiceForm}>Invoice Form</div>
         </div>
@@ -84,7 +105,15 @@ class Invoice extends Component {
 
 const mapStateToProps = state => ({
   supplies: state.supplySettings.activeSupplies,
-  itemsToBuy: state.invoicePOS.itemsToBuy
+  itemsToBuy: state.invoicePOS.itemsToBuy,
+  popup: state.invoicePOS.popup
 });
 
-export default connect(mapStateToProps)(Invoice);
+const mapDispatchToProps = dispatch => ({
+  onPopUpShowDispatch: () => dispatch(actions.togglePopup(false))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Invoice);

@@ -18,8 +18,8 @@ const posTable = props => {
           <tr key={i}>
             <td>{td.materials}</td>
             <td>{td.price}</td>
-            <td>2</td>
-            <td>{td.price * 2}</td>
+            <td>{td.quantity}</td>
+            <td>{td.price * td.quantity}</td>
           </tr>
         ))}
       </tbody>
@@ -28,7 +28,12 @@ const posTable = props => {
           <td />
           <td />
           <th>Total</th>
-          <th>450</th>
+          <th>
+            {props.data.reduce(
+              (acc, current) => acc + +current.price * current.quantity,
+              0
+            )}
+          </th>
         </tr>
       </tfoot>
     </table>
