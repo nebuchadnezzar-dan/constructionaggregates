@@ -28,9 +28,28 @@
 
 .searchWrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  margin: 0 2rem;
   margin-bottom: 3rem;
   position: relative;
+}
+
+.quantity {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid $blue-light;
+  &:focus {
+    outline-color: $blue-solid;
+  }
+}
+
+.quantityWrap {
+  flex: 0 0 20%;
+}
+
+.itemInvoice {
+  flex: 0 0 75%;
 }
 
 .summaryWrapper {

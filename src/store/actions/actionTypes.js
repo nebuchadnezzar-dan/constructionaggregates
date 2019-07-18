@@ -19,3 +19,4 @@ export const ACTIVE_ROUTE = 'ACTIVE_ROUTE';
 
 export const ADD_ITEMS_TO_SALES = 'ADD_ITEMS_TO_SALES';
 export const TOGGLE_POP_UP = 'SHOW_POP_UP';
+export const ON_CHANGE_QUANTITY = 'ON_CHANGE_QUANTITY';

@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   itemsToBuy: [],
-  popup: false
+  popup: false,
+  quantityForm: 1
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,19 +17,29 @@ const reducer = (state = initialState, action) => {
       if (itemIndex !== -1) {
         itemsCopy[itemIndex] = {
           ...itemsCopy[itemIndex],
-          quantity: itemsCopy[itemIndex].quantity + 1
+          quantity: +itemsCopy[itemIndex].quantity + state.quantityForm
         };
+        // itemsCopy[itemIndex] = action.payload;
       } else {
-        itemsCopy = itemsCopy.concat({ ...action.payload, quantity: 1 });
+        itemsCopy = itemsCopy.concat({
+          ...action.payload,
+          quantity: state.quantityForm
+        });
       }
       return {
         ...state,
-        itemsToBuy: itemsCopy
+        itemsToBuy: itemsCopy,
+        quantityForm: 1
       };
     case actionTypes.TOGGLE_POP_UP:
       return {
         ...state,
         popup: action.payload
+      };
+    case actionTypes.ON_CHANGE_QUANTITY:
+      return {
+        ...state,
+        quantityForm: action.payload
       };
     default:
       return state;

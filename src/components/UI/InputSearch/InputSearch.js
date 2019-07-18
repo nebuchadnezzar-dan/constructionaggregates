@@ -11,7 +11,11 @@ class InputSearch extends Component {
     inputSupplies: [],
     filteredSuppliesState: [],
     focusedItemIndex: '',
-    searchForm: ''
+    searchForm: '',
+    hideSuggestClick: true,
+    hideSuggestBlur: true,
+    focusOnSuggest: false,
+    hoveredItem: ''
   };
   componentDidMount() {
     this.setState({ inputSupplies: this.props.data });
@@ -89,6 +93,7 @@ class InputSearch extends Component {
           this.state.filteredSuppliesState[this.state.focusedItemIndex]
         );
       }
+      this.setState({ searchForm: '', focusedItemIndex: '' });
     }
   };
 
@@ -97,18 +102,44 @@ class InputSearch extends Component {
       searchForm: e.target.value,
       filteredSuppliesState: this.state.inputSupplies.filter(material =>
         material.materials.toLowerCase().includes(e.target.value.toLowerCase())
-      )
+      ),
+      hideSuggestBlur: false,
+      hideSuggestClick: false
+    });
+  };
+  onClickItemsAutoSuggest = (i, from) => {
+    let ind;
+    if (from === 'leave') {
+      ind = '';
+      this.setState({ hoveredItem: '' });
+    } else if (from === 'enter') {
+      ind = i;
+    }
+    this.setState({ hoveredItem: ind });
+  };
+  onFocusInput = () => {
+    if (this.state.hoveredItem !== '') {
+      this.props.onAddItemsToBuyDispatch(
+        this.state.filteredSuppliesState[this.state.hoveredItem]
+      );
+    }
+    this.setState({
+      hideSuggestClick: true,
+      searchForm: '',
+      focusedItemIndex: ''
     });
   };
 
   render() {
     const { props } = this;
     let suggestion =
-      this.state.searchForm.length > 0 ? (
+      this.state.searchForm.length > 0 && !this.state.hideSuggestClick ? (
         <div className={styles.autosuggest}>
           {' '}
           {this.state.filteredSuppliesState.map((supply, i) => (
             <div
+              onMouseEnter={this.onClickItemsAutoSuggest.bind(null, i, 'enter')}
+              onMouseLeave={this.onClickItemsAutoSuggest.bind(null, i, 'leave')}
               key={supply.materials}
               className={[
                 styles.suggestItem,
@@ -132,6 +163,7 @@ class InputSearch extends Component {
           value={this.state.searchForm}
           onChange={this.onSearchFormhandler}
           onKeyDown={this.onKeyPressHandler}
+          onBlur={this.onFocusInput.bind(null, 'blur')}
         />
         {suggestion}
       </div>

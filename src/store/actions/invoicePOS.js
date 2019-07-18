@@ -9,3 +9,8 @@ export const togglePopup = popup => ({
   type: actionTypes.TOGGLE_POP_UP,
   payload: popup
 });
+
+export const onChangeQuantity = value => ({
+  type: actionTypes.ON_CHANGE_QUANTITY,
+  payload: value
+});

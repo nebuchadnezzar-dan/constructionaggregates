@@ -25,14 +25,14 @@ class Invoice extends Component {
     },
     value: {
       item: ''
-    },
-    suppliesState: [],
-    filteredSuppliesState: [],
-    searchForm: '',
-    focusedItemIndex: ''
+    }
   };
   componentDidMount() {
     this.setState({ suppliesState: this.props.supplies });
+    document.addEventListener('keydown', this.onKeyDownHandler, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDownHandler, false);
   }
   onFormChangeHandler = (_, name, e) => {
     console.log(name, e.target.value);
@@ -40,12 +40,21 @@ class Invoice extends Component {
   onClosePopUp = () => {
     this.props.onPopUpShowDispatch();
   };
+  onQuantityChangeHandler = e => {
+    this.props.onChangeQualityDispatch(e.target.value);
+  };
+  onKeyDownHandler = e => {
+    if (e.keyCode === 27 && this.props.popup) {
+      console.log('pressed');
+      this.props.onPopUpShowDispatch();
+    }
+  };
 
   render() {
     const popupShow = this.props.popup ? (
       <Auxillary>
         <div className={styles.popup}>
-          <PopUp />
+          <PopUp>Item doesn't exist</PopUp>
         </div>
         <div
           className={styles.popupBack}
@@ -61,11 +70,23 @@ class Invoice extends Component {
         <div className={styles.invoiceWrapper}>
           <div className={styles.sales}>
             <div className={styles.searchWrapper}>
-              <InputSearch elementConfig={{ placeholder: 'Customer' }} />
-              <InputSearch
-                elementConfig={{ placeholder: 'Item' }}
-                data={this.props.supplies}
-              />
+              {/* <InputSearch elementConfig={{ placeholder: 'Customer' }} /> */}
+              <div className={styles.quantityWrap}>
+                {' '}
+                <input
+                  type="number"
+                  placeholder="Quantity"
+                  className={styles.quantity}
+                  value={this.props.quantityRedux}
+                  onChange={this.onQuantityChangeHandler}
+                />
+              </div>
+              <div className={styles.itemInvoice}>
+                <InputSearch
+                  elementConfig={{ placeholder: 'Item' }}
+                  data={this.props.supplies}
+                />
+              </div>
             </div>
             <POSCustomer />
             <div className={styles.summaryWrapper}>
@@ -106,11 +127,13 @@ class Invoice extends Component {
 const mapStateToProps = state => ({
   supplies: state.supplySettings.activeSupplies,
   itemsToBuy: state.invoicePOS.itemsToBuy,
-  popup: state.invoicePOS.popup
+  popup: state.invoicePOS.popup,
+  quantityRedux: state.invoicePOS.quantityForm
 });
 
 const mapDispatchToProps = dispatch => ({
-  onPopUpShowDispatch: () => dispatch(actions.togglePopup(false))
+  onPopUpShowDispatch: () => dispatch(actions.togglePopup(false)),
+  onChangeQualityDispatch: value => dispatch(actions.onChangeQuantity(value))
 });
 
 export default connect(

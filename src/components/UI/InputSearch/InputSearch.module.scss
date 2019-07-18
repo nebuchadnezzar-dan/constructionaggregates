@@ -2,7 +2,7 @@
 
 .search {
   position: relative;
-  flex: 0 0 50%;
+  // flex: 0 0 50%;
   text-align: center;
 }
 
@@ -13,7 +13,7 @@
   line-height: 1;
   position: absolute;
   top: 0.4rem;
-  left: 2rem;
+  left: 1rem;
   color: $grey;
 }
 
@@ -22,7 +22,7 @@
   border-radius: 5px;
   border: 1px solid $blue-light;
   text-indent: 2rem;
-  width: 90%;
+  width: 100%;
   &:focus {
     outline-color: $blue-solid;
   }
@@ -32,8 +32,8 @@
   border: 1px solid $blue-light;
   position: absolute;
   top: 3.7rem;
-  right: 1.2rem;
-  width: 90%;
+  // right: 1.2rem;
+  width: 100%;
   border-top: none;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
