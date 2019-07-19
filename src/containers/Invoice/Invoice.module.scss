@@ -14,6 +14,8 @@
 }
 
 .invoiceForm {
+  flex: 0 0 50%;
+  padding: 0.5rem;
 }
 
 .form {
@@ -22,7 +24,7 @@
 
 .sales {
   flex: 0 0 50%;
-  padding: 0.5px;
+  padding: 0.5rem;
   position: relative;
 }
 
@@ -125,4 +127,9 @@
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
   height: 100%;
+}
+
+.truckComponentWrapper {
+  // overflow: hidden;
+  width: 100%;
 }

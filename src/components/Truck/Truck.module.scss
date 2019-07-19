@@ -1,0 +1,82 @@
+@import '../../styles/colors.scss';
+
+$randColor: floor(random(16777215));
+
+@function dec-to-hex($d) {
+  $hexVals: 'A' 'B' 'C' 'D' 'E' 'F';
+  $base: 16;
+  $quotient: $d;
+  $result: '';
+  @if $d == 0 {
+    $result: '00';
+  }
+  @while $quotient != 0 {
+    $mod: $quotient % $base;
+    $quotient: floor($quotient / $base);
+    @if $mod > 9 {
+      $mod: nth($hexVals, $mod - 9);
+    }
+    @if $d < $base {
+      $result: '0' + $mod;
+    } @else {
+      $result: $mod + $result;
+    }
+  }
+  @return #{'#' + $result};
+}
+// #fff
+.truckWrapper {
+  display: flex;
+  //   flex-direction: row;
+  overflow-x: scroll;
+  padding: 2rem 3rem;
+  margin-bottom: 1rem;
+  //   background-color: dec-to-hex(floor(random(16777215)));
+  //   color: #9f87de;
+}
+
+.truck {
+  flex: 0 0 40%;
+  height: 15rem;
+  /* width: 15rem; */
+  padding: 2rem;
+
+  color: #fff;
+  &:not(last-child) {
+    margin-right: 2.5rem;
+  }
+}
+
+.activeTruck {
+  outline: #4caf50 solid 10px;
+}
+
+.search {
+  position: relative;
+  text-align: center;
+  width: 80%;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+
+.searchIcon {
+  display: inline-block;
+  transform: rotate(-45deg);
+  font-size: 3rem;
+  line-height: 1;
+  position: absolute;
+  top: 0.4rem;
+  left: 1rem;
+  color: $grey;
+}
+
+.input {
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid $blue-light;
+  text-indent: 2rem;
+  width: 100%;
+  &:focus {
+    outline-color: $blue-solid;
+  }
+}

@@ -15,6 +15,7 @@ import POSSummary from '../../components/POSSummary/POSSummary';
 import Button from '../../components/UI/Button/Button';
 import PopUp from '../../components/PopUp/PopUp';
 import Auxillary from '../../hoc/Auxillary/Auxillary';
+import Truck from '../../components/Truck/Truck';
 
 class Invoice extends Component {
   state = {
@@ -117,7 +118,11 @@ class Invoice extends Component {
             </div>
             <div className={styles.popupBack} /> */}
           </div>
-          <div className={styles.invoiceForm}>Invoice Form</div>
+          <div className={styles.invoiceForm}>
+            <div className={styles.truckComponentWrapper}>
+              <Truck trucks={this.props.trucks} />
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -128,7 +133,8 @@ const mapStateToProps = state => ({
   supplies: state.supplySettings.activeSupplies,
   itemsToBuy: state.invoicePOS.itemsToBuy,
   popup: state.invoicePOS.popup,
-  quantityRedux: state.invoicePOS.quantityForm
+  quantityRedux: state.invoicePOS.quantityForm,
+  trucks: state.truckSettings.availableTrucks
 });
 
 const mapDispatchToProps = dispatch => ({
