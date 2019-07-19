@@ -41,6 +41,14 @@ class Truck extends Component {
             onChange={this.onTruckHandler}
           />
         </div>
+        <div className={styles.truckLabel}>
+          {'Plate No: '}
+          {this.state.activeTruck !== '' ? (
+            <span>{this.state.copyTrucks[this.state.activeTruck].plateNo}</span>
+          ) : (
+            <span>Please choose a Truck to deliver the goods</span>
+          )}
+        </div>
         <div className={styles.truckWrapper}>
           {this.state.copyTrucks
             .filter(tr =>
@@ -59,25 +67,12 @@ class Truck extends Component {
                       ? styles.activeTruck
                       : null
                   ].join(' ')}
-                  style={{ backgroundColor: truck.color }}
+                  style={{ backgroundColor: truck.color.padEnd(7, 0) }}
                 >
-                  {'Plate No: ' + truck.plateNo}
+                  {'Plate No: ' + truck.plateNo + ' ' + truck.color}
                 </div>
               );
             })}
-        </div>
-        <div>
-          {'Truck Plate No: '}
-          {/* {this.state.activeTruck} */}
-          {this.state.activeTruck !== ''
-            ? this.state.copyTrucks[this.state.activeTruck].plateNo
-            : null}
-          {/* {'Truck Plate No: ' + this.state.activeTruck.length === 1 ? (
-            this.state.activeTruck
-          ) : (
-            // this.state.copyTrucks[this.state.activeTruck].plateNo
-            <span>Please choose a Truck to deliver th goods</span>
-          )} */}
         </div>
       </Auxillary>
     );

@@ -118,9 +118,14 @@ class Invoice extends Component {
             </div>
             <div className={styles.popupBack} /> */}
           </div>
+          <hr style={{ width: '1', border: ' 0.5px solid #26c6da' }} />
           <div className={styles.invoiceForm}>
             <div className={styles.truckComponentWrapper}>
               <Truck trucks={this.props.trucks} />
+            </div>
+            <div className={styles.addressWrap}>
+              <div>Deliver to:</div>
+              <input placeholder="Address" className={styles.address} />
             </div>
           </div>
         </div>

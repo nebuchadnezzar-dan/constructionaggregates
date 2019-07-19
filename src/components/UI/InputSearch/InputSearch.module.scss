@@ -1,4 +1,5 @@
 @import '../../../styles/colors.scss';
+@import '../../../styles/utility.scss';
 
 .search {
   position: relative;
@@ -7,25 +8,11 @@
 }
 
 .searchIcon {
-  display: inline-block;
-  transform: rotate(-45deg);
-  font-size: 3rem;
-  line-height: 1;
-  position: absolute;
-  top: 0.4rem;
-  left: 1rem;
-  color: $grey;
+  @include searchIcon;
 }
 
 .input {
-  padding: 1rem;
-  border-radius: 5px;
-  border: 1px solid $blue-light;
-  text-indent: 2rem;
-  width: 100%;
-  &:focus {
-    outline-color: $blue-solid;
-  }
+  @include inputWithSearch;
 }
 
 .autosuggest {

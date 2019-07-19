@@ -1,4 +1,5 @@
 @import '../../styles/colors.scss';
+@import '../../styles/utility.scss';
 
 .invoiceMain {
   padding: 1.5rem 2rem;
@@ -15,7 +16,8 @@
 
 .invoiceForm {
   flex: 0 0 50%;
-  padding: 0.5rem;
+  padding: 1rem;
+  background-color: $superlightgrey;
 }
 
 .form {
@@ -132,4 +134,14 @@
 .truckComponentWrapper {
   // overflow: hidden;
   width: 100%;
+  margin-bottom: 2rem;
+}
+
+.addressWrap {
+  width: 80%;
+  margin: auto;
+}
+
+.address {
+  @include inputWithSearch;
 }

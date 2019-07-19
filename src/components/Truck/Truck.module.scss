@@ -1,4 +1,5 @@
 @import '../../styles/colors.scss';
+@import '../../styles/utility.scss';
 
 $randColor: floor(random(16777215));
 
@@ -39,8 +40,8 @@ $randColor: floor(random(16777215));
   flex: 0 0 40%;
   height: 15rem;
   /* width: 15rem; */
-  padding: 2rem;
 
+  //   color: $dimgrey;
   color: #fff;
   &:not(last-child) {
     margin-right: 2.5rem;
@@ -48,7 +49,7 @@ $randColor: floor(random(16777215));
 }
 
 .activeTruck {
-  outline: #4caf50 solid 10px;
+  outline: $orange-light solid 0.5rem;
 }
 
 .search {
@@ -60,23 +61,18 @@ $randColor: floor(random(16777215));
 }
 
 .searchIcon {
-  display: inline-block;
-  transform: rotate(-45deg);
-  font-size: 3rem;
-  line-height: 1;
-  position: absolute;
-  top: 0.4rem;
-  left: 1rem;
-  color: $grey;
+  @include searchIcon;
 }
 
 .input {
-  padding: 1rem;
-  border-radius: 5px;
-  border: 1px solid $blue-light;
-  text-indent: 2rem;
-  width: 100%;
-  &:focus {
-    outline-color: $blue-solid;
+  @include inputWithSearch;
+}
+
+.truckLabel {
+  font-size: 1.8rem;
+  & span {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-transform: uppercase;
   }
 }
