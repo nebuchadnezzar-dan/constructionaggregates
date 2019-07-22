@@ -24,3 +24,8 @@ export const toggleFinalPopup = action => ({
   type: actionTypes.TOGGLE_FINAL_POP_UP,
   payload: action
 });
+
+export const voidItem = index => ({
+  type: actionTypes.VOID_ITEM,
+  payload: index
+});

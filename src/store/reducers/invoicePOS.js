@@ -55,6 +55,11 @@ const reducer = (state = initialState, action) => {
         finalPopup: action.payload.toggle,
         actionButton: action.payload.name
       };
+    case actionTypes.VOID_ITEM:
+      return {
+        ...state,
+        itemsToBuy: state.itemsToBuy.filter((_, i) => i !== action.payload)
+      };
     default:
       return state;
   }

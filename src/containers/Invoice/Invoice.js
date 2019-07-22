@@ -68,7 +68,9 @@ class Invoice extends Component {
     const finalPopup = this.props.finalPopup ? (
       <Auxillary>
         <div className={styles.finalPopup}>
-          <PopUp type="final">Item doesn't exist</PopUp>
+          <PopUp type="final" address={this.state.address}>
+            Item doesn't exist
+          </PopUp>
         </div>
         <div
           className={styles.finalPopupBack}

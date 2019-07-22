@@ -20,5 +20,6 @@ export {
   togglePopup,
   onChangeQuantity,
   setTruck,
-  toggleFinalPopup
+  toggleFinalPopup,
+  voidItem
 } from './invoicePOS';

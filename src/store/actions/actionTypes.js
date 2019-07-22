@@ -22,3 +22,4 @@ export const TOGGLE_POP_UP = 'SHOW_POP_UP';
 export const ON_CHANGE_QUANTITY = 'ON_CHANGE_QUANTITY';
 export const SET_TRUCK = 'SET_TRUCK';
 export const TOGGLE_FINAL_POP_UP = 'TOGGLE_FINAL_POP_UP';
+export const VOID_ITEM = 'VOID_ITEM';
