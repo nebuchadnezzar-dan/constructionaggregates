@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
+import * as actions from '../../store/actions/index';
+
 import styles from './Truck.module.scss';
 import Auxillary from '../../hoc/Auxillary/Auxillary';
 
@@ -25,6 +29,7 @@ class Truck extends Component {
 
   onTruckClickHandler = i => {
     this.setState({ activeTruck: i });
+    this.props.setTruckDispatch(this.state.copyTrucks[i]);
   };
 
   render() {
@@ -79,4 +84,11 @@ class Truck extends Component {
   }
 }
 
-export default Truck;
+const mapDispatchToProps = dispatch => ({
+  setTruckDispatch: truck => dispatch(actions.setTruck(truck))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Truck);

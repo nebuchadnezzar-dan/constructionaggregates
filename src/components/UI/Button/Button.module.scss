@@ -92,6 +92,13 @@
   &posButton {
     width: 90%;
   }
+  &posButtonAction {
+    flex: auto;
+    color: #fff;
+    border-radius: 0;
+    height: 8rem;
+    text-transform: uppercase;
+  }
 }
 
 .color {

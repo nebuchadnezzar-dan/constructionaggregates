@@ -12,7 +12,9 @@ const layout = props => {
   return (
     <Auxillary>
       <div className={styles.sideBar}>
-        <MainNavigation />
+        <div className={styles.sidebarInside}>
+          <MainNavigation />
+        </div>
       </div>
       <div className={styles.mainContent}>
         <HeadNavigation>{props.activeRoute}</HeadNavigation>

@@ -15,4 +15,10 @@ export {
   addMaterialToSupply
 } from './supplySettings';
 export { activeRoute } from './route';
-export { addItemsToSales, togglePopup, onChangeQuantity } from './invoicePOS';
+export {
+  addItemsToSales,
+  togglePopup,
+  onChangeQuantity,
+  setTruck,
+  toggleFinalPopup
+} from './invoicePOS';

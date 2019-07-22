@@ -16,6 +16,7 @@ import Button from '../../components/UI/Button/Button';
 import PopUp from '../../components/PopUp/PopUp';
 import Auxillary from '../../hoc/Auxillary/Auxillary';
 import Truck from '../../components/Truck/Truck';
+import POSButtons from '../../components/POSButtons/POSButtons';
 
 class Invoice extends Component {
   state = {
@@ -24,9 +25,7 @@ class Invoice extends Component {
       'plate no': { type: 'text', placeholder: 'Item' },
       discount: { type: 'number', placeholder: '0' }
     },
-    value: {
-      item: ''
-    }
+    address: ''
   };
   componentDidMount() {
     this.setState({ suppliesState: this.props.supplies });
@@ -35,19 +34,20 @@ class Invoice extends Component {
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeyDownHandler, false);
   }
-  onFormChangeHandler = (_, name, e) => {
-    console.log(name, e.target.value);
-  };
   onClosePopUp = () => {
     this.props.onPopUpShowDispatch();
   };
   onQuantityChangeHandler = e => {
     this.props.onChangeQualityDispatch(e.target.value);
   };
+  onAddressChangehandler = e => {
+    this.setState({ address: e.target.value });
+  };
   onKeyDownHandler = e => {
-    if (e.keyCode === 27 && this.props.popup) {
+    if (e.keyCode === 27) {
       console.log('pressed');
-      this.props.onPopUpShowDispatch();
+      if (this.props.popup) this.props.onPopUpShowDispatch();
+      if (this.props.finalPopup) this.props.onToggleFinalPopupDispatch();
     }
   };
 
@@ -55,11 +55,24 @@ class Invoice extends Component {
     const popupShow = this.props.popup ? (
       <Auxillary>
         <div className={styles.popup}>
-          <PopUp>Item doesn't exist</PopUp>
+          <PopUp cName="blink" type="simple">
+            Item doesn't exist
+          </PopUp>
         </div>
         <div
           className={styles.popupBack}
           onClick={this.props.onPopUpShowDispatch.bind(null)}
+        />
+      </Auxillary>
+    ) : null;
+    const finalPopup = this.props.finalPopup ? (
+      <Auxillary>
+        <div className={styles.finalPopup}>
+          <PopUp type="final">Item doesn't exist</PopUp>
+        </div>
+        <div
+          className={styles.finalPopupBack}
+          onClick={this.props.onToggleFinalPopupDispatch.bind(null)}
         />
       </Auxillary>
     ) : null;
@@ -69,6 +82,7 @@ class Invoice extends Component {
           <HeadChild>Invoice</HeadChild>
         </Head>
         <div className={styles.invoiceWrapper}>
+          {finalPopup}
           <div className={styles.sales}>
             <div className={styles.searchWrapper}>
               {/* <InputSearch elementConfig={{ placeholder: 'Customer' }} /> */}
@@ -124,8 +138,18 @@ class Invoice extends Component {
               <Truck trucks={this.props.trucks} />
             </div>
             <div className={styles.addressWrap}>
-              <div>Deliver to:</div>
-              <input placeholder="Address" className={styles.address} />
+              <div className={styles.addressLabel}>Deliver to:</div>
+              <div className={styles.addressInput}>
+                <input
+                  placeholder="Address"
+                  className={styles.address}
+                  value={this.state.address}
+                  onChange={this.onAddressChangehandler}
+                />
+              </div>
+            </div>
+            <div className={styles.buttonActionsWrapper}>
+              <POSButtons />
             </div>
           </div>
         </div>
@@ -139,12 +163,15 @@ const mapStateToProps = state => ({
   itemsToBuy: state.invoicePOS.itemsToBuy,
   popup: state.invoicePOS.popup,
   quantityRedux: state.invoicePOS.quantityForm,
-  trucks: state.truckSettings.availableTrucks
+  trucks: state.truckSettings.availableTrucks,
+  finalPopup: state.invoicePOS.finalPopup
 });
 
 const mapDispatchToProps = dispatch => ({
   onPopUpShowDispatch: () => dispatch(actions.togglePopup(false)),
-  onChangeQualityDispatch: value => dispatch(actions.onChangeQuantity(value))
+  onChangeQualityDispatch: value => dispatch(actions.onChangeQuantity(value)),
+  onToggleFinalPopupDispatch: () =>
+    dispatch(actions.toggleFinalPopup({ toggle: false }))
 });
 
 export default connect(

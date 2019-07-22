@@ -7,7 +7,7 @@ import NavLinks from './MainNavLinks/MainNavLink';
 const mainNavigation = () => {
   return (
     <Auxillary>
-      <div>LOGO</div>
+      <div style={{ padding: '3.6rem' }}>LOGO</div>
       <div>
         <Unordered classname="ulNavigation">
           <NavLinks name="dashboard" link="/" exact>

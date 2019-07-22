@@ -12,6 +12,7 @@
 .invoiceWrapper {
   display: flex;
   margin-top: 3rem;
+  position: relative;
 }
 
 .invoiceForm {
@@ -131,6 +132,23 @@
   height: 100%;
 }
 
+.finalPopup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4000;
+  width: 90%;
+}
+.finalPopupBack {
+  position: absolute;
+  z-index: 2000;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+}
+
 .truckComponentWrapper {
   // overflow: hidden;
   width: 100%;
@@ -138,7 +156,15 @@
 }
 
 .addressWrap {
-  width: 80%;
+  margin-bottom: 2rem;
+}
+
+.addressLabel {
+  margin-bottom: 1rem;
+}
+
+.addressInput {
+  width: 90%;
   margin: auto;
 }
 

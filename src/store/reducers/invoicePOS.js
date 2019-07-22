@@ -3,7 +3,10 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   itemsToBuy: [],
   popup: false,
-  quantityForm: 1
+  quantityForm: 1,
+  truck: '',
+  finalPopup: false,
+  actionButton: ''
 };
 
 const reducer = (state = initialState, action) => {
@@ -17,7 +20,7 @@ const reducer = (state = initialState, action) => {
       if (itemIndex !== -1) {
         itemsCopy[itemIndex] = {
           ...itemsCopy[itemIndex],
-          quantity: +itemsCopy[itemIndex].quantity + state.quantityForm
+          quantity: +itemsCopy[itemIndex].quantity + +state.quantityForm
         };
         // itemsCopy[itemIndex] = action.payload;
       } else {
@@ -40,6 +43,17 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         quantityForm: action.payload
+      };
+    case actionTypes.SET_TRUCK:
+      return {
+        ...state,
+        truck: action.payload
+      };
+    case actionTypes.TOGGLE_FINAL_POP_UP:
+      return {
+        ...state,
+        finalPopup: action.payload.toggle,
+        actionButton: action.payload.name
       };
     default:
       return state;
