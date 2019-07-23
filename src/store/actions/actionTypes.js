@@ -23,3 +23,7 @@ export const ON_CHANGE_QUANTITY = 'ON_CHANGE_QUANTITY';
 export const SET_TRUCK = 'SET_TRUCK';
 export const TOGGLE_FINAL_POP_UP = 'TOGGLE_FINAL_POP_UP';
 export const VOID_ITEM = 'VOID_ITEM';
+export const EDIT_ADDRESS = 'EDIT_ADDRESS';
+export const RESET_POS = 'RESET_POS';
+export const EDIT_TRUCK_SEARCH_FORM = 'EDIT_TRUCK_SEARCH_FORM';
+export const ADD_DISCOUNT = 'ADD_DISCOUNT';

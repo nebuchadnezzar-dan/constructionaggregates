@@ -9,9 +9,7 @@ import Auxillary from '../../hoc/Auxillary/Auxillary';
 
 class Truck extends Component {
   state = {
-    truckValue: '',
-    copyTrucks: [],
-    activeTruck: ''
+    copyTrucks: []
   };
 
   componentDidMount() {
@@ -24,11 +22,10 @@ class Truck extends Component {
     });
   }
   onTruckHandler = e => {
-    this.setState({ truckValue: e.target.value });
+    this.props.editTruckSearchFormDispatch(e.target.value);
   };
 
   onTruckClickHandler = i => {
-    this.setState({ activeTruck: i });
     this.props.setTruckDispatch(this.state.copyTrucks[i]);
   };
 
@@ -42,14 +39,14 @@ class Truck extends Component {
             className={styles.input}
             placeholder="Truck"
             type="text"
-            value={this.state.truckValue}
+            value={this.props.truckSearchForm}
             onChange={this.onTruckHandler}
           />
         </div>
         <div className={styles.truckLabel}>
           {'Plate No: '}
-          {this.state.activeTruck !== '' ? (
-            <span>{this.state.copyTrucks[this.state.activeTruck].plateNo}</span>
+          {this.props.activeTruck !== '' ? (
+            <span>{this.props.activeTruck.plateNo}</span>
           ) : (
             <span>Please choose a Truck to deliver the goods</span>
           )}
@@ -59,7 +56,7 @@ class Truck extends Component {
             .filter(tr =>
               tr.plateNo
                 .toLowerCase()
-                .includes(this.state.truckValue.toLowerCase())
+                .includes(this.props.truckSearchForm.toLowerCase())
             )
             .map((truck, i) => {
               return (
@@ -68,7 +65,7 @@ class Truck extends Component {
                   onClick={this.onTruckClickHandler.bind(null, truck.index)}
                   className={[
                     styles.truck,
-                    this.state.activeTruck === truck.index
+                    this.props.activeTruck.index === truck.index
                       ? styles.activeTruck
                       : null
                   ].join(' ')}
@@ -84,11 +81,18 @@ class Truck extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  activeTruck: state.invoicePOS.truck,
+  truckSearchForm: state.invoicePOS.truckSearchInput
+});
+
 const mapDispatchToProps = dispatch => ({
-  setTruckDispatch: truck => dispatch(actions.setTruck(truck))
+  setTruckDispatch: truck => dispatch(actions.setTruck(truck)),
+  editTruckSearchFormDispatch: value =>
+    dispatch(actions.editTruckSearchForm(value))
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Truck);

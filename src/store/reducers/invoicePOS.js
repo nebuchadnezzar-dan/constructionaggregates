@@ -6,7 +6,10 @@ const initialState = {
   quantityForm: 1,
   truck: '',
   finalPopup: false,
-  actionButton: ''
+  actionButton: '',
+  address: '',
+  truckSearchInput: '',
+  discount: 0
 };
 
 const reducer = (state = initialState, action) => {
@@ -59,6 +62,34 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         itemsToBuy: state.itemsToBuy.filter((_, i) => i !== action.payload)
+      };
+    case actionTypes.EDIT_ADDRESS:
+      return {
+        ...state,
+        address: action.payload
+      };
+    case actionTypes.RESET_POS:
+      return {
+        ...state,
+        itemsToBuy: [],
+        popup: false,
+        quantityForm: 1,
+        truck: '',
+        finalPopup: false,
+        address: '',
+        truckSearchInput: '',
+        discount: 0
+      };
+    case actionTypes.EDIT_TRUCK_SEARCH_FORM:
+      return {
+        ...state,
+        truckSearchInput: action.payload
+      };
+    case actionTypes.ADD_DISCOUNT:
+      return {
+        ...state,
+        discount: action.payload,
+        finalPopup: false
       };
     default:
       return state;

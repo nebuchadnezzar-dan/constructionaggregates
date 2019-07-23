@@ -98,6 +98,10 @@
     border-radius: 0;
     height: 8rem;
     text-transform: uppercase;
+    transition: height 0.5s;
+    &:hover {
+      height: 10rem;
+    }
   }
 }
 

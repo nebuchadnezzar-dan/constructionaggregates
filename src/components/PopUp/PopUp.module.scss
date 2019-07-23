@@ -30,6 +30,9 @@
   &Red {
     background-color: $red-solid;
   }
+  &Violet {
+    background-color: $violet-solid;
+  }
 }
 
 .totalWrapper {
@@ -37,6 +40,7 @@
   align-items: center;
   justify-content: flex-end;
   font-size: 7rem;
+  line-height: 1;
   & div:last-child {
     font-size: 10rem;
     margin-left: 3rem;
@@ -44,7 +48,19 @@
   }
 }
 
-.paymentWrapper {
+.discountWrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  line-height: 1;
+  & div:last-child {
+    font-size: 5rem;
+    margin-left: 2rem;
+  }
+}
+
+.paymentWrapper,
+.discountFormWrapper {
   display: flex;
   align-items: center;
   & input {
@@ -55,6 +71,10 @@
     padding: 1rem;
     width: 50%;
   }
+}
+
+.discountFormWrapper {
+  margin-top: 2rem;
 }
 
 .changeWrapper {

@@ -24,8 +24,7 @@ class Invoice extends Component {
       item: { type: 'text', placeholder: 'Item' },
       'plate no': { type: 'text', placeholder: 'Item' },
       discount: { type: 'number', placeholder: '0' }
-    },
-    address: ''
+    }
   };
   componentDidMount() {
     this.setState({ suppliesState: this.props.supplies });
@@ -41,11 +40,10 @@ class Invoice extends Component {
     this.props.onChangeQualityDispatch(e.target.value);
   };
   onAddressChangehandler = e => {
-    this.setState({ address: e.target.value });
+    this.props.onEditAddressDispatch(e.target.value);
   };
   onKeyDownHandler = e => {
     if (e.keyCode === 27) {
-      console.log('pressed');
       if (this.props.popup) this.props.onPopUpShowDispatch();
       if (this.props.finalPopup) this.props.onToggleFinalPopupDispatch();
     }
@@ -68,9 +66,7 @@ class Invoice extends Component {
     const finalPopup = this.props.finalPopup ? (
       <Auxillary>
         <div className={styles.finalPopup}>
-          <PopUp type="final" address={this.state.address}>
-            Item doesn't exist
-          </PopUp>
+          <PopUp type="final">Item doesn't exist</PopUp>
         </div>
         <div
           className={styles.finalPopupBack}
@@ -129,10 +125,6 @@ class Invoice extends Component {
               <p>Employee</p>
             </div>
             {popupShow}
-            {/* <div className={styles.popup}>
-              <PopUp />
-            </div>
-            <div className={styles.popupBack} /> */}
           </div>
           <hr style={{ width: '1', border: ' 0.5px solid #26c6da' }} />
           <div className={styles.invoiceForm}>
@@ -145,7 +137,7 @@ class Invoice extends Component {
                 <input
                   placeholder="Address"
                   className={styles.address}
-                  value={this.state.address}
+                  value={this.props.address}
                   onChange={this.onAddressChangehandler}
                 />
               </div>
@@ -166,14 +158,16 @@ const mapStateToProps = state => ({
   popup: state.invoicePOS.popup,
   quantityRedux: state.invoicePOS.quantityForm,
   trucks: state.truckSettings.availableTrucks,
-  finalPopup: state.invoicePOS.finalPopup
+  finalPopup: state.invoicePOS.finalPopup,
+  address: state.invoicePOS.address
 });
 
 const mapDispatchToProps = dispatch => ({
   onPopUpShowDispatch: () => dispatch(actions.togglePopup(false)),
   onChangeQualityDispatch: value => dispatch(actions.onChangeQuantity(value)),
   onToggleFinalPopupDispatch: () =>
-    dispatch(actions.toggleFinalPopup({ toggle: false }))
+    dispatch(actions.toggleFinalPopup({ toggle: false })),
+  onEditAddressDispatch: value => dispatch(actions.editAddress(value))
 });
 
 export default connect(

@@ -29,3 +29,22 @@ export const voidItem = index => ({
   type: actionTypes.VOID_ITEM,
   payload: index
 });
+
+export const editAddress = value => ({
+  type: actionTypes.EDIT_ADDRESS,
+  payload: value
+});
+
+export const resetPos = () => ({
+  type: actionTypes.RESET_POS
+});
+
+export const editTruckSearchForm = value => ({
+  type: actionTypes.EDIT_TRUCK_SEARCH_FORM,
+  payload: value
+});
+
+export const addDiscount = value => ({
+  type: actionTypes.ADD_DISCOUNT,
+  payload: value
+});

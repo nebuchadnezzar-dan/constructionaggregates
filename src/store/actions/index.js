@@ -21,5 +21,9 @@ export {
   onChangeQuantity,
   setTruck,
   toggleFinalPopup,
-  voidItem
+  voidItem,
+  editAddress,
+  resetPos,
+  editTruckSearchForm,
+  addDiscount
 } from './invoicePOS';

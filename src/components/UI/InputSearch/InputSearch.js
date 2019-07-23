@@ -93,7 +93,7 @@ class InputSearch extends Component {
           this.state.filteredSuppliesState[this.state.focusedItemIndex]
         );
       }
-      this.setState({ searchForm: '', focusedItemIndex: '' });
+      this.setState({ searchForm: '', focusedItemIndex: '', hoveredItem: '' });
     }
   };
 
@@ -111,7 +111,6 @@ class InputSearch extends Component {
     let ind;
     if (from === 'leave') {
       ind = '';
-      this.setState({ hoveredItem: '' });
     } else if (from === 'enter') {
       ind = i;
     }
