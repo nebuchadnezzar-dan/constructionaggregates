@@ -22,8 +22,8 @@ const mainNavigation = () => {
             Table List
           </NavLinks>
 
-          <NavLinks name="typography" link="/typography">
-            Typography
+          <NavLinks name="customers" link="/customers">
+            Customers
           </NavLinks>
 
           <NavLinks name="icons" link="/settings">

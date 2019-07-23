@@ -103,6 +103,17 @@
       height: 10rem;
     }
   }
+  &smallUp,
+  &smallDown {
+    padding: 0;
+    background-color: transparent;
+    font-size: 1.1rem;
+    line-height: 0.9;
+    color: #fff;
+  }
+  &smallDown {
+    transform: rotate(180deg);
+  }
 }
 
 .color {
