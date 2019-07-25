@@ -46,9 +46,10 @@ class POSButtons extends Component {
             color={button.color}
             click={this.buttonClickHandler.bind(null, button.name)}
           >
-            {' '}
-            {button.svg}
-            {button.name}
+            <div className={styles.buttonInside}>
+              {button.svg}
+              {button.name}
+            </div>
           </Button>
         ))}
       </div>

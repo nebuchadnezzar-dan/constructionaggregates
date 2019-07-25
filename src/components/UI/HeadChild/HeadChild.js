@@ -4,30 +4,33 @@ import Auxillary from '../../../hoc/Auxillary/Auxillary';
 import Button from '../Button/Button';
 
 // make this class to handle the active view/form
-const headChild = props => (
-  <Auxillary>
-    <span>
-      <Button
-        cName={
-          props.forClassName === 'form' ? 'headButtonActive' : 'headButton'
-        }
-        click={props.dispatchClickForm}
-      >
-        {props.children}
-      </Button>
-    </span>{' '}
-    <span style={{ fontSize: '3rem', fontWeight: '300' }}>|</span>{' '}
-    <span>
-      <Button
-        cName={
-          props.forClassName === 'view' ? 'headButtonActive' : 'headButton'
-        }
-        click={props.dispatchClickView}
-      >
-        View
-      </Button>
-    </span>
-  </Auxillary>
-);
+const headChild = props => {
+  const childName = props.childName;
+  return (
+    <Auxillary>
+      <span>
+        <Button
+          cName={
+            props.forClassName === 'form' ? 'headButtonActive' : 'headButton'
+          }
+          click={props.dispatchClickForm}
+        >
+          {props.children}
+        </Button>
+      </span>{' '}
+      <span style={{ fontSize: '3rem', fontWeight: '300' }}>|</span>{' '}
+      <span>
+        <Button
+          cName={
+            props.forClassName === 'view' ? 'headButtonActive' : 'headButton'
+          }
+          click={props.dispatchClickView}
+        >
+          {childName}
+        </Button>
+      </span>
+    </Auxillary>
+  );
+};
 
 export default headChild;

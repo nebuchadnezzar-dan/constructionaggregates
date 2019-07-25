@@ -7,6 +7,7 @@ const button = props => {
       disabled={props.disabled}
       className={[
         styles.button,
+        styles.color,
         styles['button' + props.cName],
         styles['button' + props.active],
         styles['color' + props.color]

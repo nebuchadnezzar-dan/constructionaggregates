@@ -75,3 +75,28 @@
 .tableButtons {
   text-align: center;
 }
+
+.title {
+  font-size: 1.8rem;
+  background-color: $red-light;
+  color: #fff;
+  padding: 1rem;
+}
+
+.customer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 2rem 3rem;
+  & > * {
+    flex: 1;
+  }
+  &Name {
+    flex: 0 0 15%;
+  }
+  &Input {
+    @include inputWithSearch;
+    border: 1px solid $red-light;
+    width: 90%;
+  }
+}

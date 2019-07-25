@@ -58,6 +58,7 @@ class Supply extends Component {
         <li key={supplyKey}>
           <Button
             disabled={matExist}
+            color={matExist ? 'color' : 'black'}
             cName="SupplyLink"
             active={
               this.props.activeSupp === supplyKey ? 'SupplyLinkactive' : null
@@ -73,6 +74,7 @@ class Supply extends Component {
       <li key="addMats">
         <Button
           cName="SupplyLinkAdd"
+          color="black"
           active={this.props.activeSupp === 'add' ? 'SupplyLinkactive' : null}
           click={this.props.supplyActiveDispatch.bind(null, 'add')}
         >
@@ -179,6 +181,7 @@ class Supply extends Component {
             forClassName={this.state.view}
             dispatchClickView={this.onToggleView.bind(null, 'view')}
             dispatchClickForm={this.onToggleView.bind(null, 'form')}
+            childName="View"
           >
             SUPPLY
           </HeadChild>

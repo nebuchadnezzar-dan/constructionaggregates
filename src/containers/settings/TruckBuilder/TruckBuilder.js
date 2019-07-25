@@ -97,6 +97,7 @@ class TruckBuilder extends Component {
             forClassName={this.state.view}
             dispatchClickView={this.onToggleView.bind(null, 'view')}
             dispatchClickForm={this.onToggleView.bind(null, 'form')}
+            childName="View"
           >
             TRUCK
           </HeadChild>

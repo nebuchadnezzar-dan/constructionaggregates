@@ -33,12 +33,16 @@
     text-transform: uppercase;
     border-radius: 0;
     text-align: justify;
+    transition: all 0.3s;
     &:active,
     &active {
       background-color: $orange-light;
       outline: none;
-      color: $superlightgrey;
+      // color: $superlightgrey;
       font-weight: 600;
+    }
+    &:hover {
+      background-color: $orange-light;
     }
     &available {
       background-color: $cat-light-green;
@@ -98,9 +102,19 @@
     border-radius: 0;
     height: 8rem;
     text-transform: uppercase;
+    margin-top: -10rem;
     transition: height 0.5s;
+    transform: rotatex(180deg) translate3d(0, -20rem, 0);
+    transform-origin: top;
     &:hover {
       height: 10rem;
+    }
+    &:not(:last-child) {
+      flex: 1;
+    }
+    &:last-child {
+      flex: 0 0 100%;
+      margin-top: -12rem;
     }
   }
   &smallUp,
@@ -117,6 +131,7 @@
 }
 
 .color {
+  color: #fff;
   &red {
     background-color: $red-light;
   }
@@ -131,5 +146,8 @@
   }
   &green {
     background-color: $green-light;
+  }
+  &black {
+    color: $dimgrey;
   }
 }

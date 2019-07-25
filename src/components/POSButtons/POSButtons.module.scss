@@ -1,10 +1,18 @@
 .buttonWrapper {
   display: flex;
-  height: 10rem;
+  flex-wrap: wrap;
+  height: 20rem;
   margin-top: 1rem;
 }
 
 .svg {
   fill: #fff;
   margin-bottom: 0.5rem;
+}
+
+.buttonInside {
+  transform: rotatex(-180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
