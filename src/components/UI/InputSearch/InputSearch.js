@@ -15,10 +15,14 @@ class InputSearch extends Component {
     hideSuggestClick: true,
     hideSuggestBlur: true,
     focusOnSuggest: false,
-    hoveredItem: ''
+    hoveredItem: '',
+    component: ''
   };
   componentDidMount() {
-    this.setState({ inputSupplies: this.props.data });
+    this.setState({
+      inputSupplies: this.props.data,
+      component: this.props.component
+    });
   }
 
   onKeyPressHandler = e => {
@@ -58,7 +62,12 @@ class InputSearch extends Component {
       }
       let value = e.target.value;
       if (this.state.filteredSuppliesState.length !== -1) {
-        value = copyFiltered[currentItemIndex].materials;
+        value =
+          this.state.component === 'supplies'
+            ? copyFiltered[currentItemIndex].materials
+            : `${copyFiltered[currentItemIndex].lastName}, ${
+                copyFiltered[currentItemIndex].firstName
+              }`;
       }
 
       if (
@@ -72,37 +81,56 @@ class InputSearch extends Component {
       }
     }
     if (e.keyCode === 13) {
-      if (
-        copyFiltered.findIndex(
-          item => item.materials.toLowerCase() === e.target.value.toLowerCase()
-        ) === -1
-      ) {
-        // console.log(
-        //   e.target.value.toLowerCase(),
-        //   copyFiltered[this.state.focusedItemIndex].materials.toLowerCase()
-        // );
+      let customerNameFind;
+      customerNameFind =
+        this.state.component === 'customer'
+          ? copyFiltered.findIndex(
+              customer =>
+                `${customer.lastName}, ${customer.firstName}`.toLowerCase() ===
+                e.target.value.toLowerCase()
+            )
+          : copyFiltered.findIndex(
+              item =>
+                item.materials.toLowerCase() === e.target.value.toLowerCase()
+            );
+      if (customerNameFind === -1) {
         this.props.onPopUpShowDispatch();
       } else if (
         copyFiltered.length > 0 &&
         this.state.focusedItemIndex !== ''
       ) {
-        // console.log(
-        //   this.state.filteredSuppliesState[this.state.focusedItemIndex]
-        // );
-        this.props.onAddItemsToBuyDispatch(
-          this.state.filteredSuppliesState[this.state.focusedItemIndex]
-        );
+        this.state.component === 'supplies'
+          ? this.props.onAddItemsToBuyDispatch(
+              this.state.filteredSuppliesState[this.state.focusedItemIndex]
+            )
+          : this.props.onSetCustomerDispatch(
+              this.state.filteredSuppliesState[this.state.focusedItemIndex]
+            );
       }
       this.setState({ searchForm: '', focusedItemIndex: '', hoveredItem: '' });
     }
   };
 
   onSearchFormhandler = e => {
+    const copiedState = [...this.state.inputSupplies];
+    let filter;
+    if (this.state.component === 'supplies')
+      filter = copiedState.filter(material =>
+        material.materials.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+    if (this.state.component === 'customer')
+      filter = copiedState.filter(
+        customer =>
+          customer.lastName
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase()) ||
+          customer.firstName
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase())
+      );
     this.setState({
       searchForm: e.target.value,
-      filteredSuppliesState: this.state.inputSupplies.filter(material =>
-        material.materials.toLowerCase().includes(e.target.value.toLowerCase())
-      ),
+      filteredSuppliesState: filter,
       hideSuggestBlur: false,
       hideSuggestClick: false
     });
@@ -118,9 +146,12 @@ class InputSearch extends Component {
   };
   onFocusInput = () => {
     if (this.state.hoveredItem !== '') {
-      this.props.onAddItemsToBuyDispatch(
-        this.state.filteredSuppliesState[this.state.hoveredItem]
-      );
+      const tobePassed = this.state.filteredSuppliesState[
+        this.state.hoveredItem
+      ];
+      this.state.component === 'supplies'
+        ? this.props.onAddItemsToBuyDispatch(tobePassed)
+        : this.props.onSetCustomerDispatch(tobePassed);
     }
     this.setState({
       hideSuggestClick: true,
@@ -139,14 +170,15 @@ class InputSearch extends Component {
             <div
               onMouseEnter={this.onClickItemsAutoSuggest.bind(null, i, 'enter')}
               onMouseLeave={this.onClickItemsAutoSuggest.bind(null, i, 'leave')}
-              key={supply.materials}
+              key={i}
               className={[
                 styles.suggestItem,
                 styles[i === this.state.focusedItemIndex ? 'isActive' : null]
               ].join(' ')}
-              // isActive={i === this.state.focusedItemIndex}
             >
-              {supply.materials}
+              {this.state.component === 'supplies'
+                ? supply.materials
+                : `${supply.lastName}, ${supply.firstName}`}
             </div>
           ))}
         </div>
@@ -172,6 +204,7 @@ class InputSearch extends Component {
 
 const mapDispatchToProps = dispatch => ({
   onAddItemsToBuyDispatch: item => dispatch(actions.addItemsToSales(item)),
+  onSetCustomerDispatch: customer => dispatch(actions.setCustomer(customer)),
   onPopUpShowDispatch: () => dispatch(actions.togglePopup(true))
 });
 

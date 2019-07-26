@@ -48,3 +48,13 @@ export const addDiscount = value => ({
   type: actionTypes.ADD_DISCOUNT,
   payload: value
 });
+
+export const setCustomer = customer => ({
+  type: actionTypes.SET_CUSTOMER,
+  payload: customer
+});
+
+export const toggleCustomerDisplay = display => ({
+  type: actionTypes.TOGGLE_CUSTOMER_DISPLAY,
+  payload: display
+});

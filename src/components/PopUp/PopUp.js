@@ -72,7 +72,9 @@ class PopUp extends Component {
             <div className={styles.belowWrapper}>
               <div>
                 <div>Customer:</div>
-                <div>Customer name</div>
+                <div>{`${props.customer.lastName}, ${
+                  props.customer.firstName
+                }`}</div>
               </div>
               <div>
                 <div>Deliver at:</div>
@@ -164,7 +166,8 @@ const mapStateToProps = state => ({
   truck: state.invoicePOS.truck,
   action: state.invoicePOS.actionButton,
   address: state.invoicePOS.address,
-  discount: state.invoicePOS.discount
+  discount: state.invoicePOS.discount,
+  customer: state.invoicePOS.customer
 });
 
 const mapDispatchToProps = dispatch => ({

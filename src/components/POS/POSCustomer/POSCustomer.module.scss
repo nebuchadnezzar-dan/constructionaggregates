@@ -1,4 +1,5 @@
 @import '../../../styles/colors.scss';
+@import '../../../styles/utility.scss';
 
 .customerWrapper {
   display: flex;
@@ -19,7 +20,26 @@
   flex: 0 0 80%;
 }
 
+.customerInputWrapper {
+  display: flex;
+  align-items: center;
+}
+
 .customerName {
-  font-size: 3rem;
-  font-weight: bold;
+  // font-size: 3rem;
+  // font-weight: bold;
+  margin-right: 1rem;
+  flex: 1;
+  &Display {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-right: 1rem;
+  }
+}
+
+.searchIconButton {
+  @include searchIcon;
+  top: 0.7rem;
+  left: 0.8rem;
+  color: #fff;
 }

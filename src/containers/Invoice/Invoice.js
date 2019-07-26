@@ -98,6 +98,7 @@ class Invoice extends Component {
                 <InputSearch
                   elementConfig={{ placeholder: 'Item' }}
                   data={this.props.supplies}
+                  component="supplies"
                 />
               </div>
             </div>

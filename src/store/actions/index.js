@@ -25,6 +25,8 @@ export {
   editAddress,
   resetPos,
   editTruckSearchForm,
-  addDiscount
+  addDiscount,
+  setCustomer,
+  toggleCustomerDisplay
 } from './invoicePOS';
 export { addCustomer } from './customer';

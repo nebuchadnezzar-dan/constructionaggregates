@@ -9,7 +9,9 @@ const initialState = {
   actionButton: '',
   address: '',
   truckSearchInput: '',
-  discount: 0
+  discount: 0,
+  customer: '',
+  displayCustomer: 'display'
 };
 
 const reducer = (state = initialState, action) => {
@@ -78,7 +80,9 @@ const reducer = (state = initialState, action) => {
         finalPopup: false,
         address: '',
         truckSearchInput: '',
-        discount: 0
+        discount: 0,
+        customer: '',
+        displayCustomer: 'display'
       };
     case actionTypes.EDIT_TRUCK_SEARCH_FORM:
       return {
@@ -90,6 +94,17 @@ const reducer = (state = initialState, action) => {
         ...state,
         discount: action.payload,
         finalPopup: false
+      };
+    case actionTypes.SET_CUSTOMER:
+      return {
+        ...state,
+        customer: action.payload,
+        displayCustomer: 'display'
+      };
+    case actionTypes.TOGGLE_CUSTOMER_DISPLAY:
+      return {
+        ...state,
+        displayCustomer: action.payload
       };
     default:
       return state;

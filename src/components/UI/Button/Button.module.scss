@@ -128,6 +128,11 @@
   &smallDown {
     transform: rotate(180deg);
   }
+  &searchCustomerPOS {
+    position: relative;
+    height: 4rem;
+    width: 3rem;
+  }
 }
 
 .color {
