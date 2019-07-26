@@ -27,3 +27,5 @@ export const EDIT_ADDRESS = 'EDIT_ADDRESS';
 export const RESET_POS = 'RESET_POS';
 export const EDIT_TRUCK_SEARCH_FORM = 'EDIT_TRUCK_SEARCH_FORM';
 export const ADD_DISCOUNT = 'ADD_DISCOUNT';
+
+export const ADD_CUSTOMER = 'ADD_CUSTOMER';

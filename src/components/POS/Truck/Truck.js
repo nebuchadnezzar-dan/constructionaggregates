@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import * as actions from '../../store/actions/index';
+import * as actions from '../../../store/actions/index';
 
 import styles from './Truck.module.scss';
-import Auxillary from '../../hoc/Auxillary/Auxillary';
+import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
 class Truck extends Component {
   state = {

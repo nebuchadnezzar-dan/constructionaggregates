@@ -27,3 +27,4 @@ export {
   editTruckSearchForm,
   addDiscount
 } from './invoicePOS';
+export { addCustomer } from './customer';

@@ -1,0 +1,65 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/utility.scss';
+
+.cutomerTable {
+  & table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    & thead {
+      background-color: $red-light;
+      color: #fff;
+      & th {
+        padding: 2rem;
+        font-size: 1.8rem;
+        text-transform: uppercase;
+      }
+    }
+    & tbody {
+      background-color: $gainsboro;
+    }
+  }
+}
+
+.odd {
+  background-color: $superlightgrey;
+}
+
+.even {
+  background-color: #fff;
+}
+
+.sortButton {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem;
+  &Wrapper {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.searchCustomer {
+  margin-bottom: 2rem;
+}
+
+.search {
+  position: relative;
+  text-align: center;
+  width: 80%;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+
+.searchIcon {
+  @include searchIcon;
+}
+
+.input {
+  @include inputWithSearch;
+  border: 1px solid $red-light;
+}
+
+.tableButtons {
+  text-align: center;
+}

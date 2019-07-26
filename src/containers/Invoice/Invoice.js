@@ -8,15 +8,15 @@ import * as actions from '../../store/actions/index';
 
 import Head from '../../components/UI/Head/Head';
 import HeadChild from '../../components/UI/HeadChild/HeadChild';
-import POSTable from '../../components/POSTable/POSTable';
+import POSTable from '../../components/POS/POSTable/POSTable';
 import InputSearch from '../../components/UI/InputSearch/InputSearch';
-import POSCustomer from '../../components/POSCustomer/POSCustomer';
-import POSSummary from '../../components/POSSummary/POSSummary';
+import POSCustomer from '../../components/POS/POSCustomer/POSCustomer';
+import POSSummary from '../../components/POS/POSSummary/POSSummary';
 import Button from '../../components/UI/Button/Button';
 import PopUp from '../../components/PopUp/PopUp';
 import Auxillary from '../../hoc/Auxillary/Auxillary';
-import Truck from '../../components/Truck/Truck';
-import POSButtons from '../../components/POSButtons/POSButtons';
+import Truck from '../../components/POS/Truck/Truck';
+import POSButtons from '../../components/POS/POSButtons/POSButtons';
 
 class Invoice extends Component {
   state = {

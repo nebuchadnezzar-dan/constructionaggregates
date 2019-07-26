@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import * as actions from '../../store/actions/index';
+import * as actions from '../../../store/actions/index';
 
 import styles from './POSButtons.module.scss';
 
-import Button from '../UI/Button/Button';
+import Button from '../../UI/Button/Button';
 
-import { ReactComponent as Void } from '../../assets/svg/blocked.svg';
-import { ReactComponent as Cancel } from '../../assets/svg/undo2.svg';
-import { ReactComponent as Discount } from '../../assets/svg/ticket.svg';
-import { ReactComponent as Credit } from '../../assets/svg/credit-card.svg';
-import { ReactComponent as Pay } from '../../assets/svg/coin-dollar.svg';
+import { ReactComponent as Void } from '../../../assets/svg/blocked.svg';
+import { ReactComponent as Cancel } from '../../../assets/svg/undo2.svg';
+import { ReactComponent as Discount } from '../../../assets/svg/ticket.svg';
+import { ReactComponent as Credit } from '../../../assets/svg/credit-card.svg';
+import { ReactComponent as Pay } from '../../../assets/svg/coin-dollar.svg';
 
 class POSButtons extends Component {
   state = {

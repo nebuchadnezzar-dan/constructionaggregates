@@ -12,6 +12,7 @@ import truckSettings from './store/reducers/truckSettings';
 import supplySettings from './store/reducers/supplySettings';
 import route from './store/reducers/route';
 import invoicePOS from './store/reducers/invoicePOS';
+import customer from './store/reducers/customer';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -22,7 +23,8 @@ const rootReducers = combineReducers({
   truckSettings: truckSettings,
   supplySettings: supplySettings,
   route: route,
-  invoicePOS: invoicePOS
+  invoicePOS: invoicePOS,
+  customer: customer
 });
 
 // const store = createStore(
