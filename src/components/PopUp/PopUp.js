@@ -26,6 +26,18 @@ class PopUp extends Component {
       }
     }
   };
+  onCreditButtonHandler = credit => {
+    this.props.addCreditDispatch(
+      {
+        customer: this.props.customer.lastName,
+        truck: this.props.truck,
+        items: this.props.items,
+        address: this.props.address
+      },
+      credit
+    );
+    this.props.resetPosDispatch();
+  };
 
   render() {
     const { props } = this;
@@ -124,6 +136,66 @@ class PopUp extends Component {
           </div>
         );
         break;
+      case 'credit':
+        action = (
+          <div className={styles.actionWrapper}>
+            <div className={[styles.header, styles.headerBlue].join(' ')}>
+              {props.action}
+            </div>
+            <div className={styles.totalWrapper}>
+              <div>Total:</div>
+              <div>{total}</div>
+            </div>
+            <div className={styles.discountWrapper}>
+              <div>Discount:</div>
+              <div>{props.discount}</div>
+            </div>
+            <div className={styles.tableWrapper}>
+              <table className={styles.table}>
+                <thead className={styles.tableCredit}>
+                  <tr>
+                    <th>Item</th>
+                    <th>Unit Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {props.items.map((item, i) => (
+                    <tr key={item.materials}>
+                      <td>{item.materials}</td>
+                      <td>{item.price}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <hr />
+            <div className={styles.belowWrapper}>
+              <div>
+                <div>Customer:</div>
+                <div>{`${props.customer.lastName}, ${
+                  props.customer.firstName
+                }`}</div>
+              </div>
+              <div>
+                <div>Deliver at:</div>
+                <div>{props.address}</div>
+              </div>
+              <div>
+                <div>Truck:</div>
+                <div>{props.truck.plateNo}</div>
+              </div>
+            </div>
+            <div className={styles.creditButton}>
+              <Button
+                color="blue"
+                click={this.onCreditButtonHandler.bind(null, total)}
+              >
+                Save
+              </Button>
+            </div>
+          </div>
+        );
+        break;
       case 'cancel':
         props.resetPosDispatch();
         break;
@@ -173,7 +245,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onVoidItem: index => dispatch(actions.voidItem(index)),
   resetPosDispatch: () => dispatch(actions.resetPos()),
-  addDiscountDispatch: value => dispatch(actions.addDiscount(value))
+  addDiscountDispatch: value => dispatch(actions.addDiscount(value)),
+  addCreditDispatch: (customer, credit) =>
+    dispatch(actions.addCredit(customer, credit)),
+  resetDispatch: () => dispatch(actions.resetPos())
 });
 
 export default connect(

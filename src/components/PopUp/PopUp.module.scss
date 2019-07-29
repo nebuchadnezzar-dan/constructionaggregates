@@ -21,6 +21,7 @@
 .header {
   padding: 1rem;
   text-align: center;
+  color: #fff;
   &Green {
     background-color: $green-solid;
   }
@@ -109,6 +110,15 @@
     background-color: $red-light;
     color: #fff;
   }
+  &Credit {
+    background-color: $blue-light;
+    color: #fff;
+  }
+}
+
+.creditButton {
+  text-align: right;
+  margin-top: 1rem;
 }
 
 .blink {

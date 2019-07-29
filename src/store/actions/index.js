@@ -29,4 +29,4 @@ export {
   setCustomer,
   toggleCustomerDisplay
 } from './invoicePOS';
-export { addCustomer } from './customer';
+export { addCustomer, addCredit } from './customer';

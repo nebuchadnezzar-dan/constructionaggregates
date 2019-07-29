@@ -127,7 +127,7 @@ class Invoice extends Component {
             </div>
             {popupShow}
           </div>
-          <hr style={{ width: '1', border: ' 0.5px solid #26c6da' }} />
+          <div className={styles.hr} />
           <div className={styles.invoiceForm}>
             <div className={styles.truckComponentWrapper}>
               <Truck trucks={this.props.trucks} />

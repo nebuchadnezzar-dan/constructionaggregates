@@ -58,3 +58,4 @@ export const toggleCustomerDisplay = display => ({
   type: actionTypes.TOGGLE_CUSTOMER_DISPLAY,
   payload: display
 });
+
