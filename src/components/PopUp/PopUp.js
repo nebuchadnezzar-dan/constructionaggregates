@@ -220,6 +220,81 @@ class PopUp extends Component {
           </div>
         );
         break;
+      case 'creditSummary':
+        const totalCredit =
+          props.creditRedux
+            .filter(
+              customerCred => customerCred.customer === props.customer.lastName
+            )
+            .reduce(
+              (acc, customerFilter) =>
+                acc +
+                customerFilter.items.reduce(
+                  (accItem, item) => accItem + +item.price * +item.quantity,
+                  0
+                ),
+              0
+            ) - props.customer.partialPaid;
+        action = (
+          <div className={styles.actionWrapper}>
+            <div className={[styles.header, styles.headerOrange].join(' ')}>
+              {props.action}
+            </div>
+            <div className={styles.totalWrapper}>
+              <div>Total:</div>
+              <div>{totalCredit}</div>
+            </div>
+            <div className={styles.discountWrapper}>
+              <div>Partially Paid:</div>
+              <div>{props.customer.partialPaid}</div>
+            </div>
+            <div className={styles.tableWrapper}>
+              <table className={styles.tableCreditSummaryTable}>
+                <thead className={styles.tableCreditSummary}>
+                  <tr>
+                    <th>Date</th>
+                    <th>Credit</th>
+                  </tr>
+                </thead>
+                <tbody className={styles.creditSummaryBody}>
+                  {props.creditRedux
+                    .filter(cred => cred.customer === props.customer.lastName)
+                    .map((credit, i) => {
+                      const totalCred = credit.items.reduce(
+                        (acc, accItem) =>
+                          acc + +accItem.price * +accItem.quantity,
+                        0
+                      );
+                      return (
+                        <tr key={i}>
+                          <td>{credit.date}</td>
+                          <td>{totalCred}</td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+            <hr />
+            <div className={styles.belowWrapper}>
+              <div>
+                <div>Customer:</div>
+                <div>{`${props.customer.lastName}, ${
+                  props.customer.firstName
+                }`}</div>
+              </div>
+            </div>
+            <div className={styles.creditButton}>
+              <Button
+                color="orange"
+                // click={this.onCreditButtonHandler.bind(null, total)}
+              >
+                Print
+              </Button>
+            </div>
+          </div>
+        );
+        break;
       default:
         console.log('none were satisfied');
     }
@@ -239,7 +314,8 @@ const mapStateToProps = state => ({
   action: state.invoicePOS.actionButton,
   address: state.invoicePOS.address,
   discount: state.invoicePOS.discount,
-  customer: state.invoicePOS.customer
+  customer: state.invoicePOS.customer,
+  creditRedux: state.customer.credit
 });
 
 const mapDispatchToProps = dispatch => ({

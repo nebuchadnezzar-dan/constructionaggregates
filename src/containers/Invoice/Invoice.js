@@ -45,8 +45,12 @@ class Invoice extends Component {
   onKeyDownHandler = e => {
     if (e.keyCode === 27) {
       if (this.props.popup) this.props.onPopUpShowDispatch();
-      if (this.props.finalPopup) this.props.onToggleFinalPopupDispatch();
+      if (this.props.finalPopup) this.props.onToggleFinalPopupDispatch(false);
     }
+  };
+  buttonSummaryHandler = name => {
+    // console.log(toggle);
+    this.props.onToggleFinalPopupDispatch({ name, toggle: true });
   };
 
   render() {
@@ -70,7 +74,7 @@ class Invoice extends Component {
         </div>
         <div
           className={styles.finalPopupBack}
-          onClick={this.props.onToggleFinalPopupDispatch.bind(null)}
+          onClick={this.props.onToggleFinalPopupDispatch.bind(null, false)}
         />
       </Auxillary>
     ) : null;
@@ -110,7 +114,11 @@ class Invoice extends Component {
             </div>
             <div className={styles.buttonWrapper}>
               <div className={styles.button}>
-                <Button cName="posButton" color="orange">
+                <Button
+                  cName="posButton"
+                  color="orange"
+                  click={this.buttonSummaryHandler.bind(null, 'creditSummary')}
+                >
                   Credit
                 </Button>
               </div>
@@ -166,8 +174,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onPopUpShowDispatch: () => dispatch(actions.togglePopup(false)),
   onChangeQualityDispatch: value => dispatch(actions.onChangeQuantity(value)),
-  onToggleFinalPopupDispatch: () =>
-    dispatch(actions.toggleFinalPopup({ toggle: false })),
+  onToggleFinalPopupDispatch: toggle =>
+    dispatch(actions.toggleFinalPopup(toggle)),
   onEditAddressDispatch: value => dispatch(actions.editAddress(value))
 });
 

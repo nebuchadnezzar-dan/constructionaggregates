@@ -13,10 +13,10 @@ const app = () => {
   return (
     <Auxillary>
       <Layout>
-        <Route path="/" exact component={Invoice} />
+        <Route path="/" exact render={() => <div>Dashboard</div>} />
         <Route path="/settings" component={Settings} />
         <Route path="/user" render={() => <div>User</div>} />
-        <Route path="/table" render={() => <div>Table</div>} />
+        <Route path="/pos" component={Invoice} />
         <Route path="/customers" component={Customer} />
         <Route path="/notifications" render={() => <div>Notifications</div>} />
         <Route path="/support" render={() => <div>Support</div>} />

@@ -1,65 +1,131 @@
 import * as actionTypes from '../actions/actionTypes';
-
-const newDate = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today
-    .getMonth()
-    .toString()
-    .padStart(2, '0');
-  const day = today
-    .getDate()
-    .toString()
-    .padStart(2, '2');
-  return `${year}-${month}-${day}`;
-};
+import { newDate } from '../../util/dateHelper';
 
 const initialState = {
   customer: [
     {
       lastName: 'Collins',
       firstName: 'Phil',
-      credit: 5000,
+      partialPaid: 0,
       dateRegistered: '2019-06-26',
       timesPurchased: 15
     },
     {
       lastName: 'Banasen',
       firstName: 'Daniel',
-      credit: 2000,
+      partialPaid: 0,
       dateRegistered: '2019-06-26',
       timesPurchased: 5
     },
     {
       lastName: 'Loaf',
       firstName: 'Meat',
-      credit: 0,
+      partialPaid: 0,
       dateRegistered: '2019-06-26',
       timesPurchased: 3
     },
     {
       lastName: 'Orange',
       firstName: 'Lemons',
-      credit: 0,
+      partialPaid: 0,
       dateRegistered: '2019-06-26',
       timesPurchased: 3
     },
     {
       lastName: 'Turner',
       firstName: 'Tina',
-      credit: 1200,
+      partialPaid: 0,
       dateRegistered: '2019-06-26',
       timesPurchased: 8
     },
     {
       lastName: 'Higson',
       firstName: 'Charlie',
-      credit: 4000,
+      partialPaid: 0,
       dateRegistered: '2017-04-01',
       timesPurchased: 10
     }
   ],
-  credit: []
+  credit: [
+    {
+      customer: 'Loaf',
+      truck: {
+        maxLoad: '3',
+        plateNo: 'def',
+        status: 'maintenance',
+        color: '#437cb6',
+        index: 1
+      },
+      items: [
+        {
+          materials: 'gravel',
+          amount: '50',
+          price: '2100',
+          quantity: 1
+        },
+        {
+          materials: 'river Mixed',
+          amount: '60',
+          price: '2100',
+          quantity: 1
+        }
+      ],
+      address: 'Baguio',
+      date: '2019-06-30'
+    },
+    {
+      customer: 'Banasen',
+      truck: {
+        maxLoad: '2',
+        plateNo: 'abc',
+        status: 'maintenance',
+        color: '#47799f',
+        index: 0
+      },
+      items: [
+        {
+          materials: 'cement',
+          amount: '150',
+          price: '150',
+          quantity: '50'
+        },
+        {
+          materials: 'gravel',
+          amount: '50',
+          price: '2100',
+          quantity: 1
+        }
+      ],
+      address: 'Baguio City',
+      date: '2019-06-30'
+    },
+    {
+      customer: 'Loaf',
+      truck: {
+        maxLoad: '3',
+        plateNo: 'def',
+        status: 'maintenance',
+        color: '#437cb6',
+        index: 1
+      },
+      items: [
+        {
+          materials: 'gravel',
+          amount: '50',
+          price: '2100',
+          quantity: 2
+        },
+        {
+          materials: 'river Mixed',
+          amount: '60',
+          price: '2100',
+          quantity: 3
+        }
+      ],
+      address: 'Baguio',
+      date: '2019-06-29'
+    }
+  ]
 };
 
 const reducer = (state = initialState, action) => {
@@ -85,7 +151,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         customer: customerCopy,
-        credit: state.credit.concat(action.payload)
+        credit: state.credit.concat({ ...action.payload, date: newDate() })
       };
     default:
       return state;

@@ -128,21 +128,39 @@ class CustomerTable extends Component {
                       .toLowerCase()
                       .includes(this.state.customerSearchForm.toLowerCase())
                 )
-                .map((customer, i) => (
-                  <tr
-                    key={i}
-                    className={i % 2 === 0 ? styles.even : styles.odd}
-                  >
-                    <td>{`${customer.lastName}, ${customer.firstName}`}</td>
-                    <td>{customer.credit}</td>
-                    <td>{customer.dateRegistered}</td>
-                    <td>{customer.timesPurchased}</td>
-                    <td>
-                      <Button cName="delete">&#128465;</Button>
-                      <Button cName="edit">&#9998;</Button>
-                    </td>
-                  </tr>
-                ))}
+                .map((customer, i) => {
+                  const totalCredit =
+                    this.props.customerCreditRedux
+                      .filter(
+                        customerCred =>
+                          customerCred.customer === customer.lastName
+                      )
+                      .reduce(
+                        (acc, customerFilter) =>
+                          acc +
+                          customerFilter.items.reduce(
+                            (accItem, item) =>
+                              accItem + +item.price * +item.quantity,
+                            0
+                          ),
+                        0
+                      ) - customer.partialPaid;
+                  return (
+                    <tr
+                      key={i}
+                      className={i % 2 === 0 ? styles.even : styles.odd}
+                    >
+                      <td>{`${customer.lastName}, ${customer.firstName}`}</td>
+                      <td>{totalCredit}</td>
+                      <td>{customer.dateRegistered}</td>
+                      <td>{customer.timesPurchased}</td>
+                      <td>
+                        <Button cName="delete">&#128465;</Button>
+                        <Button cName="edit">&#9998;</Button>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>
@@ -162,7 +180,8 @@ class CustomerTable extends Component {
 }
 
 const mapStateToProps = state => ({
-  customersRedux: state.customer.customer
+  customersRedux: state.customer.customer,
+  customerCreditRedux: state.customer.credit
 });
 
 export default connect(mapStateToProps)(CustomerTable);

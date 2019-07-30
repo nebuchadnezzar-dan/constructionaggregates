@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   // get back here
-  activeRoute: 'Invoice'
+  activeRoute: 'Dashboard'
 };
 
 const reducer = (state = initialState, action) => {

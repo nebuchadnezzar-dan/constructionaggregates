@@ -11,15 +11,15 @@ const mainNavigation = () => {
       <div>
         <Unordered classname="ulNavigation">
           <NavLinks name="dashboard" link="/" exact>
-            Invoice
+            Dashboard
           </NavLinks>
 
           <NavLinks name="user" link="/user">
             User Profile
           </NavLinks>
 
-          <NavLinks name="table" link="/table">
-            Table List
+          <NavLinks name="pos" link="/pos">
+            Point of Sale
           </NavLinks>
 
           <NavLinks name="customers" link="/customers">
