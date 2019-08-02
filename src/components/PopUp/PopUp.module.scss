@@ -67,14 +67,18 @@
 .paymentWrapper,
 .discountFormWrapper {
   display: flex;
+  // align-content: center;
   align-items: center;
+  & div:nth-child(2n) {
+    width: 50%;
+    margin: 0 3rem;
+  }
   & input {
     font-size: 4rem;
-    margin-left: 3rem;
     border: 1px solid $blue-light;
     border-radius: 5px;
     padding: 1rem;
-    width: 50%;
+    width: 100%;
   }
 }
 
@@ -106,6 +110,13 @@
   margin-top: 2rem;
   font-size: 2rem;
 }
+
+.editButtonWrapper {
+  text-align: center;
+}
+// .quantityWrapper {
+//   display: flex;
+// }
 
 .table {
   width: 100%;

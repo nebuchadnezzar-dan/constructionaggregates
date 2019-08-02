@@ -32,3 +32,12 @@ main {
   // flex: 1;
   // align-self: center;
 }
+
+@media only screen and (max-width: 1138px) {
+  .sideBar {
+    display: none;
+  }
+  .mainContent {
+    width: 100%;
+  }
+}

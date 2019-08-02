@@ -59,3 +59,12 @@ export const toggleCustomerDisplay = display => ({
   payload: display
 });
 
+export const setActiveItemRow = index => ({
+  type: actionTypes.SET_ACTIVE_ITEM_ROW,
+  payload: index
+});
+
+export const editQuantity = value => ({
+  type: actionTypes.EDIT_QUANTITY,
+  payload: value
+});

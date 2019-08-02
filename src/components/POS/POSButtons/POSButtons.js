@@ -17,7 +17,7 @@ import { ReactComponent as Pay } from '../../../assets/svg/coin-dollar.svg';
 class POSButtons extends Component {
   state = {
     buttons: [
-      { name: 'void', color: 'red', svg: <Void className={styles.svg} /> },
+      { name: 'edit', color: 'red', svg: <Void className={styles.svg} /> },
       {
         name: 'cancel',
         color: 'orange',

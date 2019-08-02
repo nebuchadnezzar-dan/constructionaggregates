@@ -27,6 +27,8 @@ export {
   editTruckSearchForm,
   addDiscount,
   setCustomer,
-  toggleCustomerDisplay
+  toggleCustomerDisplay,
+  setActiveItemRow,
+  editQuantity
 } from './invoicePOS';
 export { addCustomer, addCredit } from './customer';

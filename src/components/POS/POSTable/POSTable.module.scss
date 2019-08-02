@@ -2,6 +2,7 @@
 
 .table {
   width: 100%;
+  border-collapse: collapse;
   & thead {
     background-color: $blue-light;
     color: #fff;
@@ -9,8 +10,22 @@
       padding: 5px;
     }
   }
+  & tbody {
+    & tr {
+      transition: all 0.3s;
+      &:hover {
+        background-color: $slategrey;
+        cursor: pointer;
+      }
+    }
+  }
   & tfoot {
     background-color: $cat-light-blue;
     color: $superlightgrey;
   }
+}
+
+.activeRow {
+  background-color: $slategrey;
+  color: #fff;
 }

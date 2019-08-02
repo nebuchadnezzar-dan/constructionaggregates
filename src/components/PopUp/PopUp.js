@@ -23,8 +23,13 @@ class PopUp extends Component {
     if (e.keyCode === 13) {
       if (action === 'discount') {
         this.props.addDiscountDispatch(e.target.value);
+      } else if (action === 'edit') {
+        this.props.editQuantityDispatch(e.target.value);
       }
     }
+  };
+  onEditButtonHandler = () => {
+    this.props.editQuantityDispatch(this.state.payment);
   };
   onCreditButtonHandler = credit => {
     this.props.addCreditDispatch(
@@ -100,38 +105,32 @@ class PopUp extends Component {
           </div>
         );
         break;
-      case 'void':
+      case 'edit':
         action = (
           <div className={styles.actionWrapper}>
             <div className={[styles.header, styles.headerRed].join(' ')}>
               {props.action}
             </div>
-            <div className={styles.tableWrapper}>
-              <table className={styles.table}>
-                <thead className={styles.tableHead}>
-                  <tr>
-                    <th>Item</th>
-                    <th>Unit Price</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {props.items.map((item, i) => (
-                    <tr key={item.materials}>
-                      <td>{item.materials}</td>
-                      <td>{item.price}</td>
-                      <td>
-                        <Button
-                          cName="delete"
-                          click={props.onVoidItem.bind(null, i)}
-                        >
-                          &#128465;
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className={styles.discountFormWrapper}>
+              <div>Qty</div>
+              <div>
+                <input
+                  onKeyDown={this.keyDownHandler.bind(this, props.action)}
+                  placeholder="0"
+                  type="number"
+                  onChange={this.onPaymentHandler.bind(this, props.action)}
+                  value={this.state.payment}
+                />
+              </div>
+              <div>
+                <Button color="red" click={this.onEditButtonHandler}>
+                  Go
+                </Button>
+              </div>
+            </div>
+            <hr style={{ margin: '2rem 0' }} />
+            <div className={styles.editButtonWrapper}>
+              <Button color="red"> &#128465; Remove</Button>
             </div>
           </div>
         );
@@ -315,7 +314,8 @@ const mapStateToProps = state => ({
   address: state.invoicePOS.address,
   discount: state.invoicePOS.discount,
   customer: state.invoicePOS.customer,
-  creditRedux: state.customer.credit
+  creditRedux: state.customer.credit,
+  activeRow: state.invoicePOS.activeRow
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -324,7 +324,8 @@ const mapDispatchToProps = dispatch => ({
   addDiscountDispatch: value => dispatch(actions.addDiscount(value)),
   addCreditDispatch: (customer, credit) =>
     dispatch(actions.addCredit(customer, credit)),
-  resetDispatch: () => dispatch(actions.resetPos())
+  resetDispatch: () => dispatch(actions.resetPos()),
+  editQuantityDispatch: value => dispatch(actions.editQuantity(value))
 });
 
 export default connect(

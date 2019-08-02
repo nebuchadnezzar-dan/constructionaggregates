@@ -11,6 +11,7 @@ const initialState = {
   truckSearchInput: '',
   discount: 0,
   customer: '',
+  activeRow: '',
   displayCustomer: 'display'
 };
 
@@ -82,6 +83,7 @@ const reducer = (state = initialState, action) => {
         truckSearchInput: '',
         discount: 0,
         customer: '',
+        activeRow: '',
         displayCustomer: 'display'
       };
     case actionTypes.EDIT_TRUCK_SEARCH_FORM:
@@ -105,6 +107,19 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         displayCustomer: action.payload
+      };
+    case actionTypes.SET_ACTIVE_ITEM_ROW:
+      return {
+        ...state,
+        activeRow: action.payload
+      };
+    case actionTypes.EDIT_QUANTITY:
+      itemsCopy = [...state.itemsToBuy];
+      itemsCopy[state.activeRow].quantity = action.payload;
+      return {
+        ...state,
+        itemsToBuy: itemsCopy,
+        finalPopup: false
       };
     default:
       return state;

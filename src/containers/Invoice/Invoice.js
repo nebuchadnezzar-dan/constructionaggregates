@@ -58,7 +58,7 @@ class Invoice extends Component {
       <Auxillary>
         <div className={styles.popup}>
           <PopUp cName="blink" type="simple">
-            Item doesn't exist
+            Entry doesn't exist
           </PopUp>
         </div>
         <div
@@ -70,7 +70,7 @@ class Invoice extends Component {
     const finalPopup = this.props.finalPopup ? (
       <Auxillary>
         <div className={styles.finalPopup}>
-          <PopUp type="final">Item doesn't exist</PopUp>
+          <PopUp type="final" />
         </div>
         <div
           className={styles.finalPopupBack}
@@ -86,26 +86,6 @@ class Invoice extends Component {
         <div className={styles.invoiceWrapper}>
           {finalPopup}
           <div className={styles.sales}>
-            <div className={styles.searchWrapper}>
-              {/* <InputSearch elementConfig={{ placeholder: 'Customer' }} /> */}
-              <div className={styles.quantityWrap}>
-                {' '}
-                <input
-                  type="number"
-                  placeholder="Quantity"
-                  className={styles.quantity}
-                  value={this.props.quantityRedux}
-                  onChange={this.onQuantityChangeHandler}
-                />
-              </div>
-              <div className={styles.itemInvoice}>
-                <InputSearch
-                  elementConfig={{ placeholder: 'Item' }}
-                  data={this.props.supplies}
-                  component="supplies"
-                />
-              </div>
-            </div>
             <POSCustomer />
             <div className={styles.summaryWrapper}>
               <POSSummary>Customer No.</POSSummary>
@@ -128,11 +108,27 @@ class Invoice extends Component {
                 </Button>
               </div>
             </div>
-            <POSTable data={this.props.itemsToBuy} />
-            <div className={styles.cashierName}>
-              <p>Mia Khalifa</p>
-              <p>Employee</p>
+            <div className={styles.searchWrapper}>
+              {/* <InputSearch elementConfig={{ placeholder: 'Customer' }} /> */}
+              <div className={styles.quantityWrap}>
+                {' '}
+                <input
+                  type="number"
+                  placeholder="Quantity"
+                  className={styles.quantity}
+                  value={this.props.quantityRedux}
+                  onChange={this.onQuantityChangeHandler}
+                />
+              </div>
+              <div className={styles.itemInvoice}>
+                <InputSearch
+                  elementConfig={{ placeholder: 'Item' }}
+                  data={this.props.supplies}
+                  component="supplies"
+                />
+              </div>
             </div>
+            <POSTable data={this.props.itemsToBuy} />
             {popupShow}
           </div>
           <div className={styles.hr} />
@@ -153,6 +149,10 @@ class Invoice extends Component {
             </div>
             <div className={styles.buttonActionsWrapper}>
               <POSButtons />
+            </div>
+            <div className={styles.cashierName}>
+              <p>Mia Khalifa</p>
+              <p>Employee</p>
             </div>
           </div>
         </div>
