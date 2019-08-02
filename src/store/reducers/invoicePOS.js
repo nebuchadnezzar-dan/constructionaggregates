@@ -59,12 +59,15 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         finalPopup: action.payload.toggle,
-        actionButton: action.payload.name
+        actionButton: action.payload.name,
+        popup: false
       };
     case actionTypes.VOID_ITEM:
       return {
         ...state,
-        itemsToBuy: state.itemsToBuy.filter((_, i) => i !== action.payload)
+        itemsToBuy: state.itemsToBuy.filter((_, i) => i !== state.activeRow),
+        activeRow: '',
+        finalPopup: false
       };
     case actionTypes.EDIT_ADDRESS:
       return {

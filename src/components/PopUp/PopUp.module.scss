@@ -13,6 +13,23 @@
   z-index: 3000;
   background-color: #fff;
   width: 100%;
+  & > button {
+    font-size: 1.6rem;
+    // background-color: red;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  background: #492f27;
+  color: white;
+  font-size: 2.4rem;
+  padding: 0.5rem;
+  width: 4rem;
+  height: 4rem;
+  top: -10px;
+  right: -10px;
+  border-radius: 50%;
 }
 
 .actionWrapper {
@@ -170,6 +187,10 @@
     width: 50%; /* 49% is less than (100% / 5 cols) = 20% */
     float: left;
   }
+}
+
+.activeRow {
+  margin-top: 2rem;
 }
 
 .creditButton {

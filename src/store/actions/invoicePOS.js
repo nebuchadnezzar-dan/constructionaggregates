@@ -25,9 +25,8 @@ export const toggleFinalPopup = action => ({
   payload: action
 });
 
-export const voidItem = index => ({
-  type: actionTypes.VOID_ITEM,
-  payload: index
+export const voidItem = () => ({
+  type: actionTypes.VOID_ITEM
 });
 
 export const editAddress = value => ({

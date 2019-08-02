@@ -8,7 +8,7 @@ import styles from './POSButtons.module.scss';
 
 import Button from '../../UI/Button/Button';
 
-import { ReactComponent as Void } from '../../../assets/svg/blocked.svg';
+import { ReactComponent as Edit } from '../../../assets/svg/pencil.svg';
 import { ReactComponent as Cancel } from '../../../assets/svg/undo2.svg';
 import { ReactComponent as Discount } from '../../../assets/svg/ticket.svg';
 import { ReactComponent as Credit } from '../../../assets/svg/credit-card.svg';
@@ -17,7 +17,7 @@ import { ReactComponent as Pay } from '../../../assets/svg/coin-dollar.svg';
 class POSButtons extends Component {
   state = {
     buttons: [
-      { name: 'edit', color: 'red', svg: <Void className={styles.svg} /> },
+      { name: 'edit', color: 'red', svg: <Edit className={styles.svg} /> },
       {
         name: 'cancel',
         color: 'orange',

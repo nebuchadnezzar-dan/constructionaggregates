@@ -28,8 +28,10 @@ class PopUp extends Component {
       }
     }
   };
-  onEditButtonHandler = () => {
-    this.props.editQuantityDispatch(this.state.payment);
+  onEditButtonHandler = action => {
+    if (action === 'edit') this.props.editQuantityDispatch(this.state.payment);
+    if (action === 'discount')
+      this.props.addDiscountDispatch(this.state.payment);
   };
   onCreditButtonHandler = credit => {
     this.props.addCreditDispatch(
@@ -76,6 +78,14 @@ class PopUp extends Component {
                   value={this.state.payment}
                 />
               </div>
+              <div>
+                <Button
+                  color="green"
+                  click={this.onEditButtonHandler.bind(null, props.action)}
+                >
+                  &#10004; Go
+                </Button>
+              </div>
             </div>
             <div className={styles.changeWrapper}>
               <div>Change</div>
@@ -111,6 +121,10 @@ class PopUp extends Component {
             <div className={[styles.header, styles.headerRed].join(' ')}>
               {props.action}
             </div>
+            <div className={styles.activeRow}>
+              <p>Item: {props.items[props.activeRow].materials}</p>
+              <p>Qty: {props.items[props.activeRow].quantity}</p>
+            </div>
             <div className={styles.discountFormWrapper}>
               <div>Qty</div>
               <div>
@@ -123,14 +137,20 @@ class PopUp extends Component {
                 />
               </div>
               <div>
-                <Button color="red" click={this.onEditButtonHandler}>
-                  Go
+                <Button
+                  color="red"
+                  click={this.onEditButtonHandler.bind(null, props.action)}
+                >
+                  &#10004; Go
                 </Button>
               </div>
             </div>
             <hr style={{ margin: '2rem 0' }} />
             <div className={styles.editButtonWrapper}>
-              <Button color="red"> &#128465; Remove</Button>
+              <Button color="red" click={this.props.onVoidItem.bind(null)}>
+                {' '}
+                &#128465; Remove
+              </Button>
             </div>
           </div>
         );
@@ -214,6 +234,14 @@ class PopUp extends Component {
                   onChange={this.onPaymentHandler.bind(this, props.action)}
                   value={this.state.payment}
                 />
+              </div>
+              <div>
+                <Button
+                  color="violet"
+                  click={this.onEditButtonHandler.bind(null, props.action)}
+                >
+                  &#10004; Go
+                </Button>
               </div>
             </div>
           </div>
@@ -301,6 +329,14 @@ class PopUp extends Component {
     const toBeShown = props.type === 'simple' ? props.children : action;
     return (
       <div className={styles.popupWrapper}>
+        <Button
+          cName="Close"
+          color="red"
+          click={this.props.onToggleFinalPopupDispatch.bind(null, false)}
+        >
+          X
+        </Button>
+        {/* <div className={styles.closeButton}>X</div> */}
         <div className={styles[props.cName]}>{toBeShown}</div>
       </div>
     );
@@ -319,13 +355,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onVoidItem: index => dispatch(actions.voidItem(index)),
+  onVoidItem: () => dispatch(actions.voidItem()),
   resetPosDispatch: () => dispatch(actions.resetPos()),
   addDiscountDispatch: value => dispatch(actions.addDiscount(value)),
   addCreditDispatch: (customer, credit) =>
     dispatch(actions.addCredit(customer, credit)),
   resetDispatch: () => dispatch(actions.resetPos()),
-  editQuantityDispatch: value => dispatch(actions.editQuantity(value))
+  editQuantityDispatch: value => dispatch(actions.editQuantity(value)),
+  onToggleFinalPopupDispatch: toggle =>
+    dispatch(actions.toggleFinalPopup(toggle))
 });
 
 export default connect(

@@ -46,6 +46,8 @@ class Invoice extends Component {
     if (e.keyCode === 27) {
       if (this.props.popup) this.props.onPopUpShowDispatch();
       if (this.props.finalPopup) this.props.onToggleFinalPopupDispatch(false);
+    } else if (e.keyCode === 46) {
+      if (typeof this.props.activeRow === 'number') this.props.onRemoveItem();
     }
   };
   buttonSummaryHandler = name => {
@@ -168,7 +170,8 @@ const mapStateToProps = state => ({
   quantityRedux: state.invoicePOS.quantityForm,
   trucks: state.truckSettings.availableTrucks,
   finalPopup: state.invoicePOS.finalPopup,
-  address: state.invoicePOS.address
+  address: state.invoicePOS.address,
+  activeRow: state.invoicePOS.activeRow
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -176,7 +179,8 @@ const mapDispatchToProps = dispatch => ({
   onChangeQualityDispatch: value => dispatch(actions.onChangeQuantity(value)),
   onToggleFinalPopupDispatch: toggle =>
     dispatch(actions.toggleFinalPopup(toggle)),
-  onEditAddressDispatch: value => dispatch(actions.editAddress(value))
+  onEditAddressDispatch: value => dispatch(actions.editAddress(value)),
+  onRemoveItem: () => dispatch(actions.voidItem())
 });
 
 export default connect(
