@@ -4,7 +4,8 @@ export {
   valueChangeTruck,
   saveTruck,
   editTruckSettings,
-  deleteTruckSettings
+  deleteTruckSettings,
+  fetchTruck
 } from './truckSettings';
 export {
   activeSupply,

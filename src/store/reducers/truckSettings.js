@@ -8,7 +8,8 @@ const initialState = {
     { maxLoad: '1', plateNo: 'gfh', status: 'maintenance' },
     { maxLoad: '1', plateNo: 'higi', status: 'maintenance' },
     { maxLoad: '1', plateNo: 'yu7h', status: 'maintenance' }
-  ]
+  ],
+  loading:false
 };
 
 const reducer = (state = initialState, action) => {
@@ -61,6 +62,22 @@ const reducer = (state = initialState, action) => {
           (_, i) => i !== action.payload
         )
       };
+      case actionTypes.FETCH_TRUCK_START:
+      return {
+        ...state,
+        loading: true
+      }
+      case actionTypes.FETCH_TRUCK_SUCCESS:
+      return {
+        ...state,
+        availableTrucks: action.payload,
+        loading: false
+      }
+      case actionTypes.FETCH_TRUCK_FAIL:
+      return {
+        ...state,
+        loading: false
+      }
     default:
       return state;
   }

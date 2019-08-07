@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
+import axios from '../../../axios-orders';
+
 import * as actions from '../../../store/actions/index';
 
 import { formFunction, status } from '../../../util/inputHelper';
@@ -23,7 +25,11 @@ class TruckBuilder extends Component {
     },
     view: 'form'
   };
-
+    async componentDidMount() {
+      this.props.fetchTrucksDispatch();
+      // const data = await axios.get('/settings/truck');
+      // console.log(data.data);
+    }
   onChangeValueHandler = async (index, name, event) => {
     this.props.valueChangeDispatch(index, name, event.target.value);
   };
@@ -44,6 +50,8 @@ class TruckBuilder extends Component {
 
     let toBeShown =
       this.state.view === 'form' ? (
+        view
+      ) : (
         <div className={styles.truckForm}>
           {' '}
           {this.props.truckForm.map((el, i) => {
@@ -75,11 +83,9 @@ class TruckBuilder extends Component {
             );
           })}
         </div>
-      ) : (
-        view
       );
     let button =
-      this.state.view === 'form' ? (
+      this.state.view === 'form' ? null : (
         <div className={styles.buttonPosition}>
           <Button cName="Main" click={this.props.addTruckDispatch}>
             &#9951; Add More Truck
@@ -89,15 +95,15 @@ class TruckBuilder extends Component {
             &#10004; Save
           </Button>
         </div>
-      ) : null;
-    return (
+      );
+    return this.props.loading? 'loading' : (
       <div className={styles.truckComponent}>
         <Head classname="green" svgname="truck">
           <HeadChild
             forClassName={this.state.view}
             dispatchClickView={this.onToggleView.bind(null, 'view')}
             dispatchClickForm={this.onToggleView.bind(null, 'form')}
-            childName="View"
+            childName="Form"
           >
             TRUCK
           </HeadChild>
@@ -111,7 +117,8 @@ class TruckBuilder extends Component {
 
 const mapStateToProps = state => ({
   truckForm: state.truckSettings.trucks,
-  availableTrucks: state.truckSettings.availableTrucks
+  availableTrucks: state.truckSettings.availableTrucks,
+  loading: state.truckSettings.loading
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -119,7 +126,8 @@ const mapDispatchToProps = dispatch => ({
   removeTruckDispatch: index => dispatch(actions.removeTruck(index)),
   valueChangeDispatch: (index, name, value) =>
     dispatch(actions.valueChangeTruck(index, name, value)),
-  saveTrucksDispatch: () => dispatch(actions.saveTruck())
+  saveTrucksDispatch: () => dispatch(actions.saveTruck()),
+  fetchTrucksDispatch: () => dispatch(actions.fetchTruck())
 });
 
 export default connect(

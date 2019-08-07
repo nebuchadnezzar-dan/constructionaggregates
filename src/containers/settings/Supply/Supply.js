@@ -167,12 +167,12 @@ class Supply extends Component {
     );
     let tobeShown =
       this.state.view === 'form' ? (
+        view
+      ) : (
         <div className={styles.supplyWrapper}>
           <Unordered classname="ulDefault">{inputList}</Unordered>
           <div className={styles.inputWrap}>{supplyInput}</div>
         </div>
-      ) : (
-        view
       );
     return (
       <div className={styles.supplyWrapperHead}>
@@ -181,7 +181,7 @@ class Supply extends Component {
             forClassName={this.state.view}
             dispatchClickView={this.onToggleView.bind(null, 'view')}
             dispatchClickForm={this.onToggleView.bind(null, 'form')}
-            childName="View"
+            childName="Form"
           >
             SUPPLY
           </HeadChild>

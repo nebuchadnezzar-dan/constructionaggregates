@@ -4,7 +4,8 @@ import './index.scss';
 import App from './App';
 
 import { Provider } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 import { BrowserRouter } from 'react-router-dom';
 
@@ -16,9 +17,9 @@ import customer from './store/reducers/customer';
 
 import * as serviceWorker from './serviceWorker';
 
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const basicDevtools =
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const basicDevtools =
+//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 const rootReducers = combineReducers({
   truckSettings: truckSettings,
   supplySettings: supplySettings,
@@ -27,12 +28,12 @@ const rootReducers = combineReducers({
   customer: customer
 });
 
-// const store = createStore(
-//   rootReducers,
-//   composeEnhancers(applyMiddleware(thunk))
-// );
+const store = createStore(
+  rootReducers,
+  composeEnhancers(applyMiddleware(thunk))
+);
 
-const store = createStore(rootReducers, basicDevtools);
+// const store = createStore(rootReducers, basicDevtools);
 
 const app = (
   <Provider store={store}>
