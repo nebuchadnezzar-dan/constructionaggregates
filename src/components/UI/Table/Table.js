@@ -15,10 +15,16 @@ class Table extends Component {
     dataValue: []
   };
   componentDidMount() {
-    const copyProps = this.props.data.map((dat, i) => ({
-      ...dat,
-      actions: 'view'
-    }));
+    const copyProps = this.props.data.map((dat, i) => {
+      const tempObj = {
+        ...dat,
+        actions: 'view'
+      };
+      delete tempObj.id;
+      return tempObj;
+    });
+    // const copyData = JSON.parse(JSON.stringify(this.props.data));
+    // copyData.forEach((dat) => delete dat.id);
     this.setState({ data: copyProps, dataValue: this.props.data });
   }
 
@@ -27,29 +33,29 @@ class Table extends Component {
     copyData[index] =
       toBeEdited !== 'status'
         ? {
-            ...copyData[index],
-            [toBeEdited]: (
-              <input
-                value={e.target.value}
-                onChange={this.onTouchEdit.bind(this, index, toBeEdited)}
-              />
-            )
-          }
+          ...copyData[index],
+          [toBeEdited]: (
+            <input
+              value={e.target.value}
+              onChange={this.onTouchEdit.bind(this, index, toBeEdited)}
+            />
+          )
+        }
         : {
-            ...copyData[index],
-            status: (
-              <select
-                value={e.target.value}
-                onChange={this.onTouchEdit.bind(this, index, 'status')}
-              >
-                {statusFromInput.map(st => (
-                  <option value={st.value} key={st.value}>
-                    {st.displayValue}
-                  </option>
-                ))}
-              </select>
-            )
-          };
+          ...copyData[index],
+          status: (
+            <select
+              value={e.target.value}
+              onChange={this.onTouchEdit.bind(this, index, 'status')}
+            >
+              {statusFromInput.map(st => (
+                <option value={st.value} key={st.value}>
+                  {st.displayValue}
+                </option>
+              ))}
+            </select>
+          )
+        };
     const copyValue = [...this.state.dataValue];
     copyValue[index][toBeEdited] = e.target.value;
     // const val = e.target.value;
@@ -63,6 +69,7 @@ class Table extends Component {
       ...copyValue[index],
       actions: 'view'
     };
+    delete copyData[index].id;
     this.setState({ data: copyData });
     if (this.props.from === 'truckSettings') {
       this.props.onEditTrucksDispatch(index, copyValue[index]);
@@ -77,12 +84,13 @@ class Table extends Component {
       copyData = [...this.state.data];
       let copyDataIndex = copyData[index];
       for (let copyData in copyDataIndex) {
-        copyDataIndex[copyData] = (
-          <input
-            value={this.state.data[index][copyData]}
-            onChange={this.onTouchEdit.bind(this, index, copyData)}
-          />
-        );
+        if (copyData !== 'id')
+          copyDataIndex[copyData] = (
+            <input
+              value={this.state.data[index][copyData]}
+              onChange={this.onTouchEdit.bind(this, index, copyData)}
+            />
+          );
       }
       if (copyDataIndex.status) {
         copyDataIndex.status = (
@@ -161,16 +169,16 @@ class Table extends Component {
                   </Button>
                 </td>
               ) : (
-                <td key={'actions' + i}>
-                  <Button
-                    cName="saveEdit"
-                    click={this.onSaveEdit.bind(null, i)}
-                  >
-                    {' '}
-                    &#10004;
+                  <td key={'actions' + i}>
+                    <Button
+                      cName="saveEdit"
+                      click={this.onSaveEdit.bind(null, i)}
+                    >
+                      {' '}
+                      &#10004;
                   </Button>
-                </td>
-              );
+                  </td>
+                );
             return (
               <tr
                 key={i}

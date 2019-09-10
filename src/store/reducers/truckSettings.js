@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  trucks: [{ maxLoad: '', plateNo: '', status: 'maintenance' }],
+  trucks: [{ id: '', maxLoad: '', plateNo: '', status: 'maintenance' }],
   availableTrucks: [
     { maxLoad: '2', plateNo: 'abc', status: 'maintenance' },
     { maxLoad: '3', plateNo: 'def', status: 'maintenance' },
@@ -9,7 +9,7 @@ const initialState = {
     { maxLoad: '1', plateNo: 'higi', status: 'maintenance' },
     { maxLoad: '1', plateNo: 'yu7h', status: 'maintenance' }
   ],
-  loading:false
+  loading: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -62,18 +62,18 @@ const reducer = (state = initialState, action) => {
           (_, i) => i !== action.payload
         )
       };
-      case actionTypes.FETCH_TRUCK_START:
+    case actionTypes.FETCH_TRUCK_START:
       return {
         ...state,
         loading: true
       }
-      case actionTypes.FETCH_TRUCK_SUCCESS:
+    case actionTypes.FETCH_TRUCK_SUCCESS:
       return {
         ...state,
         availableTrucks: action.payload,
         loading: false
       }
-      case actionTypes.FETCH_TRUCK_FAIL:
+    case actionTypes.FETCH_TRUCK_FAIL:
       return {
         ...state,
         loading: false
