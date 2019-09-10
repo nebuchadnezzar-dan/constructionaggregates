@@ -5,23 +5,40 @@
   font-size: 1.8rem;
   background-color: $red-light;
   color: #fff;
-  padding: 1rem;
+  padding: 1rem 2rem;
 }
 
 .customer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: 2rem 3rem;
-  & > * {
-    flex: 1;
+  width: 60%;
+  margin: auto;
+  border: 1px solid $red-light;
+
+  &Body{
+    padding: 1rem 2rem;
   }
+
+  &Body > div{
+    display: flex;
+    align-items: center;
+    margin: 2rem 0;
+  }
+
   &Name {
-    flex: 0 0 15%;
+    flex: 0 0 20%;
   }
+
   &Input {
     @include inputWithSearch;
     border: 1px solid $red-light;
     width: 90%;
   }
+
+  &InputWrapper {
+    flex: 1;
+  }
+   & button {
+     width: 50%;
+     margin-left: 25%;
+   }
+  
 }

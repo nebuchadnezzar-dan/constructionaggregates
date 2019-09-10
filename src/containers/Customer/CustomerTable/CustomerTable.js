@@ -9,6 +9,7 @@ import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
 const tableHead = [
   { display: 'customer', sort: 'lastName' },
+  { display: 'contact no', sort: 'contactNo' },
   { display: 'credit', sort: 'credit' },
   { display: 'date registered', sort: 'dateRegistered' },
   { display: 'no. of times purchased', sort: 'timesPurchased' }
@@ -151,6 +152,7 @@ class CustomerTable extends Component {
                       className={i % 2 === 0 ? styles.even : styles.odd}
                     >
                       <td>{`${customer.lastName}, ${customer.firstName}`}</td>
+                      <td>{customer.contactNo}</td>
                       <td>{totalCredit}</td>
                       <td>{customer.dateRegistered}</td>
                       <td>{customer.timesPurchased}</td>
