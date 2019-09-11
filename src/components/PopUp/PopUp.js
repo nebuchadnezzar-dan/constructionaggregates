@@ -101,7 +101,7 @@ class PopUp extends Component {
                 <div>Customer:</div>
                 <div>{`${props.customer.lastName}, ${
                   props.customer.firstName
-                }`}</div>
+                  }`}</div>
               </div>
               <div>
                 <div>Deliver at:</div>
@@ -193,7 +193,7 @@ class PopUp extends Component {
                 <div>Customer:</div>
                 <div>{`${props.customer.lastName}, ${
                   props.customer.firstName
-                }`}</div>
+                  }`}</div>
               </div>
               <div>
                 <div>Deliver at:</div>
@@ -308,13 +308,13 @@ class PopUp extends Component {
                 <div>Customer:</div>
                 <div>{`${props.customer.lastName}, ${
                   props.customer.firstName
-                }`}</div>
+                  }`}</div>
               </div>
             </div>
             <div className={styles.creditButton}>
               <Button
                 color="orange"
-                // click={this.onCreditButtonHandler.bind(null, total)}
+              // click={this.onCreditButtonHandler.bind(null, total)}
               >
                 Print
               </Button>
@@ -332,7 +332,7 @@ class PopUp extends Component {
         <Button
           cName="Close"
           color="red"
-          click={this.props.onToggleFinalPopupDispatch.bind(null, false)}
+          click={this.props.close}
         >
           X
         </Button>
@@ -361,9 +361,7 @@ const mapDispatchToProps = dispatch => ({
   addCreditDispatch: (customer, credit) =>
     dispatch(actions.addCredit(customer, credit)),
   resetDispatch: () => dispatch(actions.resetPos()),
-  editQuantityDispatch: value => dispatch(actions.editQuantity(value)),
-  onToggleFinalPopupDispatch: toggle =>
-    dispatch(actions.toggleFinalPopup(toggle))
+  editQuantityDispatch: value => dispatch(actions.editQuantity(value))
 });
 
 export default connect(

@@ -14,6 +14,7 @@ import POSCustomer from '../../components/POS/POSCustomer/POSCustomer';
 import POSSummary from '../../components/POS/POSSummary/POSSummary';
 import Button from '../../components/UI/Button/Button';
 import PopUp from '../../components/PopUp/PopUp';
+import PopupBack from '../../components/PopUp/PopupBack/PopupBack';
 import Auxillary from '../../hoc/Auxillary/Auxillary';
 import Truck from '../../components/POS/Truck/Truck';
 import POSButtons from '../../components/POS/POSButtons/POSButtons';
@@ -59,25 +60,19 @@ class Invoice extends Component {
     const popupShow = this.props.popup ? (
       <Auxillary>
         <div className={styles.popup}>
-          <PopUp cName="blink" type="simple">
+          <PopUp cName="blink" type="simple" close={this.props.onPopUpShowDispatch.bind(null)}>
             Entry doesn't exist
           </PopUp>
         </div>
-        <div
-          className={styles.popupBack}
-          onClick={this.props.onPopUpShowDispatch.bind(null)}
-        />
+        <PopupBack close={this.props.onPopUpShowDispatch.bind(null)} />
       </Auxillary>
     ) : null;
     const finalPopup = this.props.finalPopup ? (
       <Auxillary>
-        <div className={styles.finalPopup}>
-          <PopUp type="final" />
+        <div className={styles.popup}>
+          <PopUp type="final" close={this.props.onToggleFinalPopupDispatch.bind(null)} />
         </div>
-        <div
-          className={styles.finalPopupBack}
-          onClick={this.props.onToggleFinalPopupDispatch.bind(null, false)}
-        />
+        <PopupBack close={this.props.onToggleFinalPopupDispatch.bind(null, false)} />
       </Auxillary>
     ) : null;
     return (

@@ -15,6 +15,10 @@ import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 
+import Auxillary from '../../../hoc/Auxillary/Auxillary';
+import PopUp from '../../../components/PopUp/PopUp';
+import PopupBack from '../../../components/PopUp/PopupBack/PopupBack';
+
 import styles from './TruckBuilder.module.scss';
 
 class TruckBuilder extends Component {
@@ -97,8 +101,15 @@ class TruckBuilder extends Component {
           </Button>
         </div>
       );
+    let showPopup = this.props.popup ? <Auxillary>
+      <div className={styles.popup}>
+        <PopUp type="simple" close={this.props.closePopup.bind(null)}>Test</PopUp>
+      </div>
+      <PopupBack close={this.props.closePopup.bind(null)} />
+    </Auxillary> : null;
     return this.props.loading ? <Spinner /> : (
       <div className={styles.truckComponent}>
+        {showPopup}
         <Head classname="green" svgname="truck">
           <HeadChild
             forClassName={this.state.view}
@@ -119,7 +130,8 @@ class TruckBuilder extends Component {
 const mapStateToProps = state => ({
   truckForm: state.truckSettings.trucks,
   availableTrucks: state.truckSettings.availableTrucks,
-  loading: state.truckSettings.loading
+  loading: state.truckSettings.loading,
+  popup: state.truckSettings.popup
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -128,7 +140,8 @@ const mapDispatchToProps = dispatch => ({
   valueChangeDispatch: (index, name, value) =>
     dispatch(actions.valueChangeTruck(index, name, value)),
   saveTrucksDispatch: () => dispatch(actions.saveTruck()),
-  fetchTrucksDispatch: () => dispatch(actions.fetchTruck())
+  fetchTrucksDispatch: () => dispatch(actions.fetchTruck()),
+  closePopup: () => dispatch(actions.togglePopupSettings())
 });
 
 export default connect(

@@ -30,6 +30,10 @@ export const deleteTruckSettings = index => ({
   payload: index
 });
 
+export const togglePopupSettings = () => ({
+  type: actionTypes.CLOSE_POPUP_SETTINGS
+})
+
 export const fetchTruckStart = () => ({
   type: actionTypes.FETCH_TRUCK_START
 });

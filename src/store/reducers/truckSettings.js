@@ -9,7 +9,8 @@ const initialState = {
     { maxLoad: '1', plateNo: 'higi', status: 'maintenance' },
     { maxLoad: '1', plateNo: 'yu7h', status: 'maintenance' }
   ],
-  loading: false
+  loading: false,
+  popup: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -76,7 +77,13 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FETCH_TRUCK_FAIL:
       return {
         ...state,
-        loading: false
+        loading: false,
+        popup: true
+      }
+    case actionTypes.CLOSE_POPUP_SETTINGS:
+      return {
+        ...state,
+        popup: false
       }
     default:
       return state;
