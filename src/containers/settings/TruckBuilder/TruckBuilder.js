@@ -13,6 +13,7 @@ import Button from '../../../components/UI/Button/Button';
 import Head from '../../../components/UI/Head/Head';
 import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 
 import styles from './TruckBuilder.module.scss';
 
@@ -25,11 +26,11 @@ class TruckBuilder extends Component {
     },
     view: 'form'
   };
-    async componentDidMount() {
-      this.props.fetchTrucksDispatch();
-      // const data = await axios.get('/settings/truck');
-      // console.log(data.data);
-    }
+  async componentDidMount() {
+    this.props.fetchTrucksDispatch();
+    // const data = await axios.get('/settings/truck');
+    // console.log(data.data);
+  }
   onChangeValueHandler = async (index, name, event) => {
     this.props.valueChangeDispatch(index, name, event.target.value);
   };
@@ -52,38 +53,38 @@ class TruckBuilder extends Component {
       this.state.view === 'form' ? (
         view
       ) : (
-        <div className={styles.truckForm}>
-          {' '}
-          {this.props.truckForm.map((el, i) => {
-            let input = [];
-            for (let formKey in this.state.truckForm) {
-              input.push(
-                <Input
-                  key={formKey}
-                  name={formKey}
-                  elementInputType={this.state.truckForm[formKey].elementType}
-                  elementConfig={this.state.truckForm[formKey].elementConfig}
-                  change={this.onChangeValueHandler}
-                  value={el[formKey]}
-                  ind={i}
-                  color="green"
-                />
-              );
-            }
-            return (
-              <div key={i} className={styles.rowForm}>
-                <Button
-                  cName="Close"
-                  click={this.props.removeTruckDispatch.bind(null, i)}
-                >
-                  X
+          <div className={styles.truckForm}>
+            {' '}
+            {this.props.truckForm.map((el, i) => {
+              let input = [];
+              for (let formKey in this.state.truckForm) {
+                input.push(
+                  <Input
+                    key={formKey}
+                    name={formKey}
+                    elementInputType={this.state.truckForm[formKey].elementType}
+                    elementConfig={this.state.truckForm[formKey].elementConfig}
+                    change={this.onChangeValueHandler}
+                    value={el[formKey]}
+                    ind={i}
+                    color="green"
+                  />
+                );
+              }
+              return (
+                <div key={i} className={styles.rowForm}>
+                  <Button
+                    cName="Close"
+                    click={this.props.removeTruckDispatch.bind(null, i)}
+                  >
+                    X
                 </Button>
-                {input}
-              </div>
-            );
-          })}
-        </div>
-      );
+                  {input}
+                </div>
+              );
+            })}
+          </div>
+        );
     let button =
       this.state.view === 'form' ? null : (
         <div className={styles.buttonPosition}>
@@ -96,7 +97,7 @@ class TruckBuilder extends Component {
           </Button>
         </div>
       );
-    return this.props.loading? 'loading' : (
+    return this.props.loading ? <Spinner /> : (
       <div className={styles.truckComponent}>
         <Head classname="green" svgname="truck">
           <HeadChild
