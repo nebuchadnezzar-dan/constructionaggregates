@@ -9,6 +9,8 @@ import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
+// import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+
 import * as actions from '../../../store/actions/index';
 
 import styles from './Supply.module.scss';
@@ -153,8 +155,8 @@ class Supply extends Component {
           </Button>
         </div>
       ) : (
-        supplyInput
-      );
+          supplyInput
+        );
     let view = (
       <div className={styles.view}>
         {' '}
@@ -169,11 +171,11 @@ class Supply extends Component {
       this.state.view === 'form' ? (
         view
       ) : (
-        <div className={styles.supplyWrapper}>
-          <Unordered classname="ulDefault">{inputList}</Unordered>
-          <div className={styles.inputWrap}>{supplyInput}</div>
-        </div>
-      );
+          <div className={styles.supplyWrapper}>
+            <Unordered classname="ulDefault">{inputList}</Unordered>
+            <div className={styles.inputWrap}>{supplyInput}</div>
+          </div>
+        );
     return (
       <div className={styles.supplyWrapperHead}>
         <Head classname="orange" svgname="supply">

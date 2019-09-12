@@ -16,8 +16,8 @@ import Table from '../../../components/UI/Table/Table';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
-import PopUp from '../../../components/PopUp/PopUp';
-import PopupBack from '../../../components/PopUp/PopupBack/PopupBack';
+
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
 import styles from './TruckBuilder.module.scss';
 
@@ -101,27 +101,24 @@ class TruckBuilder extends Component {
           </Button>
         </div>
       );
-    let showPopup = this.props.popup ? <Auxillary>
-      <div className={styles.popup}>
-        <PopUp type="simple" close={this.props.closePopup.bind(null)}>Test</PopUp>
-      </div>
-      <PopupBack close={this.props.closePopup.bind(null)} />
-    </Auxillary> : null;
+    let withError = this.props.popup ? <p className={styles.errorMessage}>Can't load trucks!</p> : <Auxillary>
+      <Head classname="green" svgname="truck">
+        <HeadChild
+          forClassName={this.state.view}
+          dispatchClickView={this.onToggleView.bind(null, 'view')}
+          dispatchClickForm={this.onToggleView.bind(null, 'form')}
+          childName="Form"
+        >
+          TRUCK
+          </HeadChild>
+      </Head>
+      {toBeShown}
+      {button}
+    </Auxillary>
     return this.props.loading ? <Spinner /> : (
       <div className={styles.truckComponent}>
-        {showPopup}
-        <Head classname="green" svgname="truck">
-          <HeadChild
-            forClassName={this.state.view}
-            dispatchClickView={this.onToggleView.bind(null, 'view')}
-            dispatchClickForm={this.onToggleView.bind(null, 'form')}
-            childName="Form"
-          >
-            TRUCK
-          </HeadChild>
-        </Head>
-        {toBeShown}
-        {button}
+        {this.props.children}
+        {withError}
       </div>
     );
   }
@@ -147,4 +144,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TruckBuilder);
+)(withErrorHandler(TruckBuilder, axios));
