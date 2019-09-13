@@ -17,7 +17,8 @@ const initialState = {
     { materials: 'gravel', amount: '50', price: '2100' },
     { materials: 'river Mixed', amount: '60', price: '2100' },
     { materials: 'cement', amount: '150', price: '150' }
-  ]
+  ],
+  loading: false
 };
 
 const copyState = state => JSON.parse(JSON.stringify(state));
@@ -81,6 +82,22 @@ const reducer = (state = initialState, action) => {
         ...state,
         supplies: { ...state.supplies, [action.payload]: supplySet() }
       };
+    case actionTypes.FETCH_SUPPLY_START:
+      return {
+        ...state,
+        loading: true
+      }
+    case actionTypes.FETCH_SUPPLY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        activeSupplies: action.payload
+      };
+    case actionTypes.FETCH_SUPPLY_FAIL:
+      return {
+        ...state,
+        loading: false
+      }
     default:
       return state;
   }

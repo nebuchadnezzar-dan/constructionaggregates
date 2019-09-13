@@ -17,8 +17,12 @@ const withErrorHandler = (WrappedComponent, axios) => {
             });
             this.resInterceptor = axios.interceptors.response.use(res => res,
                 error => {
-                    console.log(error);
-                    this.setState({ error: error });
+                    // console.log(JSON.stringify(error));
+                    console.log(error.message)
+                    // console.log(error.response.data);
+                    // console.log(error.response.status);
+                    // console.log(error.response.headers);
+                    this.setState({ error: error.message });
                 });
 
         }
@@ -36,7 +40,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
         render() {
             const showModal = this.state.error ? <Auxillary>
                 <div className={styles.popup} >
-                    <PopUp type="simple" close={this.onClose.bind(null)}>Test</PopUp>
+                    <PopUp type="simple" close={this.onClose.bind(null)}>{this.state.error}</PopUp>
                 </div>
                 <PopupBack close={this.onClose.bind(null)} />
             </Auxillary> : null;

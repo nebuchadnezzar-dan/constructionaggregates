@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import axios from '../../../axios-orders';
+
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import Unordered from '../../../components/UI/Unordered/Unordered';
@@ -8,6 +10,7 @@ import Head from '../../../components/UI/Head/Head';
 import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 
 // import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
@@ -21,6 +24,11 @@ class Supply extends Component {
     activeSupp: '',
     addForm: ''
   };
+  async componentDidMount() {
+    // const data = await axios.get('/settings/supply');
+    // console.log(data);
+    this.props.fetchSupply();
+  }
   // parameters _ is not needed
   onChangeValueHandler = (name, _, __, value, event) => {
     // console.log(name, value);
@@ -176,6 +184,7 @@ class Supply extends Component {
             <div className={styles.inputWrap}>{supplyInput}</div>
           </div>
         );
+    // let spinner = this.props
     return (
       <div className={styles.supplyWrapperHead}>
         <Head classname="orange" svgname="supply">
@@ -206,7 +215,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.valueChangeSupply(name, inputMod, value)),
   supplyOnClickSupplyButtonDispatch: name =>
     dispatch(actions.addSupplyValue(name)),
-  supplyAddMaterials: matName => dispatch(actions.addMaterialToSupply(matName))
+  supplyAddMaterials: matName => dispatch(actions.addMaterialToSupply(matName)),
+  fetchSupply: () => dispatch(actions.fetchSupply())
 });
 
 export default connect(
