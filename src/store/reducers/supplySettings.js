@@ -18,7 +18,8 @@ const initialState = {
     { materials: 'river Mixed', amount: '60', price: '2100' },
     { materials: 'cement', amount: '150', price: '150' }
   ],
-  loading: false
+  loading: false,
+  error: false
 };
 
 const copyState = state => JSON.parse(JSON.stringify(state));
@@ -96,7 +97,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FETCH_SUPPLY_FAIL:
       return {
         ...state,
-        loading: false
+        loading: false,
+        error: true
       }
     default:
       return state;

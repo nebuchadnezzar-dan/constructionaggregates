@@ -45,7 +45,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
                 <PopupBack close={this.onClose.bind(null)} />
             </Auxillary> : null;
             return <Auxillary>
-                <WrappedComponent {...this.props} >
+                <WrappedComponent {...this.props}>
                     {showModal}
                 </WrappedComponent>
             </Auxillary>

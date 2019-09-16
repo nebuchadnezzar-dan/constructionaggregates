@@ -18,6 +18,7 @@
   border-radius: 0.6rem;
   box-shadow: $box-shadows-1;
   margin-top: 6rem;
+  position: relative;
 }
 .supplyWrapper {
   display: flex;
@@ -42,4 +43,8 @@
   font-weight: bold;
   color: $darkslategrey;
   margin-bottom: 1rem;
+}
+
+.errorMessage {
+  padding: 4rem 5rem;
 }

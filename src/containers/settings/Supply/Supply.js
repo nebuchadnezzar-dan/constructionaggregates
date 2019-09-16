@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import axios from '../../../axios-orders';
+// import axios from '../../../axios-orders';
 
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
@@ -11,8 +11,6 @@ import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-
-// import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
 import * as actions from '../../../store/actions/index';
 
@@ -184,21 +182,26 @@ class Supply extends Component {
             <div className={styles.inputWrap}>{supplyInput}</div>
           </div>
         );
-    // let spinner = this.props
-    return (
-      <div className={styles.supplyWrapperHead}>
-        <Head classname="orange" svgname="supply">
-          <HeadChild
-            forClassName={this.state.view}
-            dispatchClickView={this.onToggleView.bind(null, 'view')}
-            dispatchClickForm={this.onToggleView.bind(null, 'form')}
-            childName="Form"
-          >
-            SUPPLY
+    let mainSupplyBody = <div className={styles.supplyWrapperHead}>
+      {this.props.children}
+      <Head classname="orange" svgname="supply">
+        <HeadChild
+          forClassName={this.state.view}
+          dispatchClickView={this.onToggleView.bind(null, 'view')}
+          dispatchClickForm={this.onToggleView.bind(null, 'form')}
+          childName="Form"
+        >
+          SUPPLY
           </HeadChild>
-        </Head>
-        {tobeShown}
-      </div>
+      </Head>
+      {tobeShown}
+    </div>;
+    const spinner = <div style={{ display: 'block' }}><Spinner /></div>;
+    let bodyWithSpinner = this.props.loading ? spinner : mainSupplyBody;
+    return (
+      <Auxillary>
+        {bodyWithSpinner}
+      </Auxillary>
     );
   }
 }
@@ -206,7 +209,9 @@ class Supply extends Component {
 const mapStateToProps = state => ({
   activeSupp: state.supplySettings.activeSupp,
   supplies: state.supplySettings.supplies,
-  activeSupplies: state.supplySettings.activeSupplies
+  activeSupplies: state.supplySettings.activeSupplies,
+  loading: state.supplySettings.loading,
+  error: state.supplySettings.error
 });
 
 const mapDispatchToProps = dispatch => ({
