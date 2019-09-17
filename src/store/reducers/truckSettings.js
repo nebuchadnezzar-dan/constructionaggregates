@@ -71,6 +71,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FETCH_TRUCK_SUCCESS:
       return {
         ...state,
+        error: false,
         availableTrucks: action.payload,
         loading: false
       }

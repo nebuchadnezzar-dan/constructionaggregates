@@ -6,11 +6,20 @@ import axios from '../../axios-orders';
 
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
+import * as actions from '../../store/actions/index';
+
 import Auxillary from '../../hoc/Auxillary/Auxillary';
 import TruckBuilder from './TruckBuilder/TruckBuilder';
 import Supply from './Supply/Supply';
 
+import Spinner from '../../components/UI/Spinner/Spinner';
+
 class Settings extends Component {
+  componentDidMount() {
+    this.props.fetchTruckSettings();
+    this.props.fetchSupplySettings();
+  }
+
   render() {
     console.log('[Settings]', this.props.children);
     let bodyWithError = this.props.errorTruck || this.props.errorSupply ?
@@ -21,10 +30,11 @@ class Settings extends Component {
         <TruckBuilder />
         <Supply />
       </Auxillary>);
+    let bodyWithErrorAndSpinner = this.props.loadingTruck || this.props.loadingSupply ? <div><Spinner /></div> : bodyWithError;
     return (
       <Auxillary>
         {this.props.children}
-        {bodyWithError}
+        {bodyWithErrorAndSpinner}
       </Auxillary>
     );
   }
@@ -32,7 +42,14 @@ class Settings extends Component {
 
 const mapStateToProps = state => ({
   errorTruck: state.truckSettings.error,
-  errorSupply: state.supplySettings.error
-})
+  errorSupply: state.supplySettings.error,
+  loadingTruck: state.truckSettings.loading,
+  loadingSupply: state.supplySettings.loading
+});
 
-export default connect(mapStateToProps)(withErrorHandler(Settings, axios));
+const mapDispatchToProps = dispatch => ({
+  fetchTruckSettings: () => dispatch(actions.fetchTruck()),
+  fetchSupplySettings: () => dispatch(actions.fetchSupply())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Settings, axios));

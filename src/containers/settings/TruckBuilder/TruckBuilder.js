@@ -13,7 +13,6 @@ import Button from '../../../components/UI/Button/Button';
 import Head from '../../../components/UI/Head/Head';
 import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
-import Spinner from '../../../components/UI/Spinner/Spinner';
 
 import styles from './TruckBuilder.module.scss';
 
@@ -26,11 +25,7 @@ class TruckBuilder extends Component {
     },
     view: 'form'
   };
-  async componentDidMount() {
-    this.props.fetchTrucksDispatch();
-    // const data = await axios.get('/settings/truck');
-    // console.log(data.data);
-  }
+
   onChangeValueHandler = async (index, name, event) => {
     this.props.valueChangeDispatch(index, name, event.target.value);
   };
@@ -97,7 +92,7 @@ class TruckBuilder extends Component {
           </Button>
         </div>
       );
-    return this.props.loading ? <Spinner /> : (
+    return (
       <div className={styles.truckComponent}>
         {this.props.children}
         <Head classname="green" svgname="truck">
@@ -119,9 +114,7 @@ class TruckBuilder extends Component {
 
 const mapStateToProps = state => ({
   truckForm: state.truckSettings.trucks,
-  availableTrucks: state.truckSettings.availableTrucks,
-  loading: state.truckSettings.loading,
-  popup: state.truckSettings.popup
+  availableTrucks: state.truckSettings.availableTrucks
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -129,9 +122,7 @@ const mapDispatchToProps = dispatch => ({
   removeTruckDispatch: index => dispatch(actions.removeTruck(index)),
   valueChangeDispatch: (index, name, value) =>
     dispatch(actions.valueChangeTruck(index, name, value)),
-  saveTrucksDispatch: () => dispatch(actions.saveTruck()),
-  fetchTrucksDispatch: () => dispatch(actions.fetchTruck()),
-  closePopup: () => dispatch(actions.togglePopupSettings())
+  saveTrucksDispatch: () => dispatch(actions.saveTruck())
 });
 
 export default connect(

@@ -92,6 +92,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        error: false,
         activeSupplies: action.payload
       };
     case actionTypes.FETCH_SUPPLY_FAIL:
