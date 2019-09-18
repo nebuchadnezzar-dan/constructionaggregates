@@ -21,7 +21,6 @@ class Settings extends Component {
   }
 
   render() {
-    console.log('[Settings]', this.props.children);
     let bodyWithError = this.props.errorTruck || this.props.errorSupply ?
       (<div style={{ padding: '3rem 4.5rem', backgroundColor: '#fff' }}>
         Can't load Settings!

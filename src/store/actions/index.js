@@ -35,3 +35,4 @@ export {
   editQuantity
 } from './invoicePOS';
 export { addCustomer, addCredit } from './customer';
+export { toggleGlobalModal } from './modal';

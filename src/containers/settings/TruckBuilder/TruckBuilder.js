@@ -13,6 +13,7 @@ import Button from '../../../components/UI/Button/Button';
 import Head from '../../../components/UI/Head/Head';
 import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
+import Modal from '../../../components/UI/Modal/Modal';
 
 import styles from './TruckBuilder.module.scss';
 
@@ -43,13 +44,23 @@ class TruckBuilder extends Component {
         />
       </div>
     );
-
+    const modalBody = (
+      <Modal>
+        <div className={styles.modalBody}>
+          <p>Are you sure you want to proceed?</p>
+          <Button color="green">Yes</Button>
+          <Button color="red" click={this.props.toggleGlobalModal.bind(null, false)}>Cancel</Button>
+        </div>
+      </Modal>
+    );
+    let modalConfirmation = this.props.showGlobalModal ? modalBody : null;
     let toBeShown =
       this.state.view === 'form' ? (
         view
       ) : (
           <div className={styles.truckForm}>
             {' '}
+            {modalConfirmation}
             {this.props.truckForm.map((el, i) => {
               let input = [];
               for (let formKey in this.state.truckForm) {
@@ -86,7 +97,11 @@ class TruckBuilder extends Component {
           <Button cName="Main" click={this.props.addTruckDispatch}>
             &#9951; Add More Truck
           </Button>
-          <Button cName="mainSave" click={this.props.saveTrucksDispatch}>
+          {/* <Button cName="mainSave" click={this.props.saveTrucksDispatch}>
+            {' '}
+            &#10004; Save
+          </Button> */}
+          <Button cName="mainSave" click={this.props.toggleGlobalModal.bind(null, true)}>
             {' '}
             &#10004; Save
           </Button>
@@ -114,7 +129,8 @@ class TruckBuilder extends Component {
 
 const mapStateToProps = state => ({
   truckForm: state.truckSettings.trucks,
-  availableTrucks: state.truckSettings.availableTrucks
+  availableTrucks: state.truckSettings.availableTrucks,
+  showGlobalModal: state.modal.showGlobalModal
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -122,7 +138,8 @@ const mapDispatchToProps = dispatch => ({
   removeTruckDispatch: index => dispatch(actions.removeTruck(index)),
   valueChangeDispatch: (index, name, value) =>
     dispatch(actions.valueChangeTruck(index, name, value)),
-  saveTrucksDispatch: () => dispatch(actions.saveTruck())
+  saveTrucksDispatch: () => dispatch(actions.saveTruck()),
+  toggleGlobalModal: value => dispatch(actions.toggleGlobalModal(value))
 });
 
 export default connect(

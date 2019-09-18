@@ -43,3 +43,5 @@ export const EDIT_QUANTITY = 'EDIT_QUANTITY';
 
 export const ADD_CUSTOMER = 'ADD_CUSTOMER';
 export const ADD_CREDIT = 'ADD_CREDIT';
+
+export const TOGGLE_GLOBAL_MODAL = 'TOGGLE_GLOBAL_MODAL'; 
