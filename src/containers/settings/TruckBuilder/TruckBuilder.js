@@ -33,6 +33,10 @@ class TruckBuilder extends Component {
   onToggleView = value => {
     this.setState({ view: value });
   };
+  onSendPostRequest = async () => {
+    await this.props.saveTrucksDispatch();
+    this.props.postTruckDispatch(this.props.toBeSavedTrucks);
+  }
 
   render() {
     const view = (
@@ -48,7 +52,7 @@ class TruckBuilder extends Component {
       <Modal>
         <div className={styles.modalBody}>
           <p>Are you sure you want to proceed?</p>
-          <Button color="green">Yes</Button>
+          <Button color="green" click={this.onSendPostRequest.bind(null)} >Yes</Button>
           <Button color="red" click={this.props.toggleGlobalModal.bind(null, false)}>Cancel</Button>
         </div>
       </Modal>
@@ -130,7 +134,8 @@ class TruckBuilder extends Component {
 const mapStateToProps = state => ({
   truckForm: state.truckSettings.trucks,
   availableTrucks: state.truckSettings.availableTrucks,
-  showGlobalModal: state.modal.showGlobalModal
+  showGlobalModal: state.modal.showGlobalModal,
+  toBeSavedTrucks: state.truckSettings.trucksToBeSaved
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -139,7 +144,8 @@ const mapDispatchToProps = dispatch => ({
   valueChangeDispatch: (index, name, value) =>
     dispatch(actions.valueChangeTruck(index, name, value)),
   saveTrucksDispatch: () => dispatch(actions.saveTruck()),
-  toggleGlobalModal: value => dispatch(actions.toggleGlobalModal(value))
+  toggleGlobalModal: value => dispatch(actions.toggleGlobalModal(value)),
+  postTruckDispatch: data => dispatch(actions.postTruck(data))
 });
 
 export default connect(

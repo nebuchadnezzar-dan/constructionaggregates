@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  trucks: [{ id: '', maxLoad: '', plateNo: '', status: 'maintenance' }],
+  trucks: [{ maxLoad: '', plateNo: '', status: 'maintenance' }],
   availableTrucks: [
     { maxLoad: '2', plateNo: 'abc', status: 'maintenance' },
     { maxLoad: '3', plateNo: 'def', status: 'maintenance' },
@@ -9,6 +9,7 @@ const initialState = {
     { maxLoad: '1', plateNo: 'higi', status: 'maintenance' },
     { maxLoad: '1', plateNo: 'yu7h', status: 'maintenance' }
   ],
+  trucksToBeSaved: [],
   loading: false,
   error: false
 };
@@ -47,6 +48,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         availableTrucks: state.availableTrucks.concat(state.trucks),
+        trucksToBeSaved: state.trucks,
         trucks: initialState.trucks
       };
     case actionTypes.EDIT_TRUCK_SETTINGS:

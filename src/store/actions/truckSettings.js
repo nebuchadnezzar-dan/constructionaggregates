@@ -58,3 +58,28 @@ export const fetchTruck = () => {
     }
   };
 };
+
+export const postTruckStart = () => ({
+  type: actionTypes.POST_TRUCK_START
+});
+
+export const postTruckSuccess = data => ({
+  type: actionTypes.POST_TRUCK_SUCCESS,
+  payload: data
+});
+
+export const postTruckFail = () => ({
+  type: actionTypes.POST_TRUCK_FAIL
+});
+
+export const postTruck = (truckData) => {
+  return async dispatch => {
+    try {
+      dispatch(postTruckStart());
+      const data = await axios.post('/settings/truck', truckData);
+      dispatch(postTruckSuccess(data));
+    } catch (e) {
+      dispatch(postTruckFail());
+    }
+  }
+};
