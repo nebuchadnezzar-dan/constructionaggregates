@@ -30,8 +30,8 @@ export const deleteTruckSettings = index => ({
   payload: index
 });
 
-export const togglePopupSettings = () => ({
-  type: actionTypes.CLOSE_POPUP_SETTINGS
+export const truckRequestReset = () => ({
+  type: actionTypes.TRUCK_REQUEST_RESET
 })
 
 export const fetchTruckStart = () => ({
@@ -77,7 +77,8 @@ export const postTruck = (truckData) => {
     try {
       dispatch(postTruckStart());
       const data = await axios.post('/settings/truck', truckData);
-      dispatch(postTruckSuccess(data));
+      // console.log(data.data);
+      dispatch(postTruckSuccess(data.data));
     } catch (e) {
       dispatch(postTruckFail());
     }

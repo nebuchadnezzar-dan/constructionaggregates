@@ -29,7 +29,7 @@ class Settings extends Component {
         <TruckBuilder />
         <Supply />
       </Auxillary>);
-    let bodyWithErrorAndSpinner = this.props.loadingTruck || this.props.loadingSupply ? <div><Spinner /></div> : bodyWithError;
+    let bodyWithErrorAndSpinner = this.props.loadingTruck || this.props.loadingSupply ? <div><Spinner color="default" /></div> : bodyWithError;
     return (
       <Auxillary>
         {this.props.children}

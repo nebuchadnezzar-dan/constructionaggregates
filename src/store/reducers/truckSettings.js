@@ -11,7 +11,9 @@ const initialState = {
   ],
   trucksToBeSaved: [],
   loading: false,
-  error: false
+  error: false,
+  postLoading: false,
+  postError: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -65,6 +67,11 @@ const reducer = (state = initialState, action) => {
           (_, i) => i !== action.payload
         )
       };
+    case actionTypes.TRUCK_REQUEST_RESET:
+      return {
+        ...state,
+        postError: false
+      }
     case actionTypes.FETCH_TRUCK_START:
       return {
         ...state,
@@ -82,6 +89,25 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: true
+      }
+    case actionTypes.POST_TRUCK_START:
+      return {
+        ...state,
+        postLoading: true,
+        postError: false
+      }
+    case actionTypes.POST_TRUCK_SUCCESS:
+      return {
+        ...state,
+        postLoading: false,
+        trucksToBeSaved: [],
+        availableTrucks: state.availableTrucks.concat(action.payload)
+      }
+    case actionTypes.POST_TRUCK_FAIL:
+      return {
+        ...state,
+        postLoading: false,
+        postError: true
       }
     default:
       return state;

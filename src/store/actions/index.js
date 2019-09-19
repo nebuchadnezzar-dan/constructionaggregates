@@ -6,8 +6,8 @@ export {
   editTruckSettings,
   deleteTruckSettings,
   fetchTruck,
-  togglePopupSettings,
-  postTruck
+  postTruck,
+  truckRequestReset
 } from './truckSettings';
 export {
   activeSupply,
