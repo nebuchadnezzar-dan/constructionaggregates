@@ -1,4 +1,5 @@
 export const status = [
+  { value: 'available', displayValue: 'Available' },
   { value: 'maintenance', displayValue: 'Maintenance' },
   { value: 'delivering', displayValue: 'Delivering' },
   { value: 'other', displayValue: 'Other' }

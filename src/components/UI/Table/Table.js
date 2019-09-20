@@ -15,9 +15,11 @@ import Auxillary from '../../../hoc/Auxillary/Auxillary';
 class Table extends Component {
   state = {
     data: [],
-    dataValue: []
+    dataValue: [],
+    untouchedValue: []
   };
   componentDidMount() {
+    console.log(this.props.data);
     const copyProps = this.props.data.map((dat, i) => {
       const tempObj = {
         ...dat,
@@ -28,10 +30,11 @@ class Table extends Component {
     });
     // const copyData = JSON.parse(JSON.stringify(this.props.data));
     // copyData.forEach((dat) => delete dat.id);
-    this.setState({ data: copyProps, dataValue: this.props.data });
+    this.setState({ data: copyProps, untouchedValue: copyProps, dataValue: this.props.data });
   }
 
   onTouchEdit = (index, toBeEdited, e) => {
+    // const copyData = JSON.parse(JSON.stringify(this.state.data));
     const copyData = [...this.state.data];
     copyData[index] =
       toBeEdited !== 'status'
@@ -72,7 +75,6 @@ class Table extends Component {
       ...copyValue[index],
       actions: 'view'
     };
-    delete copyData[index].id;
     this.setState({ data: copyData });
     if (this.props.from === 'truckSettings') {
       this.props.onEditTrucksDispatch(index, copyValue[index]);
@@ -81,10 +83,25 @@ class Table extends Component {
     }
   };
 
+  onCancelEdit = (index) => {
+    const copyData = [...this.state.data];
+    const copyValue = [...this.state.untouchedValue];
+    copyData[index] = {
+      ...copyValue[index],
+      actions: 'view'
+    };
+    this.setState({ data: copyData });
+    // if (this.props.from === 'truckSettings') {
+    //   this.props.onEditTrucksDispatch(index, copyValue[index]);
+    // } else {
+    //   this.props.onEditSupplyDispatch(index, copyValue[index]);
+    // }
+  }
+
   onButtonClick = (from, button, index, _) => {
     let copyData;
     if (button === 'edit') {
-      copyData = [...this.state.data];
+      copyData = JSON.parse(JSON.stringify(this.state.data));
       let copyDataIndex = copyData[index];
       for (let copyData in copyDataIndex) {
         copyDataIndex[copyData] = (
@@ -123,6 +140,7 @@ class Table extends Component {
 
       copyData = this.state.data.filter((_, i) => i !== index);
     }
+
     this.setState({ data: copyData });
   };
 
@@ -179,13 +197,12 @@ class Table extends Component {
                   </Button>
                     <Button
                       cName="edit"
-                      click={this.onClickButtonForConfirmation.bind(null, this.props.from)}
-                    // click={this.onButtonClick.bind(
-                    //   null,
-                    //   this.props.from,
-                    //   'edit',
-                    //   i
-                    // )}
+                      click={this.onButtonClick.bind(
+                        null,
+                        this.props.from,
+                        'edit',
+                        i
+                      )}
                     >
                       &#9998;
                   </Button>
@@ -194,10 +211,19 @@ class Table extends Component {
                     <td key={'actions' + i}>
                       <Button
                         cName="saveEdit"
+                        // click={this.onClickButtonForConfirmation.bind(null, this.props.from)}
                         click={this.onSaveEdit.bind(null, i)}
                       >
                         {' '}
                         &#10004;
+                  </Button>
+                      <Button
+                        color="red"
+                        // click={this.onClickButtonForConfirmation.bind(null, this.props.from)}
+                        click={this.onCancelEdit.bind(null, i)}
+                      >
+                        {' '}
+                        &#10006;
                   </Button>
                     </td>
                   );
