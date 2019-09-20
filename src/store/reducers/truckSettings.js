@@ -49,7 +49,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SAVE_TRUCK:
       return {
         ...state,
-        availableTrucks: state.availableTrucks.concat(state.trucks),
+        // availableTrucks: state.availableTrucks.concat(state.trucks),
         trucksToBeSaved: state.trucks,
         trucks: initialState.trucks
       };

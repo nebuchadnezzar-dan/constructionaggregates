@@ -8,6 +8,9 @@ import { status as statusFromInput } from '../../../util/inputHelper';
 import styles from './Table.module.scss';
 
 import Button from '../Button/Button';
+import Modal from '../Modal/Modal';
+import Spinner from '../Spinner/Spinner';
+import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
 class Table extends Component {
   state = {
@@ -20,7 +23,7 @@ class Table extends Component {
         ...dat,
         actions: 'view'
       };
-      delete tempObj.id;
+      // delete tempObj.id;
       return tempObj;
     });
     // const copyData = JSON.parse(JSON.stringify(this.props.data));
@@ -84,13 +87,12 @@ class Table extends Component {
       copyData = [...this.state.data];
       let copyDataIndex = copyData[index];
       for (let copyData in copyDataIndex) {
-        if (copyData !== 'id')
-          copyDataIndex[copyData] = (
-            <input
-              value={this.state.data[index][copyData]}
-              onChange={this.onTouchEdit.bind(this, index, copyData)}
-            />
-          );
+        copyDataIndex[copyData] = (
+          <input
+            value={this.state.data[index][copyData]}
+            onChange={this.onTouchEdit.bind(this, index, copyData)}
+          />
+        );
       }
       if (copyDataIndex.status) {
         copyDataIndex.status = (
@@ -123,79 +125,106 @@ class Table extends Component {
     }
     this.setState({ data: copyData });
   };
+
+  onClickButtonForConfirmation = (from) => {
+    // this.props.toggleGlobalPopupDispatch(true);
+    if (from === 'truckSettings') this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
+
+  }
+
   render() {
     let thead;
     let table;
     thead = [];
     for (let dataKey in this.state.data[0]) {
-      thead.push(<th key={dataKey}>{dataKey}</th>);
+      if (dataKey !== 'id') {
+        thead.push(<th key={dataKey}>{dataKey}</th>);
+      }
+    }
+    let modal;
+    if (this.props.from === 'truckSettings' && this.props.globalPopup && this.props.truckLocalPopup) {
+      modal = <Modal>TRUCKS TEST</Modal>;
+    } else if (this.props.from === 'supplySettings' && this.props.globalPopup && this.props.supplyLocalPopup) {
+      modal = <Modal>SUPPLY TEST</Modal>;
     }
     table = (
-      <table className={[styles.table, styles[this.props.cName]].join(' ')}>
-        <thead>
-          <tr>{thead}</tr>
-        </thead>
-        <tbody>
-          {this.state.data.map((dat, i) => {
-            let tdHold = [];
-            for (let datKey in dat) {
-              tdHold.push(<td key={datKey + i}>{dat[datKey]}</td>);
-            }
-            // console.log(tdHold[tdHold.length - 1].props.children);
-            tdHold[tdHold.length - 1] =
-              tdHold[tdHold.length - 1].props.children === 'view' ? (
-                <td key={'actions' + i}>
-                  <Button
-                    cName="delete"
-                    click={this.onButtonClick.bind(
-                      null,
-                      this.props.from,
-                      'delete',
-                      i
-                    )}
-                  >
-                    &#128465;
-                  </Button>
-                  <Button
-                    cName="edit"
-                    click={this.onButtonClick.bind(
-                      null,
-                      this.props.from,
-                      'edit',
-                      i
-                    )}
-                  >
-                    &#9998;
-                  </Button>
-                </td>
-              ) : (
+      <Auxillary>
+        {modal}
+        <table className={[styles.table, styles[this.props.cName]].join(' ')}>
+          <thead>
+            <tr>{thead}</tr>
+          </thead>
+          <tbody>
+            {this.state.data.map((dat, i) => {
+              let tdHold = [];
+              for (let datKey in dat) {
+                if (datKey !== 'id') {
+                  tdHold.push(<td key={datKey + i}>{dat[datKey]}</td>);
+                }
+              }
+              // console.log(tdHold[tdHold.length - 1].props.children);
+              tdHold[tdHold.length - 1] =
+                tdHold[tdHold.length - 1].props.children === 'view' ? (
                   <td key={'actions' + i}>
                     <Button
-                      cName="saveEdit"
-                      click={this.onSaveEdit.bind(null, i)}
+                      cName="delete"
+                      click={this.onButtonClick.bind(
+                        null,
+                        this.props.from,
+                        'delete',
+                        i
+                      )}
                     >
-                      {' '}
-                      &#10004;
+                      &#128465;
+                  </Button>
+                    <Button
+                      cName="edit"
+                      click={this.onClickButtonForConfirmation.bind(null, this.props.from)}
+                    // click={this.onButtonClick.bind(
+                    //   null,
+                    //   this.props.from,
+                    //   'edit',
+                    //   i
+                    // )}
+                    >
+                      &#9998;
                   </Button>
                   </td>
-                );
-            return (
-              <tr
-                key={i}
-                className={
-                  i % 2 === 0 ? styles.even : styles['odd' + this.props.cName]
-                }
-              >
-                {tdHold}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                ) : (
+                    <td key={'actions' + i}>
+                      <Button
+                        cName="saveEdit"
+                        click={this.onSaveEdit.bind(null, i)}
+                      >
+                        {' '}
+                        &#10004;
+                  </Button>
+                    </td>
+                  );
+              return (
+                <tr
+                  key={i}
+                  className={
+                    i % 2 === 0 ? styles.even : styles['odd' + this.props.cName]
+                  }
+                >
+                  {tdHold}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </Auxillary>
     );
     return table;
   }
 }
+
+const mapStateToProps = state => ({
+  truckLocalPopup: state.modal.localModalTruckSettingsTable,
+  globalPopup: state.modal.showGlobalModal,
+  supplyLocalPopup: state.modal.localModalSupplySettingsEdi
+});
 
 const mapDispatchToProps = dispatch => ({
   onEditTrucksDispatch: (index, value) =>
@@ -203,10 +232,12 @@ const mapDispatchToProps = dispatch => ({
   deleteTruckDispatch: index => dispatch(actions.deleteTruckSettings(index)),
   onEditSupplyDispatch: (index, value) =>
     dispatch(actions.editSupplySettings(index, value)),
-  deleteSupplyDispatch: index => dispatch(actions.deleteSupplySettings(index))
+  deleteSupplyDispatch: index => dispatch(actions.deleteSupplySettings(index)),
+  toggleLocalPopupTruckDispatch: value => dispatch(actions.toggleLocalPopupSettings(value)),
+  toggleGlobalPopupDispatch: () => dispatch(actions.toggleGlobalModal())
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Table);

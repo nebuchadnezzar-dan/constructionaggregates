@@ -16,7 +16,7 @@ export {
   editSupplySettings,
   deleteSupplySettings,
   addMaterialToSupply,
-  fetchSupply
+  fetchSupply,
 } from './supplySettings';
 export { activeRoute } from './route';
 export {
@@ -36,4 +36,4 @@ export {
   editQuantity
 } from './invoicePOS';
 export { addCustomer, addCredit } from './customer';
-export { toggleGlobalModal } from './modal';
+export { toggleGlobalModal, toggleLocalPopupSettings } from './modal';

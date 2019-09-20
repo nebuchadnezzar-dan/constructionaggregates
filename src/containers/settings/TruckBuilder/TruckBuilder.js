@@ -39,19 +39,19 @@ class TruckBuilder extends Component {
     this.setState({ view: value });
   };
   onSendPostRequest = async () => {
-    this.props.toggleGlobalModal(false);
+    this.props.toggleGlobalModalDispatch();
     this.setState({ confirmation: false, feedback: true });
     await this.props.saveTrucksDispatch();
     this.props.postTruckDispatch(this.props.toBeSavedTrucks);
-    this.props.toggleGlobalModal(true);
+    this.props.toggleLocalPopupDispatch({ from: 'localModalTruckSettingsForm', value: true, global: true });
   }
   onViewModalHandler = (button) => {
     if (button === 'showConfirmation') {
       this.props.resetRequestDispatch();
-      this.props.toggleGlobalModal(true);
+      this.props.toggleLocalPopupDispatch({ from: 'localModalTruckSettingsForm', value: true, global: true });
       this.setState({ confirmation: true, feedback: false })
     } else if (button === 'closeButton') {
-      this.props.toggleGlobalModal(false);
+      this.props.toggleGlobalModalDispatch();
       this.setState({ confirmation: false, feedback: false })
     }
   }
@@ -91,7 +91,7 @@ class TruckBuilder extends Component {
         </div>
       </Modal>
     );
-    let modalConfirmation = this.props.showGlobalModal && !this.props.postError ? modalBody : null;
+    let modalConfirmation = this.props.showGlobalModal && this.props.truckLocalPopup && !this.props.postError ? modalBody : null;
     let formBodyWithSpinner = this.props.postLoading ? <Spinner color="grey" /> : (this.props.truckForm.map((el, i) => {
       let input = [];
       for (let formKey in this.state.truckForm) {
@@ -168,7 +168,8 @@ const mapStateToProps = state => ({
   showGlobalModal: state.modal.showGlobalModal,
   toBeSavedTrucks: state.truckSettings.trucksToBeSaved,
   postLoading: state.truckSettings.postLoading,
-  postError: state.truckSettings.postError
+  postError: state.truckSettings.postError,
+  truckLocalPopup: state.modal.localModalTruckSettingsForm
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -177,9 +178,10 @@ const mapDispatchToProps = dispatch => ({
   valueChangeDispatch: (index, name, value) =>
     dispatch(actions.valueChangeTruck(index, name, value)),
   saveTrucksDispatch: () => dispatch(actions.saveTruck()),
-  toggleGlobalModal: value => dispatch(actions.toggleGlobalModal(value)),
   postTruckDispatch: data => dispatch(actions.postTruck(data)),
-  resetRequestDispatch: () => dispatch(actions.truckRequestReset())
+  resetRequestDispatch: () => dispatch(actions.truckRequestReset()),
+  toggleGlobalModalDispatch: () => dispatch(actions.toggleGlobalModal()),
+  toggleLocalPopupDispatch: value => dispatch(actions.toggleLocalPopupSettings(value))
 });
 
 export default connect(
