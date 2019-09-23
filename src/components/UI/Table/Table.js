@@ -16,7 +16,9 @@ class Table extends Component {
   state = {
     data: [],
     dataValue: [],
-    untouchedValue: []
+    untouchedValue: [],
+    activeIndex: '',
+    isBeingEdited: false
   };
   componentDidMount() {
     console.log(this.props.data);
@@ -75,7 +77,7 @@ class Table extends Component {
       ...copyValue[index],
       actions: 'view'
     };
-    this.setState({ data: copyData });
+    this.setState({ data: copyData, untouchedValue: copyData, isBeingEdited: false });
     if (this.props.from === 'truckSettings') {
       this.props.onEditTrucksDispatch(index, copyValue[index]);
     } else {
@@ -90,7 +92,7 @@ class Table extends Component {
       ...copyValue[index],
       actions: 'view'
     };
-    this.setState({ data: copyData });
+    this.setState({ data: copyData, isBeingEdited: false });
     // if (this.props.from === 'truckSettings') {
     //   this.props.onEditTrucksDispatch(index, copyValue[index]);
     // } else {
@@ -98,8 +100,13 @@ class Table extends Component {
     // }
   }
 
-  onButtonClick = (from, button, index, _) => {
+  onButtonClick = async (from, button, index, _) => {
     let copyData;
+
+    if (this.state.isBeingEdited) {
+      await this.onCancelEdit(this.state.activeIndex);
+    }
+
     if (button === 'edit') {
       copyData = JSON.parse(JSON.stringify(this.state.data));
       let copyDataIndex = copyData[index];
@@ -141,7 +148,7 @@ class Table extends Component {
       copyData = this.state.data.filter((_, i) => i !== index);
     }
 
-    this.setState({ data: copyData });
+    this.setState({ data: copyData, isBeingEdited: true, activeIndex: index });
   };
 
   onClickButtonForConfirmation = (from) => {
@@ -211,8 +218,8 @@ class Table extends Component {
                     <td key={'actions' + i}>
                       <Button
                         cName="saveEdit"
-                        // click={this.onClickButtonForConfirmation.bind(null, this.props.from)}
-                        click={this.onSaveEdit.bind(null, i)}
+                        click={this.onClickButtonForConfirmation.bind(null, this.props.from)}
+                      // click={this.onSaveEdit.bind(null, i)}
                       >
                         {' '}
                         &#10004;
