@@ -7,7 +7,8 @@ export {
   deleteTruckSettings,
   fetchTruck,
   postTruck,
-  truckRequestReset
+  truckRequestReset,
+  putTruck
 } from './truckSettings';
 export {
   activeSupply,

@@ -84,3 +84,29 @@ export const postTruck = (truckData) => {
     }
   }
 };
+
+export const putTruckStart = () => ({
+  type: actionTypes.PUT_TRUCK_START
+});
+
+export const putTruckSuccess = data => ({
+  type: actionTypes.PUT_TRUCK_SUCCESS,
+  payload: data
+});
+
+export const putTruckFail = () => ({
+  type: actionTypes.PUT_TRUCK_FAIL
+});
+
+export const putTruck = (id, value) => {
+  return async dispatch => {
+    try {
+      const valueMapped = { maxLoad: value.maxLoad, plateNo: value.plateNo, status: value.status }
+      dispatch(putTruckStart());
+      const data = await axios.put(`/settings/truck/${id}`, valueMapped);
+      dispatch(putTruckSuccess(data.data));
+    } catch (e) {
+      dispatch(putTruckFail());
+    }
+  }
+}

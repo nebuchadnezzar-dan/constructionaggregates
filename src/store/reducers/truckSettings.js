@@ -13,7 +13,9 @@ const initialState = {
   loading: false,
   error: false,
   postLoading: false,
-  postError: false
+  postError: false,
+  putLoading: false,
+  putError: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -55,7 +57,7 @@ const reducer = (state = initialState, action) => {
       };
     case actionTypes.EDIT_TRUCK_SETTINGS:
       const copyTrucksFromState = [...state.availableTrucks];
-      copyTrucksFromState[action.payload.index] = action.payload.value;
+      copyTrucksFromState[action.payload.id] = action.payload;
       return {
         ...state,
         availableTrucks: copyTrucksFromState
@@ -108,6 +110,27 @@ const reducer = (state = initialState, action) => {
         ...state,
         postLoading: false,
         postError: true
+      }
+    case actionTypes.PUT_TRUCK_START:
+      return {
+        ...state,
+        putLoading: false,
+        putError: false
+      }
+    case actionTypes.PUT_TRUCK_SUCCESS:
+      const copiedTruck = [...state.availableTrucks];
+      const ind = copiedTruck.findIndex(el => el.id === action.payload.id);
+      copiedTruck[ind] = action.payload.value;
+      return {
+        ...state,
+        availableTrucks: copiedTruck,
+        putLoading: false
+      }
+    case actionTypes.PUT_TRUCK_FAIL:
+      return {
+        ...state,
+        putLoading: false,
+        putError: true
       }
     default:
       return state;

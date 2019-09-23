@@ -11,6 +11,7 @@ import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import Spinner from '../Spinner/Spinner';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
+import Confirmation from '../Confirmation/Confirmation';
 
 class Table extends Component {
   state = {
@@ -18,10 +19,11 @@ class Table extends Component {
     dataValue: [],
     untouchedValue: [],
     activeIndex: '',
-    isBeingEdited: false
+    isBeingEdited: false,
+    confirmation: false,
+    feedback: false
   };
   componentDidMount() {
-    console.log(this.props.data);
     const copyProps = this.props.data.map((dat, i) => {
       const tempObj = {
         ...dat,
@@ -70,20 +72,28 @@ class Table extends Component {
     this.setState({ data: copyData, dataValue: copyValue });
   };
 
-  onSaveEdit = index => {
+  onSaveEdit = async index => {
     const copyData = [...this.state.data];
     const copyValue = [...this.state.dataValue];
     copyData[index] = {
       ...copyValue[index],
       actions: 'view'
     };
-    this.setState({ data: copyData, untouchedValue: copyData, isBeingEdited: false });
+    this.props.toggleGlobalPopupDispatch();
     if (this.props.from === 'truckSettings') {
-      this.props.onEditTrucksDispatch(index, copyValue[index]);
+      // this.props.onEditTrucksDispatch(index, copyValue[index]);
+      await this.props.putTruckSettingsDispatch(copyValue[index].id, copyValue[index])
     } else {
       this.props.onEditSupplyDispatch(index, copyValue[index]);
     }
+    await this.setState({ data: copyData, untouchedValue: copyData, isBeingEdited: false, confirmation: false, feedback: true });
+    this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
   };
+
+  onCLoseModal = () => {
+    this.props.toggleGlobalPopupDispatch();
+    this.setState({ confirmation: false, feedback: false })
+  }
 
   onCancelEdit = (index) => {
     const copyData = [...this.state.data];
@@ -153,26 +163,43 @@ class Table extends Component {
 
   onClickButtonForConfirmation = (from) => {
     // this.props.toggleGlobalPopupDispatch(true);
-    if (from === 'truckSettings') this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
+    if (from === 'truckSettings') {
+      this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
+      this.setState({ confirmation: true })
+    }
 
   }
 
   render() {
     let thead;
     let table;
+    let modalConfirmation;
     thead = [];
+    console.log(['LOCAL TABLE'], this.props.truckLocalPopup)
     for (let dataKey in this.state.data[0]) {
       if (dataKey !== 'id') {
         thead.push(<th key={dataKey}>{dataKey}</th>);
       }
     }
-    let modal;
+
     if (this.props.from === 'truckSettings' && this.props.globalPopup && this.props.truckLocalPopup) {
-      modal = <Modal>TRUCKS TEST</Modal>;
+      modalConfirmation =
+        <Confirmation
+          confirmation={this.state.confirmation}
+          error={this.props.putError}
+          proceed={this.onSaveEdit.bind(null, this.state.activeIndex)}
+          feedback={this.state.feedback}
+          okClose={this.props.toggleGlobalPopupDispatch}
+
+        />;
     } else if (this.props.from === 'supplySettings' && this.props.globalPopup && this.props.supplyLocalPopup) {
-      modal = <Modal>SUPPLY TEST</Modal>;
+      modalConfirmation = <Confirmation />;
     }
-    table = (
+
+    let modal = <Modal>
+      {modalConfirmation}
+    </Modal>;
+    table = this.props.putLoading ? <Spinner color="grey" /> : (
       <Auxillary>
         {modal}
         <table className={[styles.table, styles[this.props.cName]].join(' ')}>
@@ -256,7 +283,9 @@ class Table extends Component {
 const mapStateToProps = state => ({
   truckLocalPopup: state.modal.localModalTruckSettingsTable,
   globalPopup: state.modal.showGlobalModal,
-  supplyLocalPopup: state.modal.localModalSupplySettingsEdi
+  supplyLocalPopup: state.modal.localModalSupplySettingsEdi,
+  putLoadingTruck: state.truckSettings.putLoading,
+  putErrorTruck: state.truckSettings.putError
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -267,7 +296,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.editSupplySettings(index, value)),
   deleteSupplyDispatch: index => dispatch(actions.deleteSupplySettings(index)),
   toggleLocalPopupTruckDispatch: value => dispatch(actions.toggleLocalPopupSettings(value)),
-  toggleGlobalPopupDispatch: () => dispatch(actions.toggleGlobalModal())
+  toggleGlobalPopupDispatch: () => dispatch(actions.toggleGlobalModal()),
+  putTruckSettingsDispatch: (id, value) => dispatch(actions.putTruck(id, value))
 });
 
 export default connect(

@@ -16,10 +16,11 @@ import Table from '../../../components/UI/Table/Table';
 import Modal from '../../../components/UI/Modal/Modal';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import ErrorBody from '../../../components/UI/ErrorBody/ErrorBody';
+import Confirmation from '../../../components/UI/Confirmation/Confirmation';
 
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
-import Auxillary from '../../../hoc/Auxillary/Auxillary';
+// import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
 import styles from './TruckBuilder.module.scss';
 
@@ -73,29 +74,15 @@ class TruckBuilder extends Component {
         />
       </div>
     );
-    let modalChild;
-    if (this.state.confirmation) {
-      modalChild = <Auxillary><p>Are you sure you want to proceed?</p>
-        <Button color="green" click={this.onSendPostRequest.bind(null)} >Yes</Button>
-        <Button color="red" click={this.onViewModalHandler.bind(null, 'closeButton')}>Cancel</Button></Auxillary>;
-    } else if (this.state.feedback) {
-      modalChild = this.props.postError ? <Auxillary>
-        <p>Something went wrong! Please try again.</p>
-        <Button color="red" click={this.onViewModalHandler.bind(null, 'closeButton')}>
-          OK
-      </Button>
-      </Auxillary> : <Auxillary>
-          <p>Record succesfully updated/saved!</p>
-          <Button color="green" click={this.onViewModalHandler.bind(null, 'closeButton')}>
-            &#10004;
-        </Button>
-        </Auxillary>;
-    }
     const modalBody = (
       <Modal>
-        <div className={styles.modalBody}>
-          {modalChild}
-        </div>
+        <Confirmation
+          confirmation={this.state.confirmation}
+          error={this.props.postError}
+          proceed={this.onSendPostRequest.bind(null)}
+          feedback={this.state.feedback}
+          okClose={this.onViewModalHandler.bind(null, 'closeButton')}
+        />
       </Modal>
     );
     let modalConfirmation = this.props.showGlobalModal && this.props.truckLocalPopup && !this.props.postError ? modalBody : null;
