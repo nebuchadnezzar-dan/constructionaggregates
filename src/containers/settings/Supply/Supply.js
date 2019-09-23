@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// import axios from '../../../axios-orders';
+import axios from '../../../axios-orders';
 
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
@@ -10,6 +10,10 @@ import Head from '../../../components/UI/Head/Head';
 import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import ErrorBody from '../../../components/UI/ErrorBody/ErrorBody';
+
+import withErrorhandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
 import * as actions from '../../../store/actions/index';
 
@@ -21,6 +25,10 @@ class Supply extends Component {
     activeSupp: '',
     addForm: ''
   };
+
+  componentDidMount() {
+    this.props.fetchSupplyDispatch();
+  }
 
   // parameters _ is not needed
   onChangeValueHandler = (name, _, __, value, event) => {
@@ -177,7 +185,7 @@ class Supply extends Component {
             <div className={styles.inputWrap}>{supplyInput}</div>
           </div>
         );
-    let mainSupplyBody = <div className={styles.supplyWrapperHead}>
+    let mainSupplyBody = this.props.errorFetch ? <ErrorBody>{this.props.children}</ErrorBody> : <div className={styles.supplyWrapperHead}>
       {this.props.children}
       <Head classname="orange" svgname="supply">
         <HeadChild
@@ -191,9 +199,10 @@ class Supply extends Component {
       </Head>
       {tobeShown}
     </div>;
+    let mainBodyWithSpinner = this.props.loadingFetch ? <Spinner color="grey" /> : mainSupplyBody
     return (
       <Auxillary>
-        {mainSupplyBody}
+        {mainBodyWithSpinner}
       </Auxillary>
     );
   }
@@ -202,7 +211,10 @@ class Supply extends Component {
 const mapStateToProps = state => ({
   activeSupp: state.supplySettings.activeSupp,
   supplies: state.supplySettings.supplies,
-  activeSupplies: state.supplySettings.activeSupplies
+  activeSupplies: state.supplySettings.activeSupplies,
+  errorFetch: state.supplySettings.error,
+  loadingFetch: state.supplySettings.loading
+
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -211,10 +223,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.valueChangeSupply(name, inputMod, value)),
   supplyOnClickSupplyButtonDispatch: name =>
     dispatch(actions.addSupplyValue(name)),
-  supplyAddMaterials: matName => dispatch(actions.addMaterialToSupply(matName))
+  supplyAddMaterials: matName => dispatch(actions.addMaterialToSupply(matName)),
+  fetchSupplyDispatch: () => dispatch(actions.fetchSupply())
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Supply);
+)(withErrorhandler(Supply, axios));

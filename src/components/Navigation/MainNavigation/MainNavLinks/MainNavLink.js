@@ -21,6 +21,9 @@ class MainNavLinks extends Component {
   activeRouteClick = route => {
     this.props.setActiveRoute(route);
   };
+  onDisabledLinkClick = (e) => {
+    e.preventDefault();
+  }
   render() {
     const { children, name, link, exact, submenu } = this.props;
     const svgName = {
@@ -41,7 +44,7 @@ class MainNavLinks extends Component {
             exact={exact}
             activeClassName={styles.active}
             className={styles.linkWrapper}
-            onClick={name === 'icons' ? null : this.activeRouteClick.bind(null, children)}
+            onClick={name === 'icons' ? this.onDisabledLinkClick : this.activeRouteClick.bind(null, children)}
           >
             <div className={styles.svgWrap}>{SVGComponent}</div>
             <div style={{ marginLeft: '1.5rem' }}>{children}</div>

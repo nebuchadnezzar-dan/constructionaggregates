@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-// import axios from '../../../axios-orders';
+import axios from '../../../axios-orders';
 
 import * as actions from '../../../store/actions/index';
 
@@ -15,6 +15,9 @@ import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
 import Modal from '../../../components/UI/Modal/Modal';
 import Spinner from '../../../components/UI/Spinner/Spinner';
+import ErrorBody from '../../../components/UI/ErrorBody/ErrorBody';
+
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
@@ -31,6 +34,10 @@ class TruckBuilder extends Component {
     confirmation: false,
     feedback: false,
   };
+
+  componentDidMount() {
+    this.props.fetchTruckDispatch();
+  }
 
   onChangeValueHandler = async (index, name, event) => {
     this.props.valueChangeDispatch(index, name, event.target.value);
@@ -142,23 +149,24 @@ class TruckBuilder extends Component {
           </Button>
         </div>
       );
-    return (
-      <div className={styles.truckComponent}>
-        {this.props.children}
-        <Head classname="green" svgname="truck">
-          <HeadChild
-            forClassName={this.state.view}
-            dispatchClickView={this.onToggleView.bind(null, 'view')}
-            dispatchClickForm={this.onToggleView.bind(null, 'form')}
-            childName="Form"
-          >
-            TRUCK
-          </HeadChild>
-        </Head>
-        {toBeShown}
-        {button}
-      </div>
-    );
+    let mainBody = <div className={styles.truckComponent}>
+      {/* {this.props.children} */}
+      <Head classname="green" svgname="truck">
+        <HeadChild
+          forClassName={this.state.view}
+          dispatchClickView={this.onToggleView.bind(null, 'view')}
+          dispatchClickForm={this.onToggleView.bind(null, 'form')}
+          childName="Form"
+        >
+          TRUCK
+    </HeadChild>
+      </Head>
+      {toBeShown}
+      {button}
+    </div>;
+    let truckWithError = this.props.fetchError ? <ErrorBody>{this.props.children}</ErrorBody> : mainBody;
+    let truckWithSpinner = this.props.fetchLoading ? <Spinner color="grey" /> : truckWithError
+    return (truckWithSpinner);
   }
 }
 
@@ -167,6 +175,8 @@ const mapStateToProps = state => ({
   availableTrucks: state.truckSettings.availableTrucks,
   showGlobalModal: state.modal.showGlobalModal,
   toBeSavedTrucks: state.truckSettings.trucksToBeSaved,
+  fetchError: state.truckSettings.error,
+  fetchLoading: state.truckSettings.loading,
   postLoading: state.truckSettings.postLoading,
   postError: state.truckSettings.postError,
   truckLocalPopup: state.modal.localModalTruckSettingsForm
@@ -178,6 +188,7 @@ const mapDispatchToProps = dispatch => ({
   valueChangeDispatch: (index, name, value) =>
     dispatch(actions.valueChangeTruck(index, name, value)),
   saveTrucksDispatch: () => dispatch(actions.saveTruck()),
+  fetchTruckDispatch: () => dispatch(actions.fetchTruck()),
   postTruckDispatch: data => dispatch(actions.postTruck(data)),
   resetRequestDispatch: () => dispatch(actions.truckRequestReset()),
   toggleGlobalModalDispatch: () => dispatch(actions.toggleGlobalModal()),
@@ -187,4 +198,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TruckBuilder);
+)(withErrorHandler(TruckBuilder, axios));
