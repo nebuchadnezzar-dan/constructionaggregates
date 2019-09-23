@@ -26,7 +26,7 @@ const mainNavigation = () => {
             Customers
           </NavLinks>
 
-          <NavLinks name="icons" link="/settings">
+          <NavLinks name="icons" submenu>
             Settings
           </NavLinks>
 
