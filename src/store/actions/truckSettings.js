@@ -38,21 +38,21 @@ export const fetchTruckStart = () => ({
   type: actionTypes.FETCH_TRUCK_START
 });
 
-export const fetchTruckSucces = data => ({
+export const fetchTruckSucces = (data, pages) => ({
   type: actionTypes.FETCH_TRUCK_SUCCESS,
-  payload: data
+  payload: { data, pages }
 });
 
 export const fetchTruckFail = () => ({
   type: actionTypes.FETCH_TRUCK_FAIL
 });
 
-export const fetchTruck = () => {
+export const fetchTruck = (page) => {
   return async dispatch => {
     try {
       dispatch(fetchTruckStart());
-      const data = await axios.get('/settings/truck');
-      dispatch(fetchTruckSucces(data.data));
+      const data = await axios.get(`/settings/truck?page=${page}`);
+      dispatch(fetchTruckSucces(data.data.truck, data.data.pages));
     } catch (e) {
       dispatch(fetchTruckFail());
     }
@@ -63,7 +63,7 @@ export const postTruckStart = () => ({
   type: actionTypes.POST_TRUCK_START
 });
 
-export const postTruckSuccess = data => ({
+export const postTruckSuccess = (data) => ({
   type: actionTypes.POST_TRUCK_SUCCESS,
   payload: data
 });

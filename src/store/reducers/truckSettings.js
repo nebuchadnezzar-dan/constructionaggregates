@@ -10,6 +10,7 @@ const initialState = {
     { maxLoad: '1', plateNo: 'yu7h', status: 'maintenance' }
   ],
   trucksToBeSaved: [],
+  pages: '',
   loading: false,
   error: false,
   postLoading: false,
@@ -83,7 +84,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         error: false,
-        availableTrucks: action.payload,
+        availableTrucks: action.payload.data,
+        pages: action.payload.pages,
         loading: false
       }
     case actionTypes.FETCH_TRUCK_FAIL:

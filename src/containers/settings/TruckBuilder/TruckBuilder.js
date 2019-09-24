@@ -34,10 +34,16 @@ class TruckBuilder extends Component {
     view: 'form',
     confirmation: false,
     feedback: false,
+    currentpage: 1
   };
 
   componentDidMount() {
-    this.props.fetchTruckDispatch();
+    this.props.fetchTruckDispatch(1);
+  }
+
+  onChangePage = (page) => {
+    this.setState({ currentpage: page });
+    this.props.fetchTruckDispatch(page);
   }
 
   onChangeValueHandler = async (index, name, event) => {
@@ -65,6 +71,12 @@ class TruckBuilder extends Component {
   }
 
   render() {
+    let buttonPages = [];
+    for (let i = 0; i < this.props.pages; i++) {
+      let ind = i + 1;
+      buttonPages.push(<Button key={i} color={this.state.currentpage === ind ? 'green' : null} click={this.onChangePage.bind(null, ind)}>{ind}</Button>);
+    }
+
     const view = (
       <div className={styles.view}>
         <Table
@@ -72,6 +84,9 @@ class TruckBuilder extends Component {
           cName="green"
           from="truckSettings"
         />
+        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+          {buttonPages}
+        </div>
       </div>
     );
     const modalBody = (
@@ -160,6 +175,7 @@ class TruckBuilder extends Component {
 const mapStateToProps = state => ({
   truckForm: state.truckSettings.trucks,
   availableTrucks: state.truckSettings.availableTrucks,
+  pages: state.truckSettings.pages,
   showGlobalModal: state.modal.showGlobalModal,
   toBeSavedTrucks: state.truckSettings.trucksToBeSaved,
   fetchError: state.truckSettings.error,
@@ -175,7 +191,7 @@ const mapDispatchToProps = dispatch => ({
   valueChangeDispatch: (index, name, value) =>
     dispatch(actions.valueChangeTruck(index, name, value)),
   saveTrucksDispatch: () => dispatch(actions.saveTruck()),
-  fetchTruckDispatch: () => dispatch(actions.fetchTruck()),
+  fetchTruckDispatch: (page) => dispatch(actions.fetchTruck(page)),
   postTruckDispatch: data => dispatch(actions.postTruck(data)),
   resetRequestDispatch: () => dispatch(actions.truckRequestReset()),
   toggleGlobalModalDispatch: () => dispatch(actions.toggleGlobalModal()),
