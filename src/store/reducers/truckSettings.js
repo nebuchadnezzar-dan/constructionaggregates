@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  trucks: [{ maxLoad: '', plateNo: '', status: 'maintenance' }],
+  trucks: [{ maxLoad: '', plateNo: '', status: 'available' }],
   availableTrucks: [
     { maxLoad: '2', plateNo: 'abc', status: 'maintenance' },
     { maxLoad: '3', plateNo: 'def', status: 'maintenance' },
@@ -31,7 +31,7 @@ const reducer = (state = initialState, action) => {
         trucks: state.trucks.concat({
           maxLoad: '',
           plateNo: '',
-          status: 'maintenance'
+          status: 'available'
         })
       };
     case actionTypes.REMOVE_TRUCK:

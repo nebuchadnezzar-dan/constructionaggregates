@@ -10,7 +10,8 @@ const button = props => {
         styles.color,
         styles['button' + props.cName],
         styles['button' + props.active],
-        styles['color' + props.color]
+        styles['color' + props.color],
+        styles['hover' + props.hover]
       ].join(' ')}
       onClick={props.click}
     >

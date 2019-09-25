@@ -17,6 +17,7 @@ import Modal from '../../../components/UI/Modal/Modal';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import ErrorBody from '../../../components/UI/ErrorBody/ErrorBody';
 import Confirmation from '../../../components/UI/Confirmation/Confirmation';
+import Pagination from '../../../components/UI/Pagination/Pagination';
 
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
@@ -34,15 +35,16 @@ class TruckBuilder extends Component {
     view: 'form',
     confirmation: false,
     feedback: false,
-    currentpage: 1
+    currentpage: 1,
+    pageIndex: 5
   };
 
   componentDidMount() {
     this.props.fetchTruckDispatch(1);
   }
 
-  onChangePage = (page) => {
-    this.setState({ currentpage: page });
+  onChangePage = (page, pageIndex) => {
+    this.setState({ currentpage: page, pageIndex });
     this.props.fetchTruckDispatch(page);
   }
 
@@ -51,6 +53,9 @@ class TruckBuilder extends Component {
   };
   onToggleView = value => {
     this.setState({ view: value });
+    if (value === 'form') {
+      this.props.fetchTruckDispatch(this.state.currentpage);
+    }
   };
   onSendPostRequest = async () => {
     this.props.toggleGlobalModalDispatch();
@@ -71,12 +76,7 @@ class TruckBuilder extends Component {
   }
 
   render() {
-    let buttonPages = [];
-    for (let i = 0; i < this.props.pages; i++) {
-      let ind = i + 1;
-      buttonPages.push(<Button key={i} color={this.state.currentpage === ind ? 'green' : null} click={this.onChangePage.bind(null, ind)}>{ind}</Button>);
-    }
-
+    console.log('[PAGEIND]', this.state.pageIndex)
     const view = (
       <div className={styles.view}>
         <Table
@@ -84,9 +84,12 @@ class TruckBuilder extends Component {
           cName="green"
           from="truckSettings"
         />
-        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
-          {buttonPages}
-        </div>
+        <Pagination
+          currentpage={this.state.currentpage}
+          pages={this.props.pages}
+          color='green'
+          pageIndex={this.state.pageIndex}
+          clickButton={this.onChangePage} />
       </div>
     );
     const modalBody = (
@@ -145,10 +148,10 @@ class TruckBuilder extends Component {
           <Button cName="Main" click={this.props.addTruckDispatch}>
             &#9951; Add More Truck
           </Button>
-          <Button cName="mainSave" click={this.onViewModalHandler.bind(null, 'showConfirmation')}>
+          {this.props.truckForm.length > 0 ? <Button cName="mainSave" click={this.onViewModalHandler.bind(null, 'showConfirmation')}>
             {' '}
             &#10004; Save
-          </Button>
+          </Button> : null}
         </div>
       );
     let mainBody = <div className={styles.truckComponent}>

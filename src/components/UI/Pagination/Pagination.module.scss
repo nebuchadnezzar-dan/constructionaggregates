@@ -1,0 +1,17 @@
+@import '../../../styles/colors.scss';
+
+.pages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.prev{
+    margin-right: 1rem;
+}
+
+.next {
+    margin-left: 1rem;
+}

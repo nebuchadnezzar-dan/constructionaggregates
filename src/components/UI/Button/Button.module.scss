@@ -156,3 +156,15 @@
     color: $dimgrey;
   }
 }
+
+.hover {
+  &green {
+    // border: 1px solid $green-light;
+    transition: all .5s;
+    &:hover {
+      background-color: $green-light;
+    }
+  }
+}
+
+
