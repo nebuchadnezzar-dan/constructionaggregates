@@ -110,3 +110,27 @@ export const putTruck = (id, value) => {
     }
   }
 }
+
+export const deleteStart = () => ({
+  type: actionTypes.DELTE_TRUCK_START
+});
+
+export const deleteTruckSuccess = (data) => ({
+  type: actionTypes.DELETE_TRUCK_SUCCESS
+});
+
+export const deleteTruckFail = () => ({
+  type: actionTypes.DELTE_TRUCK_FAIL
+});
+
+export const deleteTruck = id => {
+  return async dispatch => {
+    try {
+      dispatch(deleteStart());
+      const data = await axios.delete(`/settings/truck/${id}`);
+      dispatch(deleteTruckSuccess(data.data));
+    } catch (e) {
+      dispatch(deleteTruckFail());
+    }
+  }
+}

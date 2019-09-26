@@ -16,7 +16,10 @@ const initialState = {
   postLoading: false,
   postError: false,
   putLoading: false,
-  putError: false
+  putError: false,
+  deleteLoading: false,
+  deleteError: false,
+  modifiedData: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -133,6 +136,24 @@ const reducer = (state = initialState, action) => {
         ...state,
         putLoading: false,
         putError: true
+      }
+    case actionTypes.DELTE_TRUCK_START:
+      return {
+        ...state,
+        deleteLoading: true,
+      }
+    case actionTypes.DELETE_TRUCK_SUCCESS:
+      return {
+        ...state,
+        modifiedData: action.payload,
+        deleteLoading: false,
+        deleteError: false
+      }
+    case actionTypes.DELTE_TRUCK_FAIL:
+      return {
+        ...state,
+        deleteLoading: false,
+        deleteError: true
       }
     default:
       return state;

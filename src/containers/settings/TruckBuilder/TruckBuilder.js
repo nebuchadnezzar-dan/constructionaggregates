@@ -185,7 +185,7 @@ const mapStateToProps = state => ({
   fetchLoading: state.truckSettings.loading,
   postLoading: state.truckSettings.postLoading,
   postError: state.truckSettings.postError,
-  truckLocalPopup: state.modal.localModalTruckSettingsForm
+  truckLocalPopup: state.modal.localModalTruckSettingsForm,
 });
 
 const mapDispatchToProps = dispatch => ({

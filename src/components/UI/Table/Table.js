@@ -21,7 +21,9 @@ class Table extends Component {
     activeIndex: '',
     isBeingEdited: false,
     confirmation: false,
-    feedback: false
+    feedback: false,
+    buttonMode: '',
+    clickedIndex: ''
   };
   componentDidMount() {
     const copyProps = this.props.data.map((dat, i) => {
@@ -29,16 +31,12 @@ class Table extends Component {
         ...dat,
         actions: 'view'
       };
-      // delete tempObj.id;
       return tempObj;
     });
-    // const copyData = JSON.parse(JSON.stringify(this.props.data));
-    // copyData.forEach((dat) => delete dat.id);
     this.setState({ data: copyProps, untouchedValue: copyProps, dataValue: this.props.data });
   }
 
   onTouchEdit = (index, toBeEdited, e) => {
-    // const copyData = JSON.parse(JSON.stringify(this.state.data));
     const copyData = [...this.state.data];
     copyData[index] =
       toBeEdited !== 'status'
@@ -68,26 +66,34 @@ class Table extends Component {
         };
     const copyValue = [...this.state.dataValue];
     copyValue[index][toBeEdited] = e.target.value;
-    // const val = e.target.value;
     this.setState({ data: copyData, dataValue: copyValue });
   };
 
-  onSaveEdit = async index => {
+  onProceed = async (button) => {
+    const index = this.state.activeIndex;
     const copyData = [...this.state.data];
     const copyValue = [...this.state.dataValue];
     copyData[index] = {
       ...copyValue[index],
       actions: 'view'
     };
-    this.props.toggleGlobalPopupDispatch();
-    if (this.props.from === 'truckSettings') {
-      // this.props.onEditTrucksDispatch(index, copyValue[index]);
-      await this.props.putTruckSettingsDispatch(copyValue[index].id, copyValue[index])
-    } else {
-      this.props.onEditSupplyDispatch(index, copyValue[index]);
+    if (button === 'edit') {
+      this.props.toggleGlobalPopupDispatch();
+      if (this.props.from === 'truckSettings') {
+        await this.props.putTruckSettingsDispatch(copyValue[index].id, copyValue[index])
+      } else {
+        this.props.onEditSupplyDispatch(index, copyValue[index]);
+      }
+      await this.setState({ data: copyData, untouchedValue: copyData, isBeingEdited: false, confirmation: false, feedback: true });
+      this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
+    } else if (button === 'delete') {
+      this.props.toggleGlobalPopupDispatch();
+      if (this.props.from === 'truckSettings') {
+        await this.props.deleteTruckProceedDispatch(copyValue[index].id);
+        await this.props.toggleLocalPopupTruckDispatch({ from: 'localModalDeleteSettings', value: true, global: true });
+        this.props.reloadDataDispatch();
+      }
     }
-    await this.setState({ data: copyData, untouchedValue: copyData, isBeingEdited: false, confirmation: false, feedback: true });
-    this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
   };
 
   onCLoseModal = () => {
@@ -103,11 +109,6 @@ class Table extends Component {
       actions: 'view'
     };
     this.setState({ data: copyData, isBeingEdited: false });
-    // if (this.props.from === 'truckSettings') {
-    //   this.props.onEditTrucksDispatch(index, copyValue[index]);
-    // } else {
-    //   this.props.onEditSupplyDispatch(index, copyValue[index]);
-    // }
   }
 
   onButtonClick = async (from, button, index, _) => {
@@ -144,9 +145,6 @@ class Table extends Component {
       } else if (copyDataIndex.materials) {
         copyDataIndex.materials = this.state.dataValue[index].materials;
       }
-      // copyDataIndex.actions = (
-      //   <Button click={this.onSaveEdit.bind(null, index)}> &#10004;</Button>
-      // );
       copyDataIndex.actions = 'save';
     } else {
       if (this.props.from === 'truckSettings') {
@@ -161,11 +159,16 @@ class Table extends Component {
     this.setState({ data: copyData, isBeingEdited: true, activeIndex: index });
   };
 
-  onClickButtonForConfirmation = (from) => {
+  onClickButtonForConfirmation = (from, button, i) => {
     // this.props.toggleGlobalPopupDispatch(true);
     if (from === 'truckSettings') {
+      // if (button === 'edit') {
+      //   this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
+      // } else if (button === 'delete') {
+      //   this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
+      // }
       this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
-      this.setState({ confirmation: true })
+      this.setState({ confirmation: true, buttonMode: button, activeIndex: i });
     }
 
   }
@@ -175,19 +178,19 @@ class Table extends Component {
     let table;
     let modalConfirmation;
     thead = [];
-    console.log(['LOCAL TABLE'], this.props.truckLocalPopup)
+    console.log(['LOCAL TABLE'], this.props.from)
     for (let dataKey in this.state.data[0]) {
       if (dataKey !== 'id') {
         thead.push(<th key={dataKey}>{dataKey}</th>);
       }
     }
 
-    if (this.props.from === 'truckSettings' && this.props.globalPopup && this.props.truckLocalPopup) {
+    if (this.props.from === 'truckSettings' && this.props.globalPopup && (this.props.truckLocalPopup || this.props.deleteLocalPopup)) {
       modalConfirmation =
         <Confirmation
           confirmation={this.state.confirmation}
           error={this.props.putError}
-          proceed={this.onSaveEdit.bind(null, this.state.activeIndex)}
+          proceed={this.onProceed.bind(null, this.state.buttonMode)}
           feedback={this.state.feedback}
           okClose={this.props.toggleGlobalPopupDispatch}
 
@@ -220,12 +223,7 @@ class Table extends Component {
                   <td key={'actions' + i}>
                     <Button
                       cName="delete"
-                      click={this.onButtonClick.bind(
-                        null,
-                        this.props.from,
-                        'delete',
-                        i
-                      )}
+                      click={this.onClickButtonForConfirmation.bind(null, this.props.from, 'delete', i)}
                     >
                       &#128465;
                   </Button>
@@ -245,20 +243,18 @@ class Table extends Component {
                     <td key={'actions' + i}>
                       <Button
                         cName="saveEdit"
-                        click={this.onClickButtonForConfirmation.bind(null, this.props.from)}
-                      // click={this.onSaveEdit.bind(null, i)}
+                        click={this.onClickButtonForConfirmation.bind(null, this.props.from, 'edit', i)}
                       >
                         {' '}
                         &#10004;
-                  </Button>
+                      </Button>
                       <Button
                         color="red"
-                        // click={this.onClickButtonForConfirmation.bind(null, this.props.from)}
                         click={this.onCancelEdit.bind(null, i)}
                       >
                         {' '}
                         &#10006;
-                  </Button>
+                      </Button>
                     </td>
                   );
               return (
@@ -285,7 +281,8 @@ const mapStateToProps = state => ({
   globalPopup: state.modal.showGlobalModal,
   supplyLocalPopup: state.modal.localModalSupplySettingsEdi,
   putLoadingTruck: state.truckSettings.putLoading,
-  putErrorTruck: state.truckSettings.putError
+  putErrorTruck: state.truckSettings.putError,
+  deleteLocalPopup: state.modal.localModalDeleteSettings
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -297,7 +294,9 @@ const mapDispatchToProps = dispatch => ({
   deleteSupplyDispatch: index => dispatch(actions.deleteSupplySettings(index)),
   toggleLocalPopupTruckDispatch: value => dispatch(actions.toggleLocalPopupSettings(value)),
   toggleGlobalPopupDispatch: () => dispatch(actions.toggleGlobalModal()),
-  putTruckSettingsDispatch: (id, value) => dispatch(actions.putTruck(id, value))
+  putTruckSettingsDispatch: (id, value) => dispatch(actions.putTruck(id, value)),
+  deleteTruckProceedDispatch: (id) => dispatch(actions.deleteTruck(id)),
+  reloadDataDispatch: () => dispatch(actions.fetchTruck(1)),
 });
 
 export default connect(

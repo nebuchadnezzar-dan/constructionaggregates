@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+
 import styles from './Confirmation.module.scss';
 
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
@@ -11,7 +13,7 @@ const confirmation = props => {
     const { confirmation, error, proceed, feedback, okClose } = props;
 
     let modalChild;
-    console.log(props);
+    console.log(props.deletePopup);
     if (confirmation) {
         modalChild = <Auxillary><p>Are you sure you want to proceed?</p>
             <Button color="green" click={proceed} >Yes</Button>
@@ -28,9 +30,20 @@ const confirmation = props => {
                     &#10004;
           </Button>
             </Auxillary>;
+    } else if (props.deletePopup) {
+        modalChild = <Auxillary>
+            <p>Record succesfully deleted!</p>
+            <Button color="green" click={okClose}>
+                &#10004;
+            </Button>
+        </Auxillary>
     }
     return <div className={styles.modalBody}> {modalChild}</div>;
 
 };
 
-export default confirmation;
+const mapStateToProps = state => ({
+    deletePopup: state.modal.localModalDeleteSettings
+});
+
+export default connect(mapStateToProps)(confirmation);
