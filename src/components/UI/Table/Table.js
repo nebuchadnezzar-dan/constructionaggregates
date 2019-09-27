@@ -178,7 +178,6 @@ class Table extends Component {
     let table;
     let modalConfirmation;
     thead = [];
-    console.log(['LOCAL TABLE'], this.props.from)
     for (let dataKey in this.state.data[0]) {
       if (dataKey !== 'id') {
         thead.push(<th key={dataKey}>{dataKey}</th>);

@@ -24,10 +24,16 @@ const pagination = props => {
     let ind = startingPage;
     let lastInd = startingPage + 4;
     let buttonPages = [];
-    console.log('[PAGINATION]', lastInd);
-    for (let i = 0; i < 5; i++) {
-        buttonPages.push(<Button key={i} hover='green' color={currentpage === ind ? color : null} click={clickButton.bind(null, ind, lastInd)}>{ind}</Button>);
-        ind++;
+    if (pages > 4) {
+        for (let i = 0; i < 5; i++) {
+            buttonPages.push(<Button key={i} hover='green' color={currentpage === ind ? color : null} click={clickButton.bind(null, ind, lastInd)}>{ind}</Button>);
+            ind++;
+        }
+    } else {
+        for (let i = 0; i < pages; i++) {
+            let curr = i + 1;
+            buttonPages.push(<Button key={i} hover='green' color={currentpage === curr ? color : null} click={clickButton.bind(null, curr, pages)}>{curr}</Button>)
+        }
     }
     const previous = currentpage !== 1 ? <div className={styles.prev}>
         <Button hover='green' click={clickButton.bind(null, currentpage - 1, lastInd)} >Previous</Button></div> : null;

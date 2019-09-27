@@ -76,7 +76,6 @@ class TruckBuilder extends Component {
   }
 
   render() {
-    console.log('[PAGEIND]', this.state.pageIndex)
     const view = (
       <div className={styles.view}>
         <Table
@@ -85,7 +84,7 @@ class TruckBuilder extends Component {
           from="truckSettings"
         />
         <Pagination
-          currentpage={this.state.currentpage}
+          currentpage={this.props.pages < this.state.currentpage ? 1 : this.state.currentpage}
           pages={this.props.pages}
           color='green'
           pageIndex={this.state.pageIndex}
