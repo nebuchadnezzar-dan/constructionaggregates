@@ -55,3 +55,28 @@ export const fetchSupply = page => {
 
   }
 }
+
+export const postSupplyStart = () => ({
+  type: actionTypes.POST_SUPPLY_START
+});
+
+export const postSupplySuccess = supply => ({
+  type: actionTypes.POST_SUPPLY_SUCCESS,
+  payload: supply
+});
+
+export const postSupplyFail = () => ({
+  type: actionTypes.POST_SUPPLY_FAIL
+});
+
+export const postSupply = data => {
+  return async dispatch => {
+    try {
+      dispatch(postSupplyStart());
+      const supply = await axios.post('/settings/supply', data);
+      dispatch(postSupplySuccess(supply.data));
+    } catch (e) {
+      dispatch(postSupplyFail());
+    }
+  }
+}

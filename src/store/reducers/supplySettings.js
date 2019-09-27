@@ -20,7 +20,9 @@ const initialState = {
   ],
   pages: '',
   loading: false,
-  error: false
+  error: false,
+  postLoading: false,
+  postError: false
 };
 
 const copyState = state => JSON.parse(JSON.stringify(state));
@@ -102,6 +104,24 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: true
+      }
+    case actionTypes.POST_SUPPLY_START:
+      return {
+        ...state,
+        postLoading: true,
+      }
+    case actionTypes.POST_SUPPLY_SUCCESS:
+      return {
+        ...state,
+        activeSupplies: state.activeSupplies.concat(action.payload),
+        postError: false,
+        postLoading: false
+      }
+    case actionTypes.POST_SUPPLY_FAIL:
+      return {
+        ...state,
+        postError: true,
+        postLoading: false
       }
     default:
       return state;
