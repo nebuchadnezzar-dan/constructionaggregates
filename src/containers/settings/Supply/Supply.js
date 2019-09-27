@@ -12,6 +12,7 @@ import Table from '../../../components/UI/Table/Table';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import ErrorBody from '../../../components/UI/ErrorBody/ErrorBody';
+import SupplyForm from '../Supply/SupplyForm/SupplyForm';
 
 import withErrorhandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
@@ -27,7 +28,7 @@ class Supply extends Component {
   };
 
   componentDidMount() {
-    this.props.fetchSupplyDispatch();
+    this.props.fetchSupplyDispatch(1);
   }
 
   // parameters _ is not needed
@@ -179,11 +180,11 @@ class Supply extends Component {
     let tobeShown =
       this.state.view === 'form' ? (
         view
-      ) : (
-          <div className={styles.supplyWrapper}>
-            <Unordered classname="ulDefault">{inputList}</Unordered>
-            <div className={styles.inputWrap}>{supplyInput}</div>
-          </div>
+      ) : (<SupplyForm />
+          // <div className={styles.supplyWrapper}>
+          //   <Unordered classname="ulDefault">{inputList}</Unordered>
+          //   <div className={styles.inputWrap}>{supplyInput}</div>
+          // </div>
         );
     let mainSupplyBody = this.props.errorFetch ? <ErrorBody>{this.props.children}</ErrorBody> : <div className={styles.supplyWrapperHead}>
       {this.props.children}
@@ -224,7 +225,7 @@ const mapDispatchToProps = dispatch => ({
   supplyOnClickSupplyButtonDispatch: name =>
     dispatch(actions.addSupplyValue(name)),
   supplyAddMaterials: matName => dispatch(actions.addMaterialToSupply(matName)),
-  fetchSupplyDispatch: () => dispatch(actions.fetchSupply())
+  fetchSupplyDispatch: (page) => dispatch(actions.fetchSupply(page))
 });
 
 export default connect(

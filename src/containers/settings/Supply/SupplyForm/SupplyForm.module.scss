@@ -1,0 +1,42 @@
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/utility.scss';
+
+.title {
+    font-size: 1.8rem;
+  background-color: $orange-light;
+  color: #fff;
+  padding: 1rem 2rem;
+}
+
+.supplyForm {
+    width: 60%;
+    margin-left: 20%;
+    border: 1px solid $orange-light
+}
+
+.body {
+    padding: 1rem 2rem;
+    & > div {
+        display: flex;
+        align-items: center;
+        margin: 2rem 0;
+    }
+    & button {
+        width: 50%;
+        margin-left: 25%;
+      }
+}
+
+.label {
+    flex: 0 0 20%;
+}
+
+.inputWrapper{
+    flex: 1;
+}
+
+.input {
+    @include inputWithSearch;
+    border: 1px solid $orange-light;
+    width: 90%;
+}

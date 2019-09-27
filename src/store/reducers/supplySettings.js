@@ -18,6 +18,7 @@ const initialState = {
     { materials: 'river Mixed', amount: '60', price: '2100' },
     { materials: 'cement', amount: '150', price: '150' }
   ],
+  pages: '',
   loading: false,
   error: false
 };
@@ -93,7 +94,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: false,
-        activeSupplies: action.payload
+        activeSupplies: action.payload.supplies,
+        pages: action.payload.pages
       };
     case actionTypes.FETCH_SUPPLY_FAIL:
       return {

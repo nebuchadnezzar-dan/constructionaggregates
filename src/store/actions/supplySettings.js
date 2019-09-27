@@ -34,21 +34,21 @@ export const fetchSupplyStart = () => ({
   type: actionTypes.FETCH_SUPPLY_START
 });
 
-export const fetchSupplySuccess = supplies => ({
+export const fetchSupplySuccess = (supplies, pages) => ({
   type: actionTypes.FETCH_SUPPLY_SUCCESS,
-  payload: supplies
+  payload: { supplies, pages }
 });
 
 export const fetchSupplyFail = () => ({
   type: actionTypes.FETCH_SUPPLY_FAIL
 });
 
-export const fetchSupply = () => {
+export const fetchSupply = page => {
   return async dispatch => {
     try {
       dispatch(fetchSupplyStart());
-      const data = await axios.get('/settings/supply');
-      dispatch(fetchSupplySuccess(data.data));
+      const data = await axios.get(`/settings/supply?page=${page}`);
+      dispatch(fetchSupplySuccess(data.data.supply, data.data.pages));
     } catch (e) {
       dispatch(fetchSupplyFail());
     }
