@@ -91,7 +91,11 @@ class Table extends Component {
       if (this.props.from === 'truckSettings') {
         await this.props.deleteTruckProceedDispatch(copyValue[index].id);
         await this.props.toggleLocalPopupTruckDispatch({ from: 'localModalDeleteSettings', value: true, global: true });
-        this.props.reloadDataDispatch();
+        this.props.reloadTruckDispatch();
+      } else {
+        await this.props.deleteSupplySettingsDispatch(copyValue[index].id);
+        await this.props.toggleLocalPopupTruckDispatch({ from: 'localModalDeleteSettings', value: true, global: true });
+        this.props.reloadSupplyDispatch();
       }
     }
   };
@@ -162,11 +166,6 @@ class Table extends Component {
   onClickButtonForConfirmation = (from, button, i) => {
     // this.props.toggleGlobalPopupDispatch(true);
     if (from === 'truckSettings') {
-      // if (button === 'edit') {
-      //   this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
-      // } else if (button === 'delete') {
-      //   this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
-      // }
       this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
       this.setState({ confirmation: true, buttonMode: button, activeIndex: i });
     } else if (from === 'supplySettings') {
@@ -197,7 +196,7 @@ class Table extends Component {
           okClose={this.props.toggleGlobalPopupDispatch}
 
         />;
-    } else if (this.props.from === 'supplySettings' && this.props.globalPopup && this.props.supplyLocalPopup) {
+    } else if (this.props.from === 'supplySettings' && this.props.globalPopup && (this.props.supplyLocalPopup || this.props.deleteLocalPopup)) {
       modalConfirmation =
         <Confirmation
           confirmation={this.state.confirmation}
@@ -308,8 +307,10 @@ const mapDispatchToProps = dispatch => ({
   toggleGlobalPopupDispatch: () => dispatch(actions.toggleGlobalModal()),
   putTruckSettingsDispatch: (id, value) => dispatch(actions.putTruck(id, value)),
   deleteTruckProceedDispatch: (id) => dispatch(actions.deleteTruck(id)),
-  reloadDataDispatch: () => dispatch(actions.fetchTruck(1)),
-  putSupplySettingsDispatch: (id, value) => dispatch(actions.putSupply(id, value))
+  reloadTruckDispatch: () => dispatch(actions.fetchTruck(1)),
+  putSupplySettingsDispatch: (id, value) => dispatch(actions.putSupply(id, value)),
+  deleteSupplySettingsDispatch: id => dispatch(actions.deleteSupply(id)),
+  reloadSupplyDispatch: () => dispatch(actions.fetchSupply())
 });
 
 export default connect(

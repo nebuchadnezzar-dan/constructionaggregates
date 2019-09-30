@@ -20,7 +20,8 @@ export {
   addMaterialToSupply,
   fetchSupply,
   postSupply,
-  putSupply
+  putSupply,
+  deleteSupply
 } from './supplySettings';
 export { activeRoute } from './route';
 export {

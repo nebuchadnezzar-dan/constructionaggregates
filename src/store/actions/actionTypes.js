@@ -36,6 +36,9 @@ export const PUT_SUPPLY_START = 'PUT_SUPPLY_START';
 export const PUT_SUPPLY_SUCCESS = 'PUT_SUPPLY_SUCCESS';
 export const PUT_SUPPLY_FAIL = 'PUT_SUPPLY_FAIL';
 
+export const DELETE_SUPPLY_START = 'DELETE_SUPPLY_START';
+export const DELETE_SUPPLY_SUCCESS = 'DELETE_SUPPLY_SUCCESS';
+export const DELETE_SUPPLY_FAIL = 'DELETE_SUPPLY_FAIL';
 
 
 /**************************************************** */

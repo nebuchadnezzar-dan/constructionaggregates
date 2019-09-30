@@ -25,6 +25,8 @@ const initialState = {
   postError: false,
   putLoading: false,
   putError: false,
+  deleteLoading: false,
+  deleteError: false,
 };
 
 const copyState = state => JSON.parse(JSON.stringify(state));
@@ -146,6 +148,24 @@ const reducer = (state = initialState, action) => {
         ...state,
         putLoading: false,
         putError: true
+      }
+    case actionTypes.DELETE_SUPPLY_START:
+      return {
+        ...state,
+        deleteError: false,
+        deleteLoading: false
+      }
+    case actionTypes.DELETE_SUPPLY_SUCCESS:
+      return {
+        ...state,
+        deleteError: false,
+        deleteLoading: false
+      }
+    case actionTypes.DELETE_SUPPLY_FAIL:
+      return {
+        ...state,
+        deleteError: true,
+        deleteLoading: false
       }
     default:
       return state;

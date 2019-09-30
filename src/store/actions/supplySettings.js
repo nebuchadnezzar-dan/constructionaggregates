@@ -105,3 +105,27 @@ export const putSupply = (id, supply) => {
     }
   }
 };
+
+export const deleteSupplyStart = () => ({
+  type: actionTypes.DELETE_SUPPLY_START
+});
+
+export const deleteSupplySuccess = data => ({
+  type: actionTypes.DELETE_SUPPLY_SUCCESS
+});
+
+export const deleteSupplyFail = () => ({
+  type: actionTypes.DELETE_SUPPLY_FAIL
+});
+
+export const deleteSupply = id => {
+  return async dispatch => {
+    try {
+      dispatch(deleteSupplyStart());
+      const data = await axios.delete(`/settings/supply/${id}`);
+      dispatch(deleteSupplySuccess(data));
+    } catch (e) {
+      dispatch(deleteSupplyFail());
+    }
+  }
+};
