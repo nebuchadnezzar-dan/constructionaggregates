@@ -52,7 +52,7 @@ class TruckForm extends Component {
 
     render() {
 
-        const modalBody = (
+        const modalBody = this.props.postLoading ? null : (
             <Modal>
                 <Confirmation
                     confirmation={this.state.confirmation}
@@ -96,6 +96,17 @@ class TruckForm extends Component {
             );
         }));
 
+        let button = this.props.postLoading ? null : (
+            <div className={styles.buttonPosition}>
+                <Button cName="Main" click={this.props.addTruckDispatch}>
+                    &#9951; Add More Truck
+                </Button>
+                {this.props.truckForm.length > 0 ? <Button cName="mainSave" click={this.onViewModalHandler.bind(null, 'showConfirmation')}>
+                    {' '}
+                    &#10004; Save
+                </Button> : null}
+            </div>
+        )
 
         return (
             <Auxillary>
@@ -103,15 +114,7 @@ class TruckForm extends Component {
                 <div className={styles.truckForm}>
                     {formBodyWithSpinner}
                 </div>
-                <div className={styles.buttonPosition}>
-                    <Button cName="Main" click={this.props.addTruckDispatch}>
-                        &#9951; Add More Truck
-                </Button>
-                    {this.props.truckForm.length > 0 ? <Button cName="mainSave" click={this.onViewModalHandler.bind(null, 'showConfirmation')}>
-                        {' '}
-                        &#10004; Save
-                </Button> : null}
-                </div>
+                {button}
             </Auxillary>
         );
 
