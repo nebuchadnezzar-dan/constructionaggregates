@@ -74,7 +74,11 @@ export const postSupply = data => {
     try {
       dispatch(postSupplyStart());
       const supply = await axios.post('/settings/supply', data);
-      dispatch(postSupplySuccess(supply.data));
+      if (supply.data.error) {
+        dispatch(postSupplyFail());
+      } else {
+        dispatch(postSupplySuccess(supply.data));
+      }
     } catch (e) {
       dispatch(postSupplyFail());
     }

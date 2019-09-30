@@ -77,8 +77,12 @@ export const postTruck = (truckData) => {
     try {
       dispatch(postTruckStart());
       const data = await axios.post('/settings/truck', truckData);
+      if (data.data.error) {
+        dispatch(postTruckFail());
+      } else {
+        dispatch(postTruckSuccess(data.data));
+      }
       // console.log(data.data);
-      dispatch(postTruckSuccess(data.data));
     } catch (e) {
       dispatch(postTruckFail());
     }
