@@ -41,6 +41,7 @@ class TruckBuilder extends Component {
 
   componentDidMount() {
     this.props.fetchTruckDispatch(1);
+    this.props.toggleGlobalModalDispatch();
   }
 
   onChangePage = (page, pageIndex) => {

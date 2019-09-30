@@ -5,7 +5,7 @@ const initialState = {
     localModalTruckSettingsForm: false,
     localModalTruckSettingsTable: false,
     localModalSupplySettingsForm: false,
-    localModalSupplySettingsEdit: false,
+    localModalSupplySettingsTable: false,
     localModalDeleteSettings: false
 };
 
@@ -13,7 +13,7 @@ const defaultState = {
     localModalTruckSettingsForm: false,
     localModalTruckSettingsTable: false,
     localModalSupplySettingsForm: false,
-    localModalSupplySettingsEdit: false,
+    localModalSupplySettingsTable: false,
     localModalDeleteSettings: false
 }
 

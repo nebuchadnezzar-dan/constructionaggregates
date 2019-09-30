@@ -19,6 +19,8 @@ export const DELTE_TRUCK_START = 'DELTE_TRUCK_START';
 export const DELETE_TRUCK_SUCCESS = 'DELETE_TRUCK_SUCCESS';
 export const DELTE_TRUCK_FAIL = 'DELTE_TRUCK_FAIL';
 
+/**************************************************** */
+
 
 /****************API REQUEST SUPPLY*************** */
 
@@ -29,6 +31,14 @@ export const FETCH_SUPPLY_FAIL = 'FETCH_SUPPLY_FAIL';
 export const POST_SUPPLY_START = 'POST_SUPPLY_START';
 export const POST_SUPPLY_SUCCESS = 'POST_SUPPLY_SUCCESS';
 export const POST_SUPPLY_FAIL = 'POST_SUPPLY_FAIL';
+
+export const PUT_SUPPLY_START = 'PUT_SUPPLY_START';
+export const PUT_SUPPLY_SUCCESS = 'PUT_SUPPLY_SUCCESS';
+export const PUT_SUPPLY_FAIL = 'PUT_SUPPLY_FAIL';
+
+
+
+/**************************************************** */
 
 export const ADD_TRUCK = 'ADD_TRUCK';
 export const REMOVE_TRUCK = 'REMOVE_TRUCK';

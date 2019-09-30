@@ -22,7 +22,9 @@ const initialState = {
   loading: false,
   error: false,
   postLoading: false,
-  postError: false
+  postError: false,
+  putLoading: false,
+  putError: false,
 };
 
 const copyState = state => JSON.parse(JSON.stringify(state));
@@ -122,6 +124,28 @@ const reducer = (state = initialState, action) => {
         ...state,
         postError: true,
         postLoading: false
+      }
+    case actionTypes.PUT_SUPPLY_START:
+      return {
+        ...state,
+        putError: false,
+        putLoading: true
+      }
+    case actionTypes.PUT_SUPPLY_SUCCESS:
+      newSuppInput = copyState(state.activeSupplies);
+      const newInd = newSuppInput.findIndex(el => el.id === action.payload.id);
+      newSuppInput[newInd] = action.payload;
+      return {
+        ...state,
+        putLoading: false,
+        putError: false,
+        activeSupplies: newSuppInput
+      }
+    case actionTypes.PUT_SUPPLY_FAIL:
+      return {
+        ...state,
+        putLoading: false,
+        putError: true
       }
     default:
       return state;

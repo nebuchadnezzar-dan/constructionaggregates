@@ -79,4 +79,29 @@ export const postSupply = data => {
       dispatch(postSupplyFail());
     }
   }
-}
+};
+
+export const putSupplyStart = () => ({
+  type: actionTypes.PUT_SUPPLY_START
+});
+
+export const putSupplySuccess = data => ({
+  type: actionTypes.PUT_SUPPLY_SUCCESS,
+  payload: data
+});
+
+export const putSupplyFail = () => ({
+  type: actionTypes.PUT_SUPPLY_FAIL
+});
+
+export const putSupply = (id, supply) => {
+  return async dispatch => {
+    try {
+      dispatch(putSupplyStart());
+      const data = await axios.put(`/settings/supply/${id}`, supply);
+      dispatch(putSupplySuccess(data.data));
+    } catch (e) {
+      dispatch(putSupplyFail());
+    }
+  }
+};

@@ -78,14 +78,14 @@ class Table extends Component {
       actions: 'view'
     };
     if (button === 'edit') {
+      await this.setState({ data: copyData, untouchedValue: copyData, isBeingEdited: false, confirmation: false, feedback: true });
       this.props.toggleGlobalPopupDispatch();
       if (this.props.from === 'truckSettings') {
-        await this.props.putTruckSettingsDispatch(copyValue[index].id, copyValue[index])
+        await this.props.putTruckSettingsDispatch(copyValue[index].id, copyValue[index]);
       } else {
-        this.props.onEditSupplyDispatch(index, copyValue[index]);
+        await this.props.putSupplySettingsDispatch(copyValue[index].id, copyValue[index]);
       }
-      await this.setState({ data: copyData, untouchedValue: copyData, isBeingEdited: false, confirmation: false, feedback: true });
-      this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
+      this.props.toggleLocalPopupTruckDispatch({ from: this.props.from === 'supplySettings' ? 'localModalSupplySettingsTable' : 'localModalTruckSettingsTable', value: true, global: true });
     } else if (button === 'delete') {
       this.props.toggleGlobalPopupDispatch();
       if (this.props.from === 'truckSettings') {
@@ -169,6 +169,9 @@ class Table extends Component {
       // }
       this.props.toggleLocalPopupTruckDispatch({ from: 'localModalTruckSettingsTable', value: true, global: true });
       this.setState({ confirmation: true, buttonMode: button, activeIndex: i });
+    } else if (from === 'supplySettings') {
+      this.props.toggleLocalPopupTruckDispatch({ from: 'localModalSupplySettingsTable', value: true, global: true });
+      this.setState({ confirmation: true, buttonMode: button, activeIndex: i });
     }
 
   }
@@ -188,20 +191,28 @@ class Table extends Component {
       modalConfirmation =
         <Confirmation
           confirmation={this.state.confirmation}
-          error={this.props.putError}
+          error={this.props.putErrorTruck}
           proceed={this.onProceed.bind(null, this.state.buttonMode)}
           feedback={this.state.feedback}
           okClose={this.props.toggleGlobalPopupDispatch}
 
         />;
     } else if (this.props.from === 'supplySettings' && this.props.globalPopup && this.props.supplyLocalPopup) {
-      modalConfirmation = <Confirmation />;
+      modalConfirmation =
+        <Confirmation
+          confirmation={this.state.confirmation}
+          error={this.props.putErrorSupply}
+          proceed={this.onProceed.bind(null, this.state.buttonMode)}
+          feedback={this.state.feedback}
+          okClose={this.props.toggleGlobalPopupDispatch}
+
+        />;
     }
 
     let modal = <Modal>
       {modalConfirmation}
     </Modal>;
-    table = this.props.putLoading ? <Spinner color="grey" /> : (
+    table = this.props.putLoadingTruck || this.props.putLoadingSupply ? <Spinner color="grey" /> : (
       <Auxillary>
         {modal}
         <table className={[styles.table, styles[this.props.cName]].join(' ')}>
@@ -278,10 +289,12 @@ class Table extends Component {
 const mapStateToProps = state => ({
   truckLocalPopup: state.modal.localModalTruckSettingsTable,
   globalPopup: state.modal.showGlobalModal,
-  supplyLocalPopup: state.modal.localModalSupplySettingsEdi,
+  supplyLocalPopup: state.modal.localModalSupplySettingsTable,
   putLoadingTruck: state.truckSettings.putLoading,
   putErrorTruck: state.truckSettings.putError,
-  deleteLocalPopup: state.modal.localModalDeleteSettings
+  deleteLocalPopup: state.modal.localModalDeleteSettings,
+  putLoadingSupply: state.supplySettings.putLoading,
+  putErrorSupply: state.supplySettings.putError
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -296,6 +309,7 @@ const mapDispatchToProps = dispatch => ({
   putTruckSettingsDispatch: (id, value) => dispatch(actions.putTruck(id, value)),
   deleteTruckProceedDispatch: (id) => dispatch(actions.deleteTruck(id)),
   reloadDataDispatch: () => dispatch(actions.fetchTruck(1)),
+  putSupplySettingsDispatch: (id, value) => dispatch(actions.putSupply(id, value))
 });
 
 export default connect(
