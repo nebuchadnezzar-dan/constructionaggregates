@@ -10,6 +10,7 @@ import Auxillary from '../../../hoc/Auxillary/Auxillary';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import ErrorBody from '../../../components/UI/ErrorBody/ErrorBody';
 import SupplyForm from '../Supply/SupplyForm/SupplyForm';
+import Pagination from '../../../components/UI/Pagination/Pagination';
 
 import withErrorhandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
@@ -21,16 +22,25 @@ class Supply extends Component {
   state = {
     view: 'form',
     activeSupp: '',
-    addForm: ''
+    addForm: '',
+    currentpage: 1,
+    pageIndex: 5
   };
 
   componentDidMount() {
     this.props.fetchSupplyDispatch(1);
   }
 
+  onChangePage = (page, pageIndex) => {
+    this.setState({ currentpage: page, pageIndex });
+    this.props.fetchSupplyDispatch(page);
+  }
 
   onToggleView = value => {
     this.setState({ view: value });
+    if (value === 'view') {
+      this.props.fetchSupplyDispatch(this.state.currentpage);
+    }
   };
   render() {
     let view = (
@@ -40,6 +50,13 @@ class Supply extends Component {
           data={this.props.activeSupplies}
           cName="orange"
           from="supplySettings"
+        />
+        <Pagination
+          currentpage={this.props.pages < this.state.currentpage ? 1 : this.state.currentpage}
+          pages={this.props.pages}
+          color='orange'
+          pageIndex={this.state.pageIndex}
+          clickButton={this.onChangePage}
         />
       </div>
     );
@@ -74,7 +91,8 @@ const mapStateToProps = state => ({
   activeSupp: state.supplySettings.activeSupp,
   activeSupplies: state.supplySettings.activeSupplies,
   errorFetch: state.supplySettings.error,
-  loadingFetch: state.supplySettings.loading
+  loadingFetch: state.supplySettings.loading,
+  pages: state.supplySettings.pages
 
 });
 
