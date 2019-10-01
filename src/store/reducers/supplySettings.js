@@ -153,7 +153,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         deleteError: false,
-        deleteLoading: false
+        deleteLoading: true
       }
     case actionTypes.DELETE_SUPPLY_SUCCESS:
       return {

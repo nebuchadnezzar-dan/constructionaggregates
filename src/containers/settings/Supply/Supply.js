@@ -38,7 +38,7 @@ class Supply extends Component {
 
   onToggleView = value => {
     this.setState({ view: value });
-    if (value === 'view') {
+    if (value === 'form') {
       this.props.fetchSupplyDispatch(this.state.currentpage);
     }
   };

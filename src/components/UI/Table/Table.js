@@ -211,7 +211,7 @@ class Table extends Component {
     let modal = <Modal>
       {modalConfirmation}
     </Modal>;
-    table = this.props.putLoadingTruck || this.props.putLoadingSupply ? <Spinner color="grey" /> : (
+    table = this.props.putLoadingTruck || this.props.putLoadingSupply || this.props.deleteLoadingTruck || this.props.deleteLoadingSupply ? <Spinner color="grey" /> : (
       <Auxillary>
         {modal}
         <table className={[styles.table, styles[this.props.cName]].join(' ')}>
@@ -293,7 +293,9 @@ const mapStateToProps = state => ({
   putErrorTruck: state.truckSettings.putError,
   deleteLocalPopup: state.modal.localModalDeleteSettings,
   putLoadingSupply: state.supplySettings.putLoading,
-  putErrorSupply: state.supplySettings.putError
+  putErrorSupply: state.supplySettings.putError,
+  deleteLoadingTruck: state.truckSettings.deleteLoading,
+  deleteLoadingSupply: state.supplySettings.deleteLoading
 });
 
 const mapDispatchToProps = dispatch => ({

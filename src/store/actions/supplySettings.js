@@ -127,7 +127,8 @@ export const deleteSupply = id => {
     try {
       dispatch(deleteSupplyStart());
       const data = await axios.delete(`/settings/supply/${id}`);
-      dispatch(deleteSupplySuccess(data));
+      console.log(data.data);
+      dispatch(deleteSupplySuccess(data.data));
     } catch (e) {
       dispatch(deleteSupplyFail());
     }
