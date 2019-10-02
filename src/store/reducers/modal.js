@@ -6,7 +6,8 @@ const initialState = {
     localModalTruckSettingsTable: false,
     localModalSupplySettingsForm: false,
     localModalSupplySettingsTable: false,
-    localModalDeleteSettings: false
+    localModalDeleteSettings: false,
+    localModalCustomerForm: false
 };
 
 const defaultState = {
@@ -14,7 +15,8 @@ const defaultState = {
     localModalTruckSettingsTable: false,
     localModalSupplySettingsForm: false,
     localModalSupplySettingsTable: false,
-    localModalDeleteSettings: false
+    localModalDeleteSettings: false,
+    localModalCustomerForm: false
 }
 
 const reducer = (state = initialState, action) => {

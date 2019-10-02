@@ -7,6 +7,10 @@ import * as actions from '../../../store/actions/index';
 import styles from './CustomerForm.module.scss';
 
 import Button from '../../../components/UI/Button/Button';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import Confirmation from '../../../components/UI/Confirmation/Confirmation';
+import Modal from '../../../components/UI/Modal/Modal';
+import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
 class CustomerForm extends Component {
   state = {
@@ -14,23 +18,53 @@ class CustomerForm extends Component {
       lastName: '',
       firstName: '',
       contactNo: ''
-    }
+    },
+    confirmation: false,
+    feedback: false
   };
 
   onInputChangeHandler = (name, e) => {
     this.setState({ form: { ...this.state.form, [name]: e.target.value } });
   };
   onClickSaveHandler = () => {
-    this.props.addCustomerDispatch({
-      lastName: this.state.form.lastName,
-      firstName: this.state.form.firstName,
-      contactNo: this.state.form.contactNo
-    });
-    this.setState({ form: { lastName: '', firstName: '', contactNo: '' } });
+    this.setState({ confirmation: true, feedback: false });
+    this.props.localPopupDispatchDispatch({ from: 'localModalCustomerForm', value: true, global: true });
+    // this.props.addCustomerDispatch({
+    //   lastName: this.state.form.lastName,
+    //   firstName: this.state.form.firstName,
+    //   contactNo: this.state.form.contactNo
+    // });
+    // this.setState({ form: { lastName: '', firstName: '', contactNo: '' } });
   };
+
+  onSendPostRequest = () => {
+    this.props.globalPopupDispatch();
+    this.props.postCustomerDispatch(this.state.form);
+    this.props.localPopupDispatchDispatch({ from: 'localModalCustomerForm', value: true, global: true });
+    this.setState({ form: { lastName: '', firstName: '', contactNo: '' }, confirmation: false, feedback: true });
+  }
+
+  onCloseModalHandler = () => {
+    this.props.globalPopupDispatch();
+    this.setState({ confirmation: false, feedback: false });
+  }
+
   render() {
-    return (
-      <div>
+    const modalBody = this.props.localPopup && this.props.globalPopup ?
+      <Modal>
+        <Confirmation
+          confirmation={this.state.confirmation}
+          error={this.props.error}
+          proceed={this.onSendPostRequest.bind(null)}
+          feedback={this.state.feedback}
+          okClose={this.onCloseModalHandler.bind(null)}
+
+        />
+      </Modal>
+      : null;
+    const spinner = this.props.loading ? <Spinner color="grey" /> : (
+      <Auxillary>
+        {modalBody}
         <div className={styles.customer}>
           <div className={styles.title}>New Customer</div>
           <div className={styles.customerBody}>
@@ -75,16 +109,28 @@ class CustomerForm extends Component {
           </Button>
           </div>
         </div>
-      </div>
+      </Auxillary>
     );
+    return spinner;
   }
 }
 
+const mapStateToProps = state => ({
+  loading: state.customer.postLoading,
+  error: state.customer.postError,
+  localPopup: state.modal.localModalCustomerForm,
+  globalPopup: state.modal.showGlobalModal
+});
+
 const mapDispatchToProps = dispatch => ({
-  addCustomerDispatch: customer => dispatch(actions.addCustomer(customer))
+  addCustomerDispatch: customer => dispatch(actions.addCustomer(customer)),
+  postCustomerDispatch: data => dispatch(actions.postCustomer(data)),
+  globalPopupDispatch: () => dispatch(actions.toggleGlobalModal()),
+  localPopupDispatchDispatch: local => dispatch(actions.toggleLocalPopupSettings(local))
+
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CustomerForm);

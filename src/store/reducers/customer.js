@@ -133,7 +133,9 @@ const initialState = {
     }
   ],
   fetchLoading: false,
-  fetchError: false
+  fetchError: false,
+  postLoading: false,
+  postError: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -179,8 +181,27 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FETCH_CUSTOMER_FAIL:
       return {
         ...state,
-        fetchError: true,
-        fetchLoading: false
+        postError: true,
+        postLoading: false
+      }
+    case actionTypes.POST_CUSTOMER_START:
+      return {
+        ...state,
+        postError: false,
+        postLoading: true,
+      }
+    case actionTypes.POST_CUSTOMER_SUCCESS:
+      return {
+        ...state,
+        postError: false,
+        postLoading: false,
+        customer: state.customer.concat(action.payload)
+      }
+    case actionTypes.POST_CUSTOMER_FAIL:
+      return {
+        ...state,
+        postError: true,
+        postLoading: false
       }
     default:
       return state;

@@ -35,4 +35,33 @@ export const fetchCustomer = page => {
       dispatch(fetchCustomerFail());
     }
   }
+};
+
+export const postCustomerStart = () => ({
+  type: actionTypes.POST_CUSTOMER_START
+});
+
+export const postCustomerSuccess = data => ({
+  type: actionTypes.POST_CUSTOMER_SUCCESS,
+  payload: data
+});
+
+export const postCustomerFail = () => ({
+  type: actionTypes.POST_CUSTOMER_FAIL
+});
+
+export const postCustomer = customer => {
+  return async dispatch => {
+    try {
+      dispatch(postCustomerStart());
+      const data = await axios.post('/customer', customer);
+      if (data.data.error) {
+        dispatch(postCustomerFail());
+      } else {
+        dispatch(postCustomerSuccess(data.data));
+      }
+    } catch (e) {
+      dispatch(postCustomerFail());
+    }
+  }
 }
