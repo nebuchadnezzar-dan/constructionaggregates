@@ -43,6 +43,14 @@ export const DELETE_SUPPLY_FAIL = 'DELETE_SUPPLY_FAIL';
 
 /**************************************************** */
 
+/************************API REQUEST CUSTOMER************ */
+
+export const FETCH_CUSTOMER_START = 'FETCH_CUSTOMER_START';
+export const FETCH_CUSTOMER_SUCCESS = 'FETCH_CUSTOMER_SUCCESS';
+export const FETCH_CUSTOMER_FAIL = 'FETCH_CUSTOMER_FAIL';
+
+/******************************************************** */
+
 export const ADD_TRUCK = 'ADD_TRUCK';
 export const REMOVE_TRUCK = 'REMOVE_TRUCK';
 export const VALUE_CHANGE_TRUCK = 'VALUE_CHANGE_TRUCK';

@@ -131,7 +131,9 @@ const initialState = {
       address: 'Baguio',
       date: '2019-06-29'
     }
-  ]
+  ],
+  fetchLoading: false,
+  fetchError: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -160,6 +162,26 @@ const reducer = (state = initialState, action) => {
         customer: customerCopy,
         credit: state.credit.concat({ ...action.payload, date: newDate() })
       };
+    case actionTypes.FETCH_CUSTOMER_START:
+      return {
+        ...state,
+        fetchError: false,
+        fetchLoading: true
+      }
+    case actionTypes.FETCH_CUSTOMER_SUCCESS:
+      return {
+        ...state,
+        customer: action.data,
+        pages: action.pages,
+        fetchError: false,
+        fetchLoading: false
+      }
+    case actionTypes.FETCH_CUSTOMER_FAIL:
+      return {
+        ...state,
+        fetchError: true,
+        fetchLoading: false
+      }
     default:
       return state;
   }
