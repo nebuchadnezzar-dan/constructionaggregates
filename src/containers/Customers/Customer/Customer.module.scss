@@ -1,0 +1,36 @@
+@import '../../../styles/colors.scss';
+
+.customerWrapper {
+    width: 60%;
+    margin: auto;
+    border: 1px solid $red-light;
+}
+
+.title {
+    padding: 1rem 1rem;
+    background-color: $red-light;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.body {
+    padding: 1rem 2rem;
+    & > div {
+        display: flex;
+        padding: .5rem 0;
+    }
+
+    & > div:last-child{
+        justify-content: center;
+    }
+}
+
+.line {
+    margin: 2rem;
+    border: .5px solid $red-light;
+}
+
+.label {
+    font-weight: 500;
+    flex: 0 0 20%;
+}
