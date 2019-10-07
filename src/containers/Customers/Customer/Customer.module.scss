@@ -1,4 +1,5 @@
 @import '../../../styles/colors.scss';
+@import '../../../styles/utility.scss';
 
 .customerWrapper {
     width: 60%;
@@ -23,11 +24,21 @@
     & > div:last-child{
         justify-content: center;
     }
+
+    & input {
+        @include inputWithSearch;
+    border: 1px solid $red-light;
+    width: 90%;
+    }
 }
 
 .line {
     margin: 2rem;
     border: .5px solid $red-light;
+}
+
+.value{
+    flex: 1;
 }
 
 .label {
