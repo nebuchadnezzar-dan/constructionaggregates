@@ -4,6 +4,8 @@ import styles from './CustomerTable.module.scss';
 
 import { connect } from 'react-redux';
 
+import * as actions from '../../../store/actions/index';
+
 import Button from '../../../components/UI/Button/Button';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
@@ -65,6 +67,11 @@ class CustomerTable extends Component {
     let customerCopy = [...this.state.localCustomers];
     this.setState({ localCustomers: sort(customerCopy, head, direction) });
   };
+
+  onViewClick = (index) => {
+    this.props.fetchCustomer(this.state.localCustomers[index].id);
+    this.props.toggleViewModeDispatch('view');
+  }
 
   render() {
     return (
@@ -157,8 +164,7 @@ class CustomerTable extends Component {
                       <td>{customer.dateRegistered}</td>
                       <td>{customer.timesPurchased}</td>
                       <td>
-                        <Button cName="delete">&#128465;</Button>
-                        <Button cName="edit">&#9998;</Button>
+                        <Button cName="delete" click={this.onViewClick.bind(null, i)}>&#128065;</Button>
                       </td>
                     </tr>
                   );
@@ -186,4 +192,9 @@ const mapStateToProps = state => ({
   customerCreditRedux: state.customer.credit
 });
 
-export default connect(mapStateToProps)(CustomerTable);
+const mapDispatchToProps = dispatch => ({
+  fetchCustomer: id => dispatch(actions.fetchCustomer(id)),
+  toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerTable);

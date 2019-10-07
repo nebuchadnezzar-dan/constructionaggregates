@@ -6,7 +6,7 @@ import axios from '../../axios-orders';
 
 import * as actions from '../../store/actions/index';
 
-import styles from './Customer.module.scss';
+import styles from './Customers.module.scss';
 
 import Head from '../../components/UI/Head/Head';
 import HeadChild from '../../components/UI/HeadChild/HeadChild';
@@ -14,10 +14,11 @@ import CustomerTable from './CustomerTable/CustomerTable';
 import CustomerForm from './CustomerForm/CustomerForm';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import ErrorBody from '../../components/UI/ErrorBody/ErrorBody';
+import Customer from '../Customers/Customer/Customer';
 
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
-class Customer extends Component {
+class Customers extends Component {
   state = {
     activeView: 'form'
   };
@@ -27,21 +28,29 @@ class Customer extends Component {
   }
 
   onToggleView = view => {
-    this.setState({ activeView: view });
+    // this.setState({ activeView: view });
+    this.props.toggleViewModeDispatch(view);
   };
   render() {
     const customerView = <CustomerTable />;
     const customerForm = <CustomerForm />;
-    const customer =
-      this.state.activeView === 'form' ? customerView : customerForm;
+    const customerInd = <Customer />;
+    let customer;
+    if (this.props.viewMode === 'table') {
+      customer = customerView;
+    } else if (this.props.viewMode === 'form') {
+      customer = customerForm;
+    } else {
+      customer = customerInd;
+    }
     const mainBody = (
       <div className={styles.cutomerMain}>
         {this.props.children}
         <Head classname="red" svgname="customer">
           <HeadChild
             forClassName={this.state.activeView}
-            dispatchClickView={this.onToggleView.bind(null, 'view')}
-            dispatchClickForm={this.onToggleView.bind(null, 'form')}
+            dispatchClickView={this.onToggleView.bind(null, 'form')}
+            dispatchClickForm={this.onToggleView.bind(null, 'table')}
             childName="Form"
           >
             Customers
@@ -58,11 +67,13 @@ class Customer extends Component {
 
 const mapStateToProps = state => ({
   loading: state.customer.fetchLoading,
-  error: state.customer.fetchError
+  error: state.customer.fetchError,
+  viewMode: state.customer.viewMode
 });
 
 const maptDispatchToProps = dispatch => ({
-  fetchCustomers: page => dispatch(actions.fetchCustomer(page))
+  fetchCustomers: page => dispatch(actions.fetchCustomers(page)),
+  toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode))
 });
 
-export default connect(mapStateToProps, maptDispatchToProps)(withErrorHandler(Customer, axios));
+export default connect(mapStateToProps, maptDispatchToProps)(withErrorHandler(Customers, axios));

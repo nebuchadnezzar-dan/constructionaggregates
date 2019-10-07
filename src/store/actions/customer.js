@@ -12,30 +12,62 @@ export const addCredit = (payload, credit) => ({
   payload, credit
 });
 
+export const toggleCustomerView = (view) => ({
+  type: actionTypes.TOGGLE_CUSTOMER_VIEW,
+  payload: view
+});
+
+export const fetchCustomersStart = () => ({
+  type: actionTypes.FETCH_CUSTOMERS_START
+});
+
+export const fetchCustomersSuccess = (data, pages) => ({
+  type: actionTypes.FETCH_CUSTOMERS_SUCCESS,
+  data, pages
+});
+
+export const fetchCustomersFail = () => ({
+  type: actionTypes.FETCH_CUSTOMERS_FAIL
+});
+
+export const fetchCustomers = page => {
+  return async dispatch => {
+    try {
+      dispatch(fetchCustomersStart());
+      const data = await axios.get(`/customers?page=${page}`);
+      dispatch(fetchCustomersSuccess(data.data.customer, data.data.pages));
+    } catch (e) {
+      dispatch(fetchCustomersFail());
+    }
+  }
+};
+
+
 export const fetchCustomerStart = () => ({
   type: actionTypes.FETCH_CUSTOMER_START
 });
 
-export const fetchCustomerSuccess = (data, pages) => ({
+export const fetchCustomerSuccess = customer => ({
   type: actionTypes.FETCH_CUSTOMER_SUCCESS,
-  data, pages
+  payload: customer
 });
 
 export const fetchCustomerFail = () => ({
   type: actionTypes.FETCH_CUSTOMER_FAIL
 });
 
-export const fetchCustomer = page => {
+export const fetchCustomer = id => {
   return async dispatch => {
     try {
       dispatch(fetchCustomerStart());
-      const data = await axios.get(`/customer?page=${page}`);
-      dispatch(fetchCustomerSuccess(data.data.customer, data.data.pages));
+      const data = await axios.get(`/customers/${id}`);
+      dispatch(fetchCustomerSuccess(data.data));
     } catch (e) {
       dispatch(fetchCustomerFail());
     }
   }
 };
+
 
 export const postCustomerStart = () => ({
   type: actionTypes.POST_CUSTOMER_START
@@ -54,7 +86,7 @@ export const postCustomer = customer => {
   return async dispatch => {
     try {
       dispatch(postCustomerStart());
-      const data = await axios.post('/customer', customer);
+      const data = await axios.post('/customers', customer);
       if (data.data.error) {
         dispatch(postCustomerFail());
       } else {

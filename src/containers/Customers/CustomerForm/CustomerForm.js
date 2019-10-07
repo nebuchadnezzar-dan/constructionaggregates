@@ -29,12 +29,6 @@ class CustomerForm extends Component {
   onClickSaveHandler = () => {
     this.setState({ confirmation: true, feedback: false });
     this.props.localPopupDispatchDispatch({ from: 'localModalCustomerForm', value: true, global: true });
-    // this.props.addCustomerDispatch({
-    //   lastName: this.state.form.lastName,
-    //   firstName: this.state.form.firstName,
-    //   contactNo: this.state.form.contactNo
-    // });
-    // this.setState({ form: { lastName: '', firstName: '', contactNo: '' } });
   };
 
   onSendPostRequest = () => {

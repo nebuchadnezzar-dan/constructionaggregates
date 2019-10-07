@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 import { newDate } from '../../util/dateHelper';
 
 const initialState = {
+  viewedCustomer: '',
   customer: [
     {
       lastName: 'Collins',
@@ -132,6 +133,7 @@ const initialState = {
       date: '2019-06-29'
     }
   ],
+  viewMode: 'table',
   fetchLoading: false,
   fetchError: false,
   postLoading: false,
@@ -164,13 +166,18 @@ const reducer = (state = initialState, action) => {
         customer: customerCopy,
         credit: state.credit.concat({ ...action.payload, date: newDate() })
       };
-    case actionTypes.FETCH_CUSTOMER_START:
+    case actionTypes.TOGGLE_CUSTOMER_VIEW:
+      return {
+        ...state,
+        viewMode: action.payload
+      }
+    case actionTypes.FETCH_CUSTOMERS_START:
       return {
         ...state,
         fetchError: false,
         fetchLoading: true
       }
-    case actionTypes.FETCH_CUSTOMER_SUCCESS:
+    case actionTypes.FETCH_CUSTOMERS_SUCCESS:
       return {
         ...state,
         customer: action.data,
@@ -178,11 +185,32 @@ const reducer = (state = initialState, action) => {
         fetchError: false,
         fetchLoading: false
       }
-    case actionTypes.FETCH_CUSTOMER_FAIL:
+    case actionTypes.FETCH_CUSTOMERS_FAIL:
       return {
         ...state,
         postError: true,
         postLoading: false
+      }
+
+    case actionTypes.FETCH_CUSTOMER_START:
+      return {
+        ...state,
+        fetchError: false,
+        fetchLoading: true
+      }
+
+    case actionTypes.FETCH_CUSTOMER_SUCCESS:
+      return {
+        ...state,
+        fetchError: false,
+        fetchLoading: false,
+        viewedCustomer: action.payload
+      }
+    case actionTypes.FETCH_CUSTOMER_FAIL:
+      return {
+        ...state,
+        fetchError: true,
+        fetchLoading: false
       }
     case actionTypes.POST_CUSTOMER_START:
       return {
