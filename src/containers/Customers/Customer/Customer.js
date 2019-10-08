@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import * as axios from '../../../axios-orders';
-
 import * as actions from '../../../store/actions/index';
 
 import styles from './Customer.module.scss';
@@ -24,7 +22,8 @@ class Customer extends Component {
             contactNo: ''
         },
         feedback: false,
-        confirmation: false
+        confirmation: false,
+        button: ''
     }
 
 
@@ -36,11 +35,19 @@ class Customer extends Component {
         this.setState({ mode: mode, form: { ...this.form, lastName: this.props.data.lastName, firstName: this.props.data.firstName, contactNo: this.props.data.contactNo } });
     }
 
-    onSendPostRequest = () => {
+    onSendPostRequest = async () => {
         this.props.globalPopupDispatch();
-        this.props.putCustomerDispatch(this.props.data.id, this.state.form);
-        // console.log(this.props.data.id, this.state.form)
-        this.props.localPopupDispatchDispatch({ from: 'localModalCustomerTable', value: true, global: true });
+        if (this.state.button === 'edit') {
+            this.props.putCustomerDispatch(this.props.data.id, this.state.form);
+            this.props.localPopupDispatchDispatch({ from: 'localModalCustomerTable', value: true, global: true });
+        } else {
+            await this.props.deleteCustomerDispatch(this.props.data.id);
+            await this.props.localPopupDispatchDispatch({ from: 'localModalDeleteSettings', value: true, global: true });
+            // await this.props.fetchCustomers(1);
+            // this.props.toggleViewModeDispatch('table');
+
+
+        }
         this.setState({ form: { lastName: '', firstName: '', contactNo: '' }, confirmation: false, feedback: true, mode: 'view' });
     }
 
@@ -50,21 +57,20 @@ class Customer extends Component {
     }
 
     onConfirm = button => {
-        if (button === 'edit') {
-            this.setState({ confirmation: true, feedback: false });
-            this.props.localPopupDispatchDispatch({ from: 'localModalCustomerTable', value: true, global: true });
-        }
+        this.setState({ confirmation: true, feedback: false, button: button });
+        this.props.localPopupDispatchDispatch({ from: 'localModalCustomerTable', value: true, global: true });
+
     }
 
 
 
     render() {
-        let { id, lastName, firstName, contactNo } = this.props.data;
+        let { id, lastName, firstName, contactNo, dateRegistered } = this.props.data;
         const name = `${this.props.data.lastName}, ${this.props.data.firstName}`;
 
         let buttonMode = this.state.mode === 'view' ? <Auxillary>
             <Button color="blue" click={this.onChangeMode.bind(null, 'edit')}>Edit</Button>
-            <Button color="red">Delete</Button>
+            <Button color="red" click={this.onConfirm.bind(null, 'delete')}>Delete</Button>
         </Auxillary> : <Auxillary>
                 <Button color="blue" click={this.onChangeMode.bind(null, 'view')}>Cancel</Button>
                 <Button color="green" click={this.onConfirm.bind(null, 'edit')}>Save</Button>
@@ -80,7 +86,7 @@ class Customer extends Component {
             contactNo = this.props.data.contactNo;
         }
 
-        const modalBody = this.props.localPopup && this.props.globalPopup ?
+        const modalBody = (this.props.localPopup && this.props.globalPopup) || this.props.deletedModal ?
             <Modal>
                 <Confirmation
                     confirmation={this.state.confirmation}
@@ -93,11 +99,18 @@ class Customer extends Component {
             </Modal>
             : null;
 
-        const spinner = this.props.loading ? <Spinner color="grey" /> : <div>
-            {modalBody}
-            <div className={styles.customerWrapper}>
+        const bodyDelete = this.props.deleted ? <Auxillary>
+            <div className={styles.deleted}>
+                <span>&#10004;</span>
+                <div>CUSTOMER SUCCESSFULLY REMOVED!</div></div>
+            <hr />
+        </Auxillary> : <div className={styles.customerWrapper}>
                 <div className={styles.title}>{id} | {name} </div>
                 <div className={styles.body}>
+                    <div>
+                        <div className={styles.label}>Date Registered</div>
+                        <div className={styles.value}>{dateRegistered}</div>
+                    </div>
                     <div>
                         <div className={styles.label}>Last Name</div>
                         <div className={styles.value}>{lastName}</div>
@@ -122,7 +135,14 @@ class Customer extends Component {
 
                 </div>
 
+            </div>;
+
+        let spinner = this.props.loading ? <Spinner color="grey" /> : <div>
+            {modalBody}
+            <div>
+                <Button color="red"><span>&#171;</span> Go Back</Button>
             </div>
+            {bodyDelete}
         </div>;
 
         return spinner;
@@ -135,13 +155,18 @@ const maptStateToProps = state => ({
     loading: state.customer.putLoading,
     error: state.customer.putError,
     localPopup: state.modal.localModalCustomerTable,
-    globalPopup: state.modal.showGlobalModal
+    globalPopup: state.modal.showGlobalModal,
+    deletedModal: state.modal.localModalDeleteSettings,
+    deleted: state.customer.deleted
 });
 
 const mapDispatchToProps = dispatch => ({
     globalPopupDispatch: () => dispatch(actions.toggleGlobalModal()),
     localPopupDispatchDispatch: local => dispatch(actions.toggleLocalPopupSettings(local)),
-    putCustomerDispatch: (id, customer) => dispatch(actions.putCustomer(id, customer))
+    putCustomerDispatch: (id, customer) => dispatch(actions.putCustomer(id, customer)),
+    deleteCustomerDispatch: id => dispatch(actions.deleteCustomer(id)),
+    toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode)),
+    fetchCustomers: page => dispatch(actions.fetchCustomers(page))
 });
 
 export default connect(maptStateToProps, mapDispatchToProps)(Customer);

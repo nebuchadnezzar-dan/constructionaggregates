@@ -61,6 +61,10 @@ export const PUT_CUSTOMER_START = 'PUT_CUSTOMER_START';
 export const PUT_CUSTOMER_SUCCESS = 'PUT_CUSTOMER_SUCCESS';
 export const PUT_CUSTOMER_FAIL = 'PUT_CUSTOMER_FAIL';
 
+export const DELETE_CUSTOMER_START = 'DELETE_CUSTOMER_START';
+export const DELETE_CUSTOMER_SUCCESS = 'DELETE_CUSTOMER_SUCCESS';
+export const DELETE_CUSTOMER_FAIL = 'DELETE_CUSTOMER_FAIL';
+
 /******************************************************** */
 
 export const ADD_TRUCK = 'ADD_TRUCK';

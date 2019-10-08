@@ -21,6 +21,13 @@
         padding: .5rem 0;
     }
 
+    & > div:first-child {
+        margin-left: 75%;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
     & > div:last-child{
         justify-content: center;
     }
@@ -44,4 +51,24 @@
 .label {
     font-weight: 500;
     flex: 0 0 20%;
+}
+
+.deleted {
+    font-weight: 500;
+    padding: 2.5rem;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+
+    & span {
+        font-size: 3rem;
+        display: inline-block;
+        color: #fff;
+        background-color: $red-light;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        text-align: center;
+        margin-right: 1rem;
+    }
 }

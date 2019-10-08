@@ -134,6 +134,7 @@ const initialState = {
     }
   ],
   viewMode: 'table',
+  deleted: false,
   fetchLoading: false,
   fetchError: false,
   postLoading: false,
@@ -177,7 +178,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         fetchError: false,
-        fetchLoading: true
+        fetchLoading: true,
+        deleted: false
       }
     case actionTypes.FETCH_CUSTOMERS_SUCCESS:
       return {
@@ -198,7 +200,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         fetchError: false,
-        fetchLoading: true
+        fetchLoading: true,
+        deleted: false
       }
 
     case actionTypes.FETCH_CUSTOMER_SUCCESS:
@@ -219,6 +222,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         postError: false,
         postLoading: true,
+        deleted: false
       }
     case actionTypes.POST_CUSTOMER_SUCCESS:
       return {
@@ -237,10 +241,10 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         putError: false,
-        putLoading: true
+        putLoading: true,
+        deleted: false
       }
     case actionTypes.PUT_CUSTOMER_SUCCESS:
-      // should i also edit the entire customers? hmmmmm
       customerCopy = [...state.customer];
       const index = customerCopy.findIndex(el => el.id === action.payload.id);
       customerCopy[index] = action.payload;
@@ -256,6 +260,27 @@ const reducer = (state = initialState, action) => {
         ...state,
         putError: true,
         putLoading: false
+      }
+    case actionTypes.DELETE_CUSTOMER_START:
+      return {
+        ...state,
+        putError: false,
+        putLoading: true,
+        deleted: false
+      }
+    case actionTypes.DELETE_CUSTOMER_SUCCESS:
+      return {
+        ...state,
+        putError: false,
+        putLoading: false,
+        deleted: true
+      }
+    case actionTypes.DELETE_CUSTOMER_FAIL:
+      return {
+        ...state,
+        putError: true,
+        putLoading: false,
+        deleted: false
       }
     default:
       return state;

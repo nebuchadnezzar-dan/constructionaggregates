@@ -40,5 +40,5 @@ export {
   setActiveItemRow,
   editQuantity
 } from './invoicePOS';
-export { addCustomer, addCredit, toggleCustomerView, fetchCustomers, fetchCustomer, postCustomer, putCustomer } from './customer';
+export { addCustomer, addCredit, toggleCustomerView, fetchCustomers, fetchCustomer, postCustomer, putCustomer, deleteCustomer } from './customer';
 export { toggleGlobalModal, toggleLocalPopupSettings } from './modal';

@@ -119,9 +119,33 @@ export const putCustomer = (id, customer) => {
       const data = await axios.put(`/customers/${id}`, customer);
       dispatch(putCustomerSuccess(data.data));
     } catch (error) {
-      // console.error(error)
-      // console.log(error);
       dispatch(putCustomerFail());
     }
   }
 };
+
+export const deleteCustomerStart = () => ({
+  type: actionTypes.DELETE_CUSTOMER_START
+});
+
+export const deleteCustomerSuccess = data => ({
+  type: actionTypes.DELETE_CUSTOMER_SUCCESS,
+  payload: data
+});
+
+export const deleteCustomerFail = () => ({
+  type: actionTypes.DELETE_CUSTOMER_FAIL
+});
+
+export const deleteCustomer = id => {
+  return async dispatch => {
+    try {
+      dispatch(deleteCustomerStart());
+      const data = axios.delete(`/customers/${id}`);
+      dispatch(deleteCustomerSuccess(data.data));
+    } catch (e) {
+      dispatch(deleteCustomerFail());
+    }
+
+  }
+}
