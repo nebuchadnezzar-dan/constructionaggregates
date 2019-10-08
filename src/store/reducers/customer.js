@@ -137,7 +137,9 @@ const initialState = {
   fetchLoading: false,
   fetchError: false,
   postLoading: false,
-  postError: false
+  postError: false,
+  putLoading: false,
+  putError: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -230,6 +232,30 @@ const reducer = (state = initialState, action) => {
         ...state,
         postError: true,
         postLoading: false
+      }
+    case actionTypes.PUT_CUSTOMER_START:
+      return {
+        ...state,
+        putError: false,
+        putLoading: true
+      }
+    case actionTypes.PUT_CUSTOMER_SUCCESS:
+      // should i also edit the entire customers? hmmmmm
+      customerCopy = [...state.customer];
+      const index = customerCopy.findIndex(el => el.id === action.payload.id);
+      customerCopy[index] = action.payload;
+      return {
+        ...state,
+        putError: false,
+        putLoading: false,
+        customer: customerCopy,
+        viewedCustomer: action.payload
+      }
+    case actionTypes.PUT_CUSTOMER_FAIL:
+      return {
+        ...state,
+        putError: true,
+        putLoading: false
       }
     default:
       return state;

@@ -57,6 +57,10 @@ export const POST_CUSTOMER_START = 'POST_CUSTOMER_START';
 export const POST_CUSTOMER_SUCCESS = 'POST_CUSTOMER_SUCCESS';
 export const POST_CUSTOMER_FAIL = 'POST_CUSTOMER_FAIL';
 
+export const PUT_CUSTOMER_START = 'PUT_CUSTOMER_START';
+export const PUT_CUSTOMER_SUCCESS = 'PUT_CUSTOMER_SUCCESS';
+export const PUT_CUSTOMER_FAIL = 'PUT_CUSTOMER_FAIL';
+
 /******************************************************** */
 
 export const ADD_TRUCK = 'ADD_TRUCK';

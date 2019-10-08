@@ -96,4 +96,32 @@ export const postCustomer = customer => {
       dispatch(postCustomerFail());
     }
   }
-}
+};
+
+export const putCustomerStart = () => ({
+  type: actionTypes.PUT_CUSTOMER_START
+});
+
+export const putCustomerSuccess = data => ({
+  type: actionTypes.PUT_CUSTOMER_SUCCESS,
+  payload: data
+});
+
+
+export const putCustomerFail = () => ({
+  type: actionTypes.PUT_CUSTOMER_FAIL
+});
+
+export const putCustomer = (id, customer) => {
+  return async dispatch => {
+    try {
+      dispatch(putCustomerStart());
+      const data = await axios.put(`/customers/${id}`, customer);
+      dispatch(putCustomerSuccess(data.data));
+    } catch (error) {
+      // console.error(error)
+      // console.log(error);
+      dispatch(putCustomerFail());
+    }
+  }
+};
