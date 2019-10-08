@@ -62,6 +62,10 @@ class Customer extends Component {
 
     }
 
+    onClickBack = () => {
+        this.props.toggleViewModeDispatch('table');
+        this.props.fetchCustomers(1);
+    }
 
 
     render() {
@@ -99,51 +103,64 @@ class Customer extends Component {
             </Modal>
             : null;
 
-        const bodyDelete = this.props.deleted ? <Auxillary>
-            <div className={styles.deleted}>
-                <span>&#10004;</span>
-                <div>CUSTOMER SUCCESSFULLY REMOVED!</div></div>
-            <hr />
-        </Auxillary> : <div className={styles.customerWrapper}>
-                <div className={styles.title}>{id} | {name} </div>
-                <div className={styles.body}>
-                    <div>
-                        <div className={styles.label}>Date Registered</div>
-                        <div className={styles.value}>{dateRegistered}</div>
-                    </div>
-                    <div>
-                        <div className={styles.label}>Last Name</div>
-                        <div className={styles.value}>{lastName}</div>
-                    </div>
-                    <div>
-                        <div className={styles.label}>First Name</div>
-                        <div className={styles.value}>{firstName}</div>
-                    </div>
-                    <div>
-                        <div className={styles.label}>Contact No.</div>
-                        <div className={styles.value}>{contactNo}</div>
-                    </div>
-
-                    <hr className={styles.line} />
-
-                    <div>
-                        {buttonMode}
-                        <Button color="orange">Credits</Button>
-                        <Button color="violet">Purchase History</Button>
-                    </div>
-
-
+        let mainBody = <div className={styles.customerWrapper}>
+            <div className={styles.title}>{id} | {name} </div>
+            <div className={styles.body}>
+                <div>
+                    <div className={styles.label}>Date Registered</div>
+                    <div className={styles.value}>{dateRegistered}</div>
+                </div>
+                <div>
+                    <div className={styles.label}>Last Name</div>
+                    <div className={styles.value}>{lastName}</div>
+                </div>
+                <div>
+                    <div className={styles.label}>First Name</div>
+                    <div className={styles.value}>{firstName}</div>
+                </div>
+                <div>
+                    <div className={styles.label}>Contact No.</div>
+                    <div className={styles.value}>{contactNo}</div>
                 </div>
 
-            </div>;
+                <hr className={styles.line} />
 
-        let spinner = this.props.loading ? <Spinner color="grey" /> : <div>
-            {modalBody}
-            <div>
-                <Button color="red"><span>&#171;</span> Go Back</Button>
+                <div>
+                    {buttonMode}
+                    <Button color="orange">Credits</Button>
+                    <Button color="violet">Purchase History</Button>
+                </div>
             </div>
-            {bodyDelete}
         </div>;
+
+        if (this.props.deleted) {
+            mainBody = <Auxillary>
+                <div className={styles.deleted}>
+                    <span>&#10004;</span>
+                    <div>CUSTOMER SUCCESSFULLY REMOVED!</div></div>
+                <hr />
+            </Auxillary>;
+        }
+        if (this.props.error) {
+            mainBody = <Auxillary>
+                <div className={styles.deleted}>
+                    <span>&#10006;</span>
+                    <div>SOMETHING WENT WRONG!</div></div>
+                <hr />
+            </Auxillary>;
+        }
+
+        const tempBody = <Auxillary>
+            <div className={styles.smallHead}>
+                <Button cName="flat" color="red" click={this.onClickBack.bind(null)}><span>&#171;</span> Go Back</Button>
+            </div>
+            <div className={styles.smallBody}>
+                {modalBody}
+                {mainBody}
+            </div>
+        </Auxillary>
+
+        let spinner = this.props.loading ? <Spinner color="grey" /> : tempBody;
 
         return spinner;
     }

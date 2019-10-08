@@ -192,8 +192,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FETCH_CUSTOMERS_FAIL:
       return {
         ...state,
-        postError: true,
-        postLoading: false
+        fetchError: true,
+        fetchLoading: false
       }
 
     case actionTypes.FETCH_CUSTOMER_START:

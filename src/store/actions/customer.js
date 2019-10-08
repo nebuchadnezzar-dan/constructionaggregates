@@ -141,7 +141,7 @@ export const deleteCustomer = id => {
   return async dispatch => {
     try {
       dispatch(deleteCustomerStart());
-      const data = axios.delete(`/customers/${id}`);
+      const data = await axios.delete(`/customers/${id}`);
       dispatch(deleteCustomerSuccess(data.data));
     } catch (e) {
       dispatch(deleteCustomerFail());

@@ -16,6 +16,7 @@
 
 .body {
     padding: 1rem 2rem;
+    background-color: #fff;
     & > div {
         display: flex;
         padding: .5rem 0;
@@ -51,6 +52,15 @@
 .label {
     font-weight: 500;
     flex: 0 0 20%;
+}
+
+.smallHead {
+    border-bottom: .5px solid $red-light;
+}
+
+.smallBody {
+    background-color: $whitesmoke;
+    padding: 1rem 0;
 }
 
 .deleted {
