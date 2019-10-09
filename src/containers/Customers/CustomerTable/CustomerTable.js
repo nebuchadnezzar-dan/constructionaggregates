@@ -8,6 +8,7 @@ import * as actions from '../../../store/actions/index';
 
 import Button from '../../../components/UI/Button/Button';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 
 const tableHead = [
   { display: 'customer', sort: 'lastName' },
@@ -63,6 +64,12 @@ class CustomerTable extends Component {
     this.setState({ customerSearchForm: e.target.value });
   };
 
+  onSearchPress = e => {
+    if (e.keyCode === 13) {
+      this.onSearchClick();
+    }
+  }
+
   sortClick = (direction, head) => {
     let customerCopy = [...this.state.localCustomers];
     this.setState({ localCustomers: sort(customerCopy, head, direction) });
@@ -73,105 +80,121 @@ class CustomerTable extends Component {
     this.props.toggleViewModeDispatch('editing');
   }
 
+  onSearchClick = () => {
+    this.props.searchCustomerDispatch(1, this.state.customerSearchForm);
+  }
+
   render() {
+
+    let body = <div className={styles.cutomerTable}>
+      <table>
+        <thead>
+          <tr>
+            {tableHead.map((head, i) => (
+              <th key={i}>
+                <div className={styles.sortButtonWrapper}>
+                  <div>{head.display}</div>
+                  <div className={styles.sortButton}>
+                    <Button
+                      cName="smallUp"
+                      click={this.sortClick.bind(null, 'up', head.sort)}
+                    >
+                      {' '}
+                      &#9650;
+                </Button>
+                    <Button
+                      cName="smallDown"
+                      click={this.sortClick.bind(null, 'down', head.sort)}
+                    >
+                      {' '}
+                      &#9650;
+                </Button>
+                  </div>
+                </div>
+              </th>
+            ))}
+            <th>
+              <div className={styles.sortButtonWrapper}>
+                <div>Action</div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.props.customersRedux
+            // .filter(
+            //   customer =>
+            //     customer.lastName
+            //       .toLowerCase()
+            //       .includes(this.state.customerSearchForm.toLowerCase()) ||
+            //     customer.firstName
+            //       .toLowerCase()
+            //       .includes(this.state.customerSearchForm.toLowerCase()) ||
+            //     customer.dateRegistered
+            //       .toLowerCase()
+            //       .includes(this.state.customerSearchForm.toLowerCase())
+            // )
+            .map((customer, i) => {
+              const totalCredit =
+                this.props.customerCreditRedux
+                  .filter(
+                    customerCred =>
+                      customerCred.customer === customer.lastName
+                  )
+                  .reduce(
+                    (acc, customerFilter) =>
+                      acc +
+                      customerFilter.items.reduce(
+                        (accItem, item) =>
+                          accItem + +item.price * +item.quantity,
+                        0
+                      ),
+                    0
+                  ) - customer.partialPaid;
+              return (
+                <tr
+                  key={i}
+                  className={i % 2 === 0 ? styles.even : styles.odd}
+                >
+                  <td>{`${customer.lastName}, ${customer.firstName}`}</td>
+                  <td>{customer.contactNo}</td>
+                  <td>{totalCredit}</td>
+                  <td>{customer.dateRegistered}</td>
+                  <td>{customer.timesPurchased}</td>
+                  <td>
+                    <Button cName="delete" click={this.onViewClick.bind(null, i)}>&#128065;</Button>
+                  </td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
+    </div>;
+
+    if (this.props.pages < 1) {
+      body = <div>
+        Sorry, no matches found...
+    </div>
+    }
+
     return (
       <Auxillary>
         {' '}
-        <div className={styles.search}>
-          <div />
-          <span className={styles.searchIcon}>&#9906;</span>
-          <input
-            className={styles.input}
-            placeholder="Customer"
-            type="text"
-            value={this.state.customerSearchForm}
-            onChange={this.searchFormHandler}
-          />
+        <div className={styles.searchWrapper}>
+          <div className={styles.search}>
+            <span className={styles.searchIcon}>&#9906;</span>
+            <input
+              className={styles.input}
+              placeholder="Customer"
+              type="text"
+              value={this.state.customerSearchForm}
+              onChange={this.searchFormHandler}
+              onKeyDown={this.onSearchPress}
+            />
+          </div>
+          <Button color="red" click={this.onSearchClick}>Search</Button>
         </div>
-        <div className={styles.cutomerTable}>
-          <table>
-            <thead>
-              <tr>
-                {tableHead.map((head, i) => (
-                  <th key={i}>
-                    <div className={styles.sortButtonWrapper}>
-                      <div>{head.display}</div>
-                      <div className={styles.sortButton}>
-                        <Button
-                          cName="smallUp"
-                          click={this.sortClick.bind(null, 'up', head.sort)}
-                        >
-                          {' '}
-                          &#9650;
-                        </Button>
-                        <Button
-                          cName="smallDown"
-                          click={this.sortClick.bind(null, 'down', head.sort)}
-                        >
-                          {' '}
-                          &#9650;
-                        </Button>
-                      </div>
-                    </div>
-                  </th>
-                ))}
-                <th>
-                  <div className={styles.sortButtonWrapper}>
-                    <div>Action</div>
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.localCustomers
-                .filter(
-                  customer =>
-                    customer.lastName
-                      .toLowerCase()
-                      .includes(this.state.customerSearchForm.toLowerCase()) ||
-                    customer.firstName
-                      .toLowerCase()
-                      .includes(this.state.customerSearchForm.toLowerCase()) ||
-                    customer.dateRegistered
-                      .toLowerCase()
-                      .includes(this.state.customerSearchForm.toLowerCase())
-                )
-                .map((customer, i) => {
-                  const totalCredit =
-                    this.props.customerCreditRedux
-                      .filter(
-                        customerCred =>
-                          customerCred.customer === customer.lastName
-                      )
-                      .reduce(
-                        (acc, customerFilter) =>
-                          acc +
-                          customerFilter.items.reduce(
-                            (accItem, item) =>
-                              accItem + +item.price * +item.quantity,
-                            0
-                          ),
-                        0
-                      ) - customer.partialPaid;
-                  return (
-                    <tr
-                      key={i}
-                      className={i % 2 === 0 ? styles.even : styles.odd}
-                    >
-                      <td>{`${customer.lastName}, ${customer.firstName}`}</td>
-                      <td>{customer.contactNo}</td>
-                      <td>{totalCredit}</td>
-                      <td>{customer.dateRegistered}</td>
-                      <td>{customer.timesPurchased}</td>
-                      <td>
-                        <Button cName="delete" click={this.onViewClick.bind(null, i)}>&#128065;</Button>
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
-        </div>
+        {this.props.loading ? <Spinner color="grey" /> : body}
       </Auxillary>
     );
   }
@@ -179,12 +202,15 @@ class CustomerTable extends Component {
 
 const mapStateToProps = state => ({
   customersRedux: state.customer.customer,
-  customerCreditRedux: state.customer.credit
+  customerCreditRedux: state.customer.credit,
+  loading: state.customer.searchLoading,
+  pages: state.customer.pages
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchCustomer: id => dispatch(actions.fetchCustomer(id)),
-  toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode))
+  toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode)),
+  searchCustomerDispatch: (page, data) => dispatch(actions.searchCustomer(page, data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomerTable);

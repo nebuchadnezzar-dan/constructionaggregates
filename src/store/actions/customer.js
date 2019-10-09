@@ -148,4 +148,29 @@ export const deleteCustomer = id => {
     }
 
   }
+};
+
+export const searchCustomerStart = () => ({
+  type: actionTypes.SEARCH_CUSTOMER_START
+});
+
+export const searchCustomerSuccess = (data, pages) => ({
+  type: actionTypes.SEARCH_CUSTOMER_SUCCESS,
+  pages, data
+});
+
+export const searchCustomerFail = () => ({
+  type: actionTypes.SEARCH_CUSTOMER_FAIL
+});
+
+export const searchCustomer = (page, customer) => {
+  return async dispatch => {
+    try {
+      dispatch(searchCustomerStart());
+      const data = await axios.get(`/customers?search=${customer}&page=${page}`);
+      dispatch(searchCustomerSuccess(data.data.customer, data.data.pages));
+    } catch (e) {
+      dispatch(searchCustomerFail());
+    }
+  }
 }

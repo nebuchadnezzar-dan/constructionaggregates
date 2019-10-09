@@ -140,7 +140,9 @@ const initialState = {
   postLoading: false,
   postError: false,
   putLoading: false,
-  putError: false
+  putError: false,
+  searchError: false,
+  searchLoading: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -281,6 +283,25 @@ const reducer = (state = initialState, action) => {
         putError: true,
         putLoading: false,
         deleted: false
+      }
+    case actionTypes.SEARCH_CUSTOMER_START:
+      return {
+        ...state,
+        searchError: false,
+        searchLoading: true
+      }
+    case actionTypes.SEARCH_CUSTOMER_SUCCESS:
+      return {
+        ...state,
+        searchLoading: false,
+        customer: action.data,
+        pages: action.pages
+      }
+    case actionTypes.SEARCH_CUSTOMER_FAIL:
+      return {
+        ...state,
+        searchLoading: false,
+        searchError: true
       }
     default:
       return state;

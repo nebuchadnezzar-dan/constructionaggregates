@@ -37,7 +37,7 @@ const pagination = props => {
     }
     const previous = currentpage !== 1 ? <div className={styles.prev}>
         <Button hover={color} click={clickButton.bind(null, currentpage - 1, lastInd)} >Previous</Button></div> : null;
-    const next = currentpage !== pages ? <div className={styles.next}>
+    const next = currentpage !== pages && pages !== 0 ? <div className={styles.next}>
         <Button hover={color} click={clickButton.bind(null, currentpage + 1, lastInd)}>Next</Button></div> : null;
     return <div className={styles.pages}>
         {previous}

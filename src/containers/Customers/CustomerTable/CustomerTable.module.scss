@@ -43,12 +43,17 @@
   margin-bottom: 2rem;
 }
 
+.searchWrapper {
+  display: flex;
+  margin: auto;
+  margin-bottom: 2rem;
+  width: 80%;
+}
+
 .search {
   position: relative;
   text-align: center;
-  width: 80%;
-  margin: auto;
-  margin-bottom: 2rem;
+  width: 100%;
 }
 
 .searchIcon {
