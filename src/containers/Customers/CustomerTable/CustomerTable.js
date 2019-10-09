@@ -70,7 +70,7 @@ class CustomerTable extends Component {
 
   onViewClick = (index) => {
     this.props.fetchCustomer(this.state.localCustomers[index].id);
-    this.props.toggleViewModeDispatch('view');
+    this.props.toggleViewModeDispatch('editing');
   }
 
   render() {
@@ -171,16 +171,6 @@ class CustomerTable extends Component {
                 })}
             </tbody>
           </table>
-        </div>
-        <div className={styles.tableButtons}>
-          <div>
-            <Button> &#171;</Button>
-            <Button>1</Button>
-            <Button>2</Button>
-            <Button>3</Button>
-            <Button>4</Button>
-            <Button>&#187;</Button>
-          </div>
         </div>
       </Auxillary>
     );

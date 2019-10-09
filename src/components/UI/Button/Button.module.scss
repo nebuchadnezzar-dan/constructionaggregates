@@ -173,6 +173,12 @@
       background-color: $orange-light;
     }
   }
+  &red {
+    transition: all .5s;
+    &:hover {
+      background-color: $red-light;
+    }
+  }
 }
 
 

@@ -90,7 +90,7 @@ class CustomerForm extends Component {
               <div className={styles.customerName}>Contact No.</div>
               <div className={styles.customerInputWrapper}>
                 <input
-                  type="number"
+                  type="text"
                   placeholder="Contact Number"
                   className={styles.customerInput}
                   onChange={this.onInputChangeHandler.bind(this, 'contactNo')}

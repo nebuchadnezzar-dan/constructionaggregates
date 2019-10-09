@@ -15,30 +15,56 @@ import CustomerForm from './CustomerForm/CustomerForm';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import ErrorBody from '../../components/UI/ErrorBody/ErrorBody';
 import Customer from '../Customers/Customer/Customer';
+import Pagination from '../../components/UI/Pagination/Pagination';
+import Auxillary from '../../hoc/Auxillary/Auxillary';
 
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 class Customers extends Component {
   state = {
-    activeView: 'form'
+    activeView: 'form',
+    currentpage: 1,
+    pageIndex: 5
   };
 
   async componentDidMount() {
     this.props.fetchCustomers(1);
   }
 
+
+  onChangePage = (page, pageIndex) => {
+    this.setState({ currentpage: page, pageIndex });
+    this.props.fetchCustomers(page);
+  }
+
   onToggleView = view => {
-    // this.setState({ activeView: view });
-    this.props.toggleViewModeDispatch(view);
+    if (view === 'form') {
+      this.props.fetchCustomers(1);
+    }
+    if (this.props.viewMode === 'editing') {
+      this.props.toggleViewModeDispatch('editing');
+    }
+    this.setState({ activeView: view });
+
   };
   render() {
-    const customerView = <CustomerTable />;
+    const customerView =
+      <Auxillary>
+        <CustomerTable />
+        <Pagination
+          currentpage={this.props.pages < this.state.currentpage ? 1 : this.state.currentpage}
+          pages={this.props.pages}
+          color='red'
+          pageIndex={this.state.pageIndex}
+          clickButton={this.onChangePage}
+        />
+      </Auxillary>;
     const customerForm = <CustomerForm />;
     const customerInd = <Customer />;
     let customer;
-    if (this.props.viewMode === 'table') {
+    if (this.state.activeView === 'form' && this.props.viewMode !== 'editing') {
       customer = customerView;
-    } else if (this.props.viewMode === 'form') {
+    } else if (this.state.activeView === 'view') {
       customer = customerForm;
     } else {
       customer = customerInd;
@@ -49,8 +75,8 @@ class Customers extends Component {
         <Head classname="red" svgname="customer">
           <HeadChild
             forClassName={this.state.activeView}
-            dispatchClickView={this.onToggleView.bind(null, 'form')}
-            dispatchClickForm={this.onToggleView.bind(null, 'table')}
+            dispatchClickView={this.onToggleView.bind(null, 'view')}
+            dispatchClickForm={this.onToggleView.bind(null, 'form')}
             childName="Form"
           >
             Customers
@@ -68,7 +94,8 @@ class Customers extends Component {
 const mapStateToProps = state => ({
   loading: state.customer.fetchLoading,
   error: state.customer.fetchError,
-  viewMode: state.customer.viewMode
+  viewMode: state.customer.viewMode,
+  pages: state.customer.pages
 });
 
 const maptDispatchToProps = dispatch => ({
