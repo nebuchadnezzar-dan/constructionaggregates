@@ -6,6 +6,8 @@ import * as actions from '../../../store/actions/index';
 
 import styles from './InputSearch.module.scss';
 
+import Spinner from '../Spinner/Spinner';
+
 class InputSearch extends Component {
   state = {
     inputSupplies: [],
@@ -66,8 +68,8 @@ class InputSearch extends Component {
           this.state.component === 'supplies'
             ? copyFiltered[currentItemIndex].materials
             : `${copyFiltered[currentItemIndex].lastName}, ${
-                copyFiltered[currentItemIndex].firstName
-              }`;
+            copyFiltered[currentItemIndex].firstName
+            }`;
       }
 
       if (
@@ -85,14 +87,14 @@ class InputSearch extends Component {
       customerNameFind =
         this.state.component === 'customer'
           ? copyFiltered.findIndex(
-              customer =>
-                `${customer.lastName}, ${customer.firstName}`.toLowerCase() ===
-                e.target.value.toLowerCase()
-            )
+            customer =>
+              `${customer.lastName}, ${customer.firstName}`.toLowerCase() ===
+              e.target.value.toLowerCase()
+          )
           : copyFiltered.findIndex(
-              item =>
-                item.materials.toLowerCase() === e.target.value.toLowerCase()
-            );
+            item =>
+              item.materials.toLowerCase() === e.target.value.toLowerCase()
+          );
       if (customerNameFind === -1) {
         this.props.onPopUpShowDispatch();
       } else if (
@@ -101,18 +103,22 @@ class InputSearch extends Component {
       ) {
         this.state.component === 'supplies'
           ? this.props.onAddItemsToBuyDispatch(
-              this.state.filteredSuppliesState[this.state.focusedItemIndex]
-            )
+            this.state.filteredSuppliesState[this.state.focusedItemIndex]
+          )
           : this.props.onSetCustomerDispatch(
-              this.state.filteredSuppliesState[this.state.focusedItemIndex]
-            );
+            this.state.filteredSuppliesState[this.state.focusedItemIndex]
+          );
       }
       this.setState({ searchForm: '', focusedItemIndex: '', hoveredItem: '' });
     }
   };
 
   onSearchFormhandler = e => {
-    const copiedState = [...this.state.inputSupplies];
+    if (e.target.value.length > 2 && this.props.component === 'customer') {
+      this.props.searchCustomerDispatch(e.target.value);
+    }
+    // this.setState({inputSupplies: })
+    const copiedState = this.props.component === 'customer' ? [...this.props.customer] : [...this.state.inputSupplies];
     let filter;
     if (this.state.component === 'supplies')
       filter = copiedState.filter(material =>
@@ -162,7 +168,7 @@ class InputSearch extends Component {
 
   render() {
     const { props } = this;
-    let suggestion =
+    let suggestion = this.props.loading ? <div className={styles.suggestItem}><Spinner color="grey" /></div> :
       this.state.searchForm.length > 0 && !this.state.hideSuggestClick ? (
         <div className={styles.autosuggest}>
           {' '}
@@ -202,13 +208,20 @@ class InputSearch extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  customer: state.customer.customer,
+  loading: state.customer.searchLoading,
+  error: state.customer.searchError
+});
+
 const mapDispatchToProps = dispatch => ({
   onAddItemsToBuyDispatch: item => dispatch(actions.addItemsToSales(item)),
   onSetCustomerDispatch: customer => dispatch(actions.setCustomer(customer)),
-  onPopUpShowDispatch: () => dispatch(actions.togglePopup(true))
+  onPopUpShowDispatch: () => dispatch(actions.togglePopup(true)),
+  searchCustomerDispatch: search => dispatch(actions.searchCustomer(1, search))
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(InputSearch);

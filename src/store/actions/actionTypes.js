@@ -77,6 +77,10 @@ export const FETCH_POS_START = 'FETCH_POS_START';
 export const FETCH_POS_SUCCESS = 'FETCH_POS_SUCCESS';
 export const FETCH_POS_FAIL = 'FETCH_POS_FAIL';
 
+export const FETCH_POS_CUSTOMER_START = 'FETCH_POS_CUSTOMER_START';
+export const FETCH_POS_CUSTOMER_SUCCESS = 'FETCH_POS_CUSTOMER_SUCCESS';
+export const FETCH_POS_CUSTOMER_FAIL = 'FETCH_POS_CUSTOMER_FAIL';
+
 /********************************************************* */
 
 export const ADD_TRUCK = 'ADD_TRUCK';

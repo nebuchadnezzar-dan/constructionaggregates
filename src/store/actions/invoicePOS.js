@@ -93,4 +93,10 @@ export const fetchPOS = () => {
       dispatch(fetchPOSFail());
     }
   }
-}
+};
+
+// export const fetchPosCustomerStart = () => ({
+//   type: actionTypes.FETCH_POS_CUSTOMER_START
+// });
+
+// export const fetchPosCustomerSuccess = data 

@@ -4,54 +4,54 @@ import { newDate } from '../../util/dateHelper';
 const initialState = {
   viewedCustomer: '',
   customer: [
-    {
-      lastName: 'Collins',
-      firstName: 'Phil',
-      contactNo: 9473827382,
-      partialPaid: 0,
-      dateRegistered: '2019-06-26',
-      timesPurchased: 15
-    },
-    {
-      lastName: 'Banasen',
-      firstName: 'Daniel',
-      partialPaid: 0,
-      contactNo: 9273917382,
-      dateRegistered: '2019-06-26',
-      timesPurchased: 5
-    },
-    {
-      lastName: 'Loaf',
-      firstName: 'Meat',
-      contactNo: 9612374817,
-      partialPaid: 0,
-      dateRegistered: '2019-06-26',
-      timesPurchased: 3
-    },
-    {
-      lastName: 'Orange',
-      firstName: 'Lemons',
-      contactNo: 9351728367,
-      partialPaid: 0,
-      dateRegistered: '2019-06-26',
-      timesPurchased: 3
-    },
-    {
-      lastName: 'Turner',
-      firstName: 'Tina',
-      contactNo: 9928616273,
-      partialPaid: 0,
-      dateRegistered: '2019-06-26',
-      timesPurchased: 8
-    },
-    {
-      lastName: 'Higson',
-      firstName: 'Charlie',
-      contactNo: 9162838492,
-      partialPaid: 0,
-      dateRegistered: '2017-04-01',
-      timesPurchased: 10
-    }
+    // {
+    //   lastName: 'Collins',
+    //   firstName: 'Phil',
+    //   contactNo: 9473827382,
+    //   partialPaid: 0,
+    //   dateRegistered: '2019-06-26',
+    //   timesPurchased: 15
+    // },
+    // {
+    //   lastName: 'Banasen',
+    //   firstName: 'Daniel',
+    //   partialPaid: 0,
+    //   contactNo: 9273917382,
+    //   dateRegistered: '2019-06-26',
+    //   timesPurchased: 5
+    // },
+    // {
+    //   lastName: 'Loaf',
+    //   firstName: 'Meat',
+    //   contactNo: 9612374817,
+    //   partialPaid: 0,
+    //   dateRegistered: '2019-06-26',
+    //   timesPurchased: 3
+    // },
+    // {
+    //   lastName: 'Orange',
+    //   firstName: 'Lemons',
+    //   contactNo: 9351728367,
+    //   partialPaid: 0,
+    //   dateRegistered: '2019-06-26',
+    //   timesPurchased: 3
+    // },
+    // {
+    //   lastName: 'Turner',
+    //   firstName: 'Tina',
+    //   contactNo: 9928616273,
+    //   partialPaid: 0,
+    //   dateRegistered: '2019-06-26',
+    //   timesPurchased: 8
+    // },
+    // {
+    //   lastName: 'Higson',
+    //   firstName: 'Charlie',
+    //   contactNo: 9162838492,
+    //   partialPaid: 0,
+    //   dateRegistered: '2017-04-01',
+    //   timesPurchased: 10
+    // }
   ],
   credit: [
     {

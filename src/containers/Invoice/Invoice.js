@@ -87,9 +87,9 @@ class Invoice extends Component {
         <div className={styles.sales}>
           <POSCustomer />
           <div className={styles.summaryWrapper}>
-            <POSSummary number={this.props.customerNo}>Customer No.</POSSummary>
+            <POSSummary mode="customer" number={this.props.customerNo}>Customer No.</POSSummary>
             <hr style={{ width: '1' }} />
-            <POSSummary>Visit</POSSummary>
+            <POSSummary mode="visit" activeNum={this.props.activeCustomer ? this.props.activeCustomer.timesPurchased : 0}>Visit</POSSummary>
           </div>
           <div className={styles.buttonWrapper}>
             <div className={styles.button}>
@@ -177,6 +177,7 @@ const mapStateToProps = state => ({
   address: state.invoicePOS.address,
   activeRow: state.invoicePOS.activeRow,
   customerNo: state.invoicePOS.customerNo,
+  activeCustomer: state.invoicePOS.customer,
   fetchLoading: state.invoicePOS.fetchLoading,
   fetchError: state.invoicePOS.fetchError
 });

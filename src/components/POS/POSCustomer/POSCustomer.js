@@ -23,20 +23,20 @@ class POSCustomer extends Component {
       typeof this.props.activeCustomer === 'string'
         ? 'Choose a Customer'
         : `${this.props.activeCustomer.lastName}, ${
-            this.props.activeCustomer.firstName
-          }`;
+        this.props.activeCustomer.firstName
+        }`;
     const display =
       this.props.displayCustomer === 'display' ? (
         <div className={styles.customerNameDisplay}>{name}</div>
       ) : (
-        <div className={styles.customerName}>
-          <InputSearch
-            elementConfig={{ placeholder: 'Customer Name' }}
-            data={this.props.customersRedux}
-            component="customer"
-          />
-        </div>
-      );
+          <div className={styles.customerName}>
+            <InputSearch
+              elementConfig={{ placeholder: 'Customer Name' }}
+              data={this.props.customersRedux}
+              component="customer"
+            />
+          </div>
+        );
     return (
       <div className={styles.customerWrapper}>
         <div className={styles.customerImgWrapper}>
@@ -59,14 +59,14 @@ class POSCustomer extends Component {
                 <span className={styles.searchIconButton}>&#9906;</span>
               </Button>
             ) : (
-              <Button
-                color="orange"
-                cName="searchCustomerPOS"
-                click={this.toggleSearch.bind(null, 'display')}
-              >
-                X
+                <Button
+                  color="orange"
+                  cName="searchCustomerPOS"
+                  click={this.toggleSearch.bind(null, 'display')}
+                >
+                  X
               </Button>
-            )}
+              )}
           </div>
           <p>
             {this.props.activeCustomer.credit > 0
