@@ -12,7 +12,10 @@ const initialState = {
   discount: 0,
   customer: '',
   activeRow: '',
-  displayCustomer: 'display'
+  displayCustomer: 'display',
+  customerNo: 0,
+  fetchLoading: false,
+  fetchError: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -124,6 +127,25 @@ const reducer = (state = initialState, action) => {
         itemsToBuy: itemsCopy,
         finalPopup: false
       };
+    case actionTypes.FETCH_POS_START:
+      return {
+        ...state,
+        fetchError: false,
+        fetchLoading: true
+      }
+    case actionTypes.FETCH_POS_SUCCESS:
+      return {
+        ...state,
+        fetchError: false,
+        fetchLoading: false,
+        customerNo: action.payload
+      }
+    case actionTypes.FETCH_POS_FAIL:
+      return {
+        ...state,
+        fetchError: true,
+        fetchLoading: false
+      }
     default:
       return state;
   }

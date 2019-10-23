@@ -312,7 +312,7 @@ const mapDispatchToProps = dispatch => ({
   reloadTruckDispatch: () => dispatch(actions.fetchTruck(1)),
   putSupplySettingsDispatch: (id, value) => dispatch(actions.putSupply(id, value)),
   deleteSupplySettingsDispatch: id => dispatch(actions.deleteSupply(id)),
-  reloadSupplyDispatch: () => dispatch(actions.fetchSupply())
+  reloadSupplyDispatch: () => dispatch(actions.fetchSupply(1))
 });
 
 export default connect(

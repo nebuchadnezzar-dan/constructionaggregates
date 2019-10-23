@@ -18,6 +18,7 @@ import PopupBack from '../../components/PopUp/PopupBack/PopupBack';
 import Auxillary from '../../hoc/Auxillary/Auxillary';
 import Truck from '../../components/POS/Truck/Truck';
 import POSButtons from '../../components/POS/POSButtons/POSButtons';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 class Invoice extends Component {
   state = {
@@ -28,6 +29,7 @@ class Invoice extends Component {
     }
   };
   componentDidMount() {
+    this.props.fetchPosDispatch();
     this.setState({ suppliesState: this.props.supplies });
     document.addEventListener('keydown', this.onKeyDownHandler, false);
   }
@@ -75,84 +77,91 @@ class Invoice extends Component {
         <PopupBack close={this.props.onToggleFinalPopupDispatch.bind(null, false)} />
       </Auxillary>
     ) : null;
-    return (
-      <div className={styles.invoiceMain}>
-        <Head classname="blue" svgname="invoice">
-          <HeadChild>Invoice</HeadChild>
-        </Head>
-        <div className={styles.invoiceWrapper}>
-          {finalPopup}
-          <div className={styles.sales}>
-            <POSCustomer />
-            <div className={styles.summaryWrapper}>
-              <POSSummary>Customer No.</POSSummary>
-              <hr style={{ width: '1' }} />
-              <POSSummary>Visit</POSSummary>
-            </div>
-            <div className={styles.buttonWrapper}>
-              <div className={styles.button}>
-                <Button
-                  cName="posButton"
-                  color="orange"
-                  click={this.buttonSummaryHandler.bind(null, 'creditSummary')}
-                >
-                  Credit
-                </Button>
-              </div>
-              <div className={styles.button}>
-                <Button cName="posButton" color="blue">
-                  Cash
-                </Button>
-              </div>
-            </div>
-            <div className={styles.searchWrapper}>
-              {/* <InputSearch elementConfig={{ placeholder: 'Customer' }} /> */}
-              <div className={styles.quantityWrap}>
-                {' '}
-                <input
-                  type="number"
-                  placeholder="Quantity"
-                  className={styles.quantity}
-                  value={this.props.quantityRedux}
-                  onChange={this.onQuantityChangeHandler}
-                />
-              </div>
-              <div className={styles.itemInvoice}>
-                <InputSearch
-                  elementConfig={{ placeholder: 'Item' }}
-                  data={this.props.supplies}
-                  component="supplies"
-                />
-              </div>
-            </div>
-            <POSTable data={this.props.itemsToBuy} />
-            {popupShow}
+
+    let mainBody = <Auxillary>
+      <Head classname="blue" svgname="invoice">
+        <HeadChild>Invoice</HeadChild>
+      </Head>
+      <div className={styles.invoiceWrapper}>
+        {finalPopup}
+        <div className={styles.sales}>
+          <POSCustomer />
+          <div className={styles.summaryWrapper}>
+            <POSSummary number={this.props.customerNo}>Customer No.</POSSummary>
+            <hr style={{ width: '1' }} />
+            <POSSummary>Visit</POSSummary>
           </div>
-          <div className={styles.hr} />
-          <div className={styles.invoiceForm}>
-            <div className={styles.truckComponentWrapper}>
-              <Truck trucks={this.props.trucks} />
+          <div className={styles.buttonWrapper}>
+            <div className={styles.button}>
+              <Button
+                cName="posButton"
+                color="orange"
+                click={this.buttonSummaryHandler.bind(null, 'creditSummary')}
+              >
+                Credit
+                </Button>
             </div>
-            <div className={styles.addressWrap}>
-              <div className={styles.addressLabel}>Deliver to:</div>
-              <div className={styles.addressInput}>
-                <input
-                  placeholder="Address"
-                  className={styles.address}
-                  value={this.props.address}
-                  onChange={this.onAddressChangehandler}
-                />
-              </div>
+            <div className={styles.button}>
+              <Button cName="posButton" color="blue">
+                Cash
+                </Button>
             </div>
-            <div className={styles.buttonActionsWrapper}>
-              <POSButtons />
+          </div>
+          <div className={styles.searchWrapper}>
+            {/* <InputSearch elementConfig={{ placeholder: 'Customer' }} /> */}
+            <div className={styles.quantityWrap}>
+              {' '}
+              <input
+                type="number"
+                placeholder="Quantity"
+                className={styles.quantity}
+                value={this.props.quantityRedux}
+                onChange={this.onQuantityChangeHandler}
+              />
             </div>
-            <div className={styles.cashierName}>
-              <p>Mia Khalifa</p>
-              <p>Employee</p>
+            <div className={styles.itemInvoice}>
+              <InputSearch
+                elementConfig={{ placeholder: 'Item' }}
+                data={this.props.supplies}
+                component="supplies"
+              />
             </div>
+          </div>
+          <POSTable data={this.props.itemsToBuy} />
+          {popupShow}
+        </div>
+        <div className={styles.hr} />
+        <div className={styles.invoiceForm}>
+          <div className={styles.truckComponentWrapper}>
+            <Truck trucks={this.props.trucks} />
+          </div>
+          <div className={styles.addressWrap}>
+            <div className={styles.addressLabel}>Deliver to:</div>
+            <div className={styles.addressInput}>
+              <input
+                placeholder="Address"
+                className={styles.address}
+                value={this.props.address}
+                onChange={this.onAddressChangehandler}
+              />
+            </div>
+          </div>
+          <div className={styles.buttonActionsWrapper}>
+            <POSButtons />
+          </div>
+          <div className={styles.cashierName}>
+            <p>Mia Khalifa</p>
+            <p>Employee</p>
           </div>
         </div>
+      </div>
+    </Auxillary>;
+
+    const spinner = this.props.fetchLoading ? <Spinner color="grey" /> : mainBody;
+
+    return (
+      <div className={styles.invoiceMain}>
+        {spinner}
       </div>
     );
   }
@@ -166,7 +175,10 @@ const mapStateToProps = state => ({
   trucks: state.truckSettings.availableTrucks,
   finalPopup: state.invoicePOS.finalPopup,
   address: state.invoicePOS.address,
-  activeRow: state.invoicePOS.activeRow
+  activeRow: state.invoicePOS.activeRow,
+  customerNo: state.invoicePOS.customerNo,
+  fetchLoading: state.invoicePOS.fetchLoading,
+  fetchError: state.invoicePOS.fetchError
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -175,7 +187,8 @@ const mapDispatchToProps = dispatch => ({
   onToggleFinalPopupDispatch: toggle =>
     dispatch(actions.toggleFinalPopup(toggle)),
   onEditAddressDispatch: value => dispatch(actions.editAddress(value)),
-  onRemoveItem: () => dispatch(actions.voidItem())
+  onRemoveItem: () => dispatch(actions.voidItem()),
+  fetchPosDispatch: () => dispatch(actions.fetchPOS())
 });
 
 export default connect(

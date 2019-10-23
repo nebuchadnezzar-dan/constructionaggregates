@@ -1,5 +1,7 @@
 import * as actionTypes from './actionTypes';
 
+import axios from '../../axios-orders';
+
 export const addItemsToSales = item => ({
   type: actionTypes.ADD_ITEMS_TO_SALES,
   payload: item
@@ -67,3 +69,28 @@ export const editQuantity = value => ({
   type: actionTypes.EDIT_QUANTITY,
   payload: value
 });
+
+export const fetchPOSStart = () => ({
+  type: actionTypes.FETCH_POS_START
+})
+
+export const fetchPOSSuccess = data => ({
+  type: actionTypes.FETCH_POS_SUCCESS,
+  payload: data
+});
+
+export const fetchPOSFail = () => ({
+  type: actionTypes.FETCH_POS_FAIL
+});
+
+export const fetchPOS = () => {
+  return async dispatch => {
+    try {
+      dispatch(fetchPOSStart());
+      const data = await axios.get('/pos');
+      dispatch(fetchPOSSuccess(data.data.count));
+    } catch (e) {
+      dispatch(fetchPOSFail());
+    }
+  }
+}

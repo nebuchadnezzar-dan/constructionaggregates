@@ -6,7 +6,7 @@ const posSummary = props => {
   return (
     <div className={styles.customerWrapper}>
       <p className={styles.summaryHead}>{props.children}</p>
-      <p className={styles.summaryBody}>15</p>
+      <p className={styles.summaryBody}>{props.number}</p>
     </div>
   );
 };
