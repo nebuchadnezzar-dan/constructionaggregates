@@ -40,6 +40,10 @@ export const DELETE_SUPPLY_START = 'DELETE_SUPPLY_START';
 export const DELETE_SUPPLY_SUCCESS = 'DELETE_SUPPLY_SUCCESS';
 export const DELETE_SUPPLY_FAIL = 'DELETE_SUPPLY_FAIL';
 
+export const SEARCH_SUPPLY_START = 'SEARCH_SUPPLY_START';
+export const SEARCH_SUPPLY_SUCCESS = 'SEARCH_SUPPLY_SUCCESS';
+export const SEARCH_SUPPLY_FAIL = 'SEARCH_SUPPLY_FAIL';
+
 
 /**************************************************** */
 

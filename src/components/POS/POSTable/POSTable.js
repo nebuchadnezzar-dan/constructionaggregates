@@ -28,7 +28,7 @@ class POSTable extends Component {
               className={i === props.activeRowRedux ? styles.activeRow : null}
               onClick={this.activerRowClickHandler.bind(null, i)}
             >
-              <td>{td.materials}</td>
+              <td>{td.name}</td>
               <td>{td.price}</td>
               <td>{td.quantity}</td>
               <td>{td.price * td.quantity}</td>

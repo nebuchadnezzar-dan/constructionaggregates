@@ -21,7 +21,8 @@ export {
   fetchSupply,
   postSupply,
   putSupply,
-  deleteSupply
+  deleteSupply,
+  searchSupply
 } from './supplySettings';
 export { activeRoute } from './route';
 export {

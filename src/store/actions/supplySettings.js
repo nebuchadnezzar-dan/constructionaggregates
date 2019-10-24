@@ -134,3 +134,28 @@ export const deleteSupply = id => {
     }
   }
 };
+
+export const searchSupplyStart = () => ({
+  type: actionTypes.SEARCH_SUPPLY_START
+});
+
+export const searchSupplySuccess = data => ({
+  type: actionTypes.SEARCH_SUPPLY_SUCCESS,
+  payload: data
+});
+
+export const searchSupplyFail = () => ({
+  type: actionTypes.SEARCH_CUSTOMER_FAIL
+});
+
+export const searchSupply = search => {
+  return async dispatch => {
+    try {
+      dispatch(searchSupplyStart());
+      const data = await axios(`/settings/supply?search=${search}`);
+      dispatch(searchSupplySuccess(data.data));
+    } catch (e) {
+      dispatch(searchSupplyFail());
+    }
+  }
+}

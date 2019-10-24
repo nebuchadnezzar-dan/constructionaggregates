@@ -66,7 +66,7 @@ class InputSearch extends Component {
       if (this.state.filteredSuppliesState.length !== -1) {
         value =
           this.state.component === 'supplies'
-            ? copyFiltered[currentItemIndex].materials
+            ? copyFiltered[currentItemIndex].name
             : `${copyFiltered[currentItemIndex].lastName}, ${
             copyFiltered[currentItemIndex].firstName
             }`;
@@ -93,7 +93,7 @@ class InputSearch extends Component {
           )
           : copyFiltered.findIndex(
             item =>
-              item.materials.toLowerCase() === e.target.value.toLowerCase()
+              item.name.toLowerCase() === e.target.value.toLowerCase()
           );
       if (customerNameFind === -1) {
         this.props.onPopUpShowDispatch();
@@ -117,12 +117,15 @@ class InputSearch extends Component {
     if (e.target.value.length > 2 && this.props.component === 'customer') {
       this.props.searchCustomerDispatch(e.target.value);
     }
-    // this.setState({inputSupplies: })
-    const copiedState = this.props.component === 'customer' ? [...this.props.customer] : [...this.state.inputSupplies];
+    if (e.target.value.length > 1 && this.props.component === 'supplies') {
+      this.props.searchSupplyDispatch(e.target.value)
+    }
+    // this.setState({inputSupplies: }) 
+    const copiedState = this.props.component === 'customer' ? [...this.props.customer] : [...this.props.supplies];
     let filter;
     if (this.state.component === 'supplies')
       filter = copiedState.filter(material =>
-        material.materials.toLowerCase().includes(e.target.value.toLowerCase())
+        material.name.toLowerCase().includes(e.target.value.toLowerCase())
       );
     if (this.state.component === 'customer')
       filter = copiedState.filter(
@@ -183,7 +186,7 @@ class InputSearch extends Component {
               ].join(' ')}
             >
               {this.state.component === 'supplies'
-                ? supply.materials
+                ? supply.name
                 : `${supply.lastName}, ${supply.firstName}`}
             </div>
           ))}
@@ -210,15 +213,19 @@ class InputSearch extends Component {
 
 const mapStateToProps = state => ({
   customer: state.customer.customer,
+  supplies: state.supplySettings.activeSupplies,
   loading: state.customer.searchLoading,
-  error: state.customer.searchError
+  error: state.customer.searchError,
+  supplyLoading: state.supplySettings.searchLoading,
+  supplyError: state.supplySettings.searchError
 });
 
 const mapDispatchToProps = dispatch => ({
   onAddItemsToBuyDispatch: item => dispatch(actions.addItemsToSales(item)),
   onSetCustomerDispatch: customer => dispatch(actions.setCustomer(customer)),
   onPopUpShowDispatch: () => dispatch(actions.togglePopup(true)),
-  searchCustomerDispatch: search => dispatch(actions.searchCustomer(1, search))
+  searchCustomerDispatch: search => dispatch(actions.searchCustomer(1, search)),
+  searchSupplyDispatch: search => dispatch(actions.searchSupply(search))
 });
 
 export default connect(

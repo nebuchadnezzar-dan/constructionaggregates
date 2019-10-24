@@ -14,9 +14,9 @@ const initialState = {
     cement: supplySet()
   },
   activeSupplies: [
-    { materials: 'gravel', amount: '50', price: '2100' },
-    { materials: 'river Mixed', amount: '60', price: '2100' },
-    { materials: 'cement', amount: '150', price: '150' }
+    // { materials: 'gravel', amount: '50', price: '2100' },
+    // { materials: 'river Mixed', amount: '60', price: '2100' },
+    // { materials: 'cement', amount: '150', price: '150' }
   ],
   pages: '',
   loading: false,
@@ -27,6 +27,8 @@ const initialState = {
   putError: false,
   deleteLoading: false,
   deleteError: false,
+  searchLoading: false,
+  searchError: false
 };
 
 const copyState = state => JSON.parse(JSON.stringify(state));
@@ -166,6 +168,25 @@ const reducer = (state = initialState, action) => {
         ...state,
         deleteError: true,
         deleteLoading: false
+      }
+    case actionTypes.SEARCH_SUPPLY_START:
+      return {
+        ...state,
+        searchLoading: true,
+        searchError: false
+      }
+    case actionTypes.SEARCH_SUPPLY_SUCCESS:
+      return {
+        ...state,
+        searchError: false,
+        searchLoading: false,
+        activeSupplies: action.payload
+      }
+    case actionTypes.SEARCH_SUPPLY_FAIL:
+      return {
+        ...state,
+        searchError: true,
+        searchLoading: false
       }
     default:
       return state;

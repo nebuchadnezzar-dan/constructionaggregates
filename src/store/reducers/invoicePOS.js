@@ -24,7 +24,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.ADD_ITEMS_TO_SALES:
       itemsCopy = [...state.itemsToBuy];
       const itemIndex = itemsCopy.findIndex(
-        item => item.materials === action.payload.materials
+        item => item.id === action.payload.id
       );
       if (itemIndex !== -1) {
         itemsCopy[itemIndex] = {
