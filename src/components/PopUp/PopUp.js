@@ -179,7 +179,7 @@ class PopUp extends Component {
                 </thead>
                 <tbody>
                   {props.items.map((item, i) => (
-                    <tr key={item.materials}>
+                    <tr key={item.id}>
                       <td>{item.materials}</td>
                       <td>{item.price}</td>
                     </tr>

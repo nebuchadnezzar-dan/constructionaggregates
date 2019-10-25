@@ -192,11 +192,13 @@ class InputSearch extends Component {
           ))}
         </div>
       ) : null;
+    const disabled = this.state.component === 'supplies' && this.props.activeCustomer.length === 0 ? true : false;
     return (
       <div className={styles.search}>
         <div />
         <span className={styles.searchIcon}>&#9906;</span>
         <input
+          disabled={disabled}
           className={styles.input}
           placeholder={props.elementConfig.placeholder}
           type="text"
@@ -214,6 +216,7 @@ class InputSearch extends Component {
 const mapStateToProps = state => ({
   customer: state.customer.customer,
   supplies: state.supplySettings.activeSupplies,
+  activeCustomer: state.invoicePOS.customer,
   loading: state.customer.searchLoading,
   error: state.customer.searchError,
   supplyLoading: state.supplySettings.searchLoading,

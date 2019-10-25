@@ -133,12 +133,13 @@ class Invoice extends Component {
         <div className={styles.hr} />
         <div className={styles.invoiceForm}>
           <div className={styles.truckComponentWrapper}>
-            <Truck trucks={this.props.trucks} />
+            <Truck />
           </div>
           <div className={styles.addressWrap}>
             <div className={styles.addressLabel}>Deliver to:</div>
             <div className={styles.addressInput}>
               <input
+                disabled={this.props.activeCustomer.length === 0 ? true : false}
                 placeholder="Address"
                 className={styles.address}
                 value={this.props.address}
@@ -157,7 +158,7 @@ class Invoice extends Component {
       </div>
     </Auxillary>;
 
-    const spinner = this.props.fetchLoading ? <Spinner color="grey" /> : mainBody;
+    const spinner = this.props.fetchLoading && this.props.fetchLoadingTruck ? <Spinner color="grey" /> : mainBody;
 
     return (
       <div className={styles.invoiceMain}>
@@ -172,7 +173,6 @@ const mapStateToProps = state => ({
   itemsToBuy: state.invoicePOS.itemsToBuy,
   popup: state.invoicePOS.popup,
   quantityRedux: state.invoicePOS.quantityForm,
-  trucks: state.truckSettings.availableTrucks,
   finalPopup: state.invoicePOS.finalPopup,
   address: state.invoicePOS.address,
   activeRow: state.invoicePOS.activeRow,

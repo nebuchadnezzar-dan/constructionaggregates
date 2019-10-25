@@ -39,23 +39,35 @@ class POSButtons extends Component {
   render() {
     return (
       <div className={styles.buttonWrapper}>
-        {this.state.buttons.map(button => (
-          <Button
-            key={button.name}
-            cName="posButtonAction"
-            color={button.color}
-            click={this.buttonClickHandler.bind(null, button.name)}
-          >
-            <div className={styles.buttonInside}>
-              {button.svg}
-              {button.name}
-            </div>
-          </Button>
-        ))}
+        {this.state.buttons.map(button => {
+          let disabled = this.props.itemsToBuy.length === 0 ? true : false;
+          if (button.name === 'edit') {
+            disabled = typeof this.props.activeRowRedux === 'number' ? false : true;
+          }
+          return (
+            <Button
+              key={button.name}
+              disabled={disabled}
+              cName="posButtonAction"
+              color={button.color}
+              click={this.buttonClickHandler.bind(null, button.name)}
+            >
+              <div className={styles.buttonInside}>
+                {button.svg}
+                {button.name}
+              </div>
+            </Button>
+          )
+        })}
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  itemsToBuy: state.invoicePOS.itemsToBuy,
+  activeRowRedux: state.invoicePOS.activeRow
+})
 
 const mapDispatchToProps = dispatch => ({
   toggleButton: name =>
@@ -63,6 +75,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(POSButtons);

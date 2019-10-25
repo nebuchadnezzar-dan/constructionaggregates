@@ -3,11 +3,11 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   trucks: [{ maxLoad: '', plateNo: '', status: 'available' }],
   availableTrucks: [
-    { maxLoad: '2', plateNo: 'abc', status: 'maintenance' },
-    { maxLoad: '3', plateNo: 'def', status: 'maintenance' },
-    { maxLoad: '1', plateNo: 'gfh', status: 'maintenance' },
-    { maxLoad: '1', plateNo: 'higi', status: 'maintenance' },
-    { maxLoad: '1', plateNo: 'yu7h', status: 'maintenance' }
+    // { maxLoad: '2', plateNo: 'abc', status: 'maintenance' },
+    // { maxLoad: '3', plateNo: 'def', status: 'maintenance' },
+    // { maxLoad: '1', plateNo: 'gfh', status: 'maintenance' },
+    // { maxLoad: '1', plateNo: 'higi', status: 'maintenance' },
+    // { maxLoad: '1', plateNo: 'yu7h', status: 'maintenance' }
   ],
   trucksToBeSaved: [],
   pages: '',

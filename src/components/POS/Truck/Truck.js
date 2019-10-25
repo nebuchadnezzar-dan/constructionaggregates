@@ -6,13 +6,15 @@ import * as actions from '../../../store/actions/index';
 
 import styles from './Truck.module.scss';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 
 class Truck extends Component {
   state = {
     copyTrucks: []
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    await this.props.fetchTruckDispatch();
     this.setState({
       copyTrucks: this.props.trucks.map((truck, i) => ({
         ...truck,
@@ -30,12 +32,14 @@ class Truck extends Component {
   };
 
   render() {
+    const disabled = this.props.activeCustomer.length === 0 ? true : false;
     return (
-      <Auxillary>
+      this.props.fetchLoadingTruck ? <Spinner color="grey" /> : <Auxillary>
         <div className={styles.search}>
           <div />
           <span className={styles.searchIcon}>&#9906;</span>
           <input
+            disabled={disabled}
             className={styles.input}
             placeholder="Truck"
             type="text"
@@ -48,10 +52,10 @@ class Truck extends Component {
           {this.props.activeTruck !== '' ? (
             <span>{this.props.activeTruck.plateNo}</span>
           ) : (
-            <span>Please choose a Truck to deliver the goods</span>
-          )}
+              <span>Please choose a Truck to deliver the goods</span>
+            )}
         </div>
-        <div className={styles.truckWrapper}>
+        {disabled ? null : <div className={styles.truckWrapper}>
           {this.state.copyTrucks
             .filter(tr =>
               tr.plateNo
@@ -75,21 +79,26 @@ class Truck extends Component {
                 </div>
               );
             })}
-        </div>
+        </div>}
       </Auxillary>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  trucks: state.truckSettings.availableTrucks,
   activeTruck: state.invoicePOS.truck,
-  truckSearchForm: state.invoicePOS.truckSearchInput
+  truckSearchForm: state.invoicePOS.truckSearchInput,
+  activeCustomer: state.invoicePOS.customer,
+  fetchLoadingTruck: state.truckSettings.fetchLoading,
+  fetchErrorTruck: state.truckSettings.fetchLoading
 });
 
 const mapDispatchToProps = dispatch => ({
   setTruckDispatch: truck => dispatch(actions.setTruck(truck)),
   editTruckSearchFormDispatch: value =>
-    dispatch(actions.editTruckSearchForm(value))
+    dispatch(actions.editTruckSearchForm(value)),
+  fetchTruckDispatch: () => dispatch(actions.fetchTruck(1))
 });
 
 export default connect(
