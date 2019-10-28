@@ -40,9 +40,12 @@ class POSButtons extends Component {
     return (
       <div className={styles.buttonWrapper}>
         {this.state.buttons.map(button => {
-          let disabled = this.props.itemsToBuy.length === 0 ? true : false;
+          let disabled = this.props.itemsToBuy.length === 0 || this.props.address.length === 0 ? true : false;
           if (button.name === 'edit') {
             disabled = typeof this.props.activeRowRedux === 'number' ? false : true;
+          }
+          if (button.name === 'cancel') {
+            disabled = this.props.activeCustomer.length === 0 ? true : false;
           }
           return (
             <Button
@@ -66,7 +69,9 @@ class POSButtons extends Component {
 
 const mapStateToProps = state => ({
   itemsToBuy: state.invoicePOS.itemsToBuy,
-  activeRowRedux: state.invoicePOS.activeRow
+  activeRowRedux: state.invoicePOS.activeRow,
+  address: state.invoicePOS.address,
+  activeCustomer: state.invoicePOS.customer
 })
 
 const mapDispatchToProps = dispatch => ({

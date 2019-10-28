@@ -59,6 +59,7 @@ class Invoice extends Component {
   };
 
   render() {
+    const disabled = this.props.itemsToBuy.length === 0 ? true : false;
     const popupShow = this.props.popup ? (
       <Auxillary>
         <div className={styles.popup}>
@@ -94,6 +95,7 @@ class Invoice extends Component {
           <div className={styles.buttonWrapper}>
             <div className={styles.button}>
               <Button
+                disabled={disabled}
                 cName="posButton"
                 color="orange"
                 click={this.buttonSummaryHandler.bind(null, 'creditSummary')}
@@ -102,7 +104,7 @@ class Invoice extends Component {
                 </Button>
             </div>
             <div className={styles.button}>
-              <Button cName="posButton" color="blue">
+              <Button disabled={disabled} cName="posButton" color="blue">
                 Cash
                 </Button>
             </div>
