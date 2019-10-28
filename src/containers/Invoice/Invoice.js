@@ -59,7 +59,7 @@ class Invoice extends Component {
   };
 
   render() {
-    const disabled = this.props.itemsToBuy.length === 0 ? true : false;
+    const disabled = this.props.activeCustomer.length === 0 ? true : false;
     const popupShow = this.props.popup ? (
       <Auxillary>
         <div className={styles.popup}>

@@ -1,0 +1,27 @@
+@import '../../../styles/colors.scss';
+
+.activeRow {
+    margin-top: 2rem;
+  }
+
+  .discountFormWrapper {
+      margin-top: 2rem;
+    display: flex;
+    // align-content: center;
+    align-items: center;
+    & div:nth-child(2n) {
+      width: 50%;
+      margin: 0 3rem;
+    }
+    & input {
+      font-size: 4rem;
+      border: 1px solid $blue-light;
+      border-radius: 5px;
+      padding: 1rem;
+      width: 100%;
+    }
+  }
+  
+  .editButtonWrapper {
+    text-align: center;
+  }

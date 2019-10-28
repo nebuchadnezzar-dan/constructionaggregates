@@ -1,0 +1,62 @@
+@import '../../../styles/colors.scss';
+
+  .totalWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 7rem;
+    line-height: 1;
+    & div:last-child {
+      font-size: 10rem;
+      margin-left: 3rem;
+      font-weight: bold;
+    }
+  }
+
+  .discountWrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    line-height: 1;
+    & div:last-child {
+      font-size: 5rem;
+      margin-left: 2rem;
+    }
+  }
+
+  .paymentWrapper {
+  display: flex;
+  // align-content: center;
+  align-items: center;
+  & div:nth-child(2n) {
+    width: 50%;
+    margin: 0 3rem;
+  }
+  & input {
+    font-size: 4rem;
+    border: 1px solid $blue-light;
+    border-radius: 5px;
+    padding: 1rem;
+    width: 100%;
+  }
+}
+
+.changeWrapper {
+    display: flex;
+    align-items: center;
+    & div:last-child {
+      font-size: 5rem;
+      margin-left: 3rem;
+    }
+  }
+
+  .belowWrapper {
+    font-size: 1.8rem;
+    & div {
+      display: flex;
+      justify-content: flex-end;
+      & div {
+        margin-left: 1rem;
+      }
+    }
+  }
