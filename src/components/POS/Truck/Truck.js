@@ -9,12 +9,23 @@ import Auxillary from '../../../hoc/Auxillary/Auxillary';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 
 class Truck extends Component {
+  _isMounted = false;
   state = {
     copyTrucks: []
   };
 
-  async componentDidMount() {
-    await this.props.fetchTruckDispatch();
+  componentDidMount() {
+    this._isMounted = true;
+    this._isMounted && this.setTruck();
+  }
+
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  setTruck = () => {
+    this.props.fetchTruckDispatch();
     this.setState({
       copyTrucks: this.props.trucks.map((truck, i) => ({
         ...truck,
@@ -22,7 +33,9 @@ class Truck extends Component {
         index: i
       }))
     });
+
   }
+
   onTruckHandler = e => {
     this.props.editTruckSearchFormDispatch(e.target.value);
   };

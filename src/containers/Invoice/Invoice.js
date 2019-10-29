@@ -160,7 +160,7 @@ class Invoice extends Component {
       </div>
     </Auxillary>;
 
-    const spinner = this.props.fetchLoading && this.props.fetchLoadingTruck ? <Spinner color="grey" /> : mainBody;
+    const spinner = this.props.fetchLoading ? <Spinner color="grey" /> : mainBody;
 
     return (
       <div className={styles.invoiceMain}>
