@@ -95,8 +95,27 @@ export const fetchPOS = () => {
   }
 };
 
-// export const fetchPosCustomerStart = () => ({
-//   type: actionTypes.FETCH_POS_CUSTOMER_START
-// });
+export const postPosStart = () => ({
+  type: actionTypes.POST_POS_START
+});
 
-// export const fetchPosCustomerSuccess = data 
+export const postPosSuccess = data => ({
+  type: actionTypes.POST_POS_SUCCESS,
+  payload: data
+});
+
+export const postPosFail = () => ({
+  type: actionTypes.POST_POS_FAIL
+});
+
+export const postPos = (id, body) => {
+  return dispatch => {
+    try {
+      dispatch(postPosStart());
+      const data = axios.post(`/pos/${id}`, body);
+      dispatch(postPosSuccess(data.data));
+    } catch (e) {
+      dispatch(postPosFail());
+    }
+  }
+}

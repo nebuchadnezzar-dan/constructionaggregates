@@ -33,9 +33,21 @@ class PopUp extends Component {
     }
   };
   onEditButtonHandler = action => {
+    // console.log(action);
     if (action === 'edit') this.props.editQuantityDispatch(this.state.payment);
     if (action === 'discount')
       this.props.addDiscountDispatch(this.state.payment);
+    if (action === 'pay') {
+      this.props.postPosDispatch(this.props.customer.id, {
+        purchased: this.props.items.map(el => ({ id: el.id, quantity: +el.quantity })),
+        mode: this.props.discount === 0 ? 'fully paid' : 'discounted',
+        trucks: [{ id: this.props.truck.id }],
+        address: this.props.address,
+        payment: +this.state.payment
+      });
+      this.props.resetPosDispatch();
+      this.props.fetchPosDispatch();
+    }
   };
   onCreditButtonHandler = credit => {
     this.props.addCreditDispatch(
@@ -145,10 +157,10 @@ class PopUp extends Component {
             <div className={[styles.header, styles.headerOrange].join(' ')}>
               {props.action}
             </div>
-           <CreditSummary totalCredit={totalCredit}
-            customer={props.customer}
-            creditRedux={props.creditRedux}
-           />
+            <CreditSummary totalCredit={totalCredit}
+              customer={props.customer}
+              creditRedux={props.creditRedux}
+            />
           </div>
         );
         break;
@@ -190,8 +202,9 @@ const mapDispatchToProps = dispatch => ({
   addDiscountDispatch: value => dispatch(actions.addDiscount(value)),
   addCreditDispatch: (customer, credit) =>
     dispatch(actions.addCredit(customer, credit)),
-  resetDispatch: () => dispatch(actions.resetPos()),
-  editQuantityDispatch: value => dispatch(actions.editQuantity(value))
+  editQuantityDispatch: value => dispatch(actions.editQuantity(value)),
+  postPosDispatch: (id, data) => dispatch(actions.postPos(id, data)),
+  fetchPosDispatch: () => dispatch(actions.fetchPOS())
 });
 
 export default connect(

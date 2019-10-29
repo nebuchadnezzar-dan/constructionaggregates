@@ -14,8 +14,11 @@ const initialState = {
   activeRow: '',
   displayCustomer: 'display',
   customerNo: 0,
+  invoice: [],
   fetchLoading: false,
-  fetchError: false
+  fetchError: false,
+  posLoading: false,
+  posError: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -145,6 +148,25 @@ const reducer = (state = initialState, action) => {
         ...state,
         fetchError: true,
         fetchLoading: false
+      }
+    case actionTypes.POST_POS_START:
+      return {
+        ...state,
+        posLoading: true,
+        posError: false,
+      }
+    case actionTypes.POST_POS_SUCCESS:
+      return {
+        ...state,
+        posLoading: false,
+        invoice: action.payload,
+        finalPopup: false
+      }
+    case actionTypes.POST_POS_FAIL:
+      return {
+        ...state,
+        posLoading: false,
+        posError: true
       }
     default:
       return state;
