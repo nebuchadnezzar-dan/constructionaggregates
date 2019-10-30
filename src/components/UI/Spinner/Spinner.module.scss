@@ -35,6 +35,15 @@
     border-color: $dimgrey transparent transparent transparent;
   }
 
+  .searchSpinner {
+    width: 30px;
+    height: 30px;
+    & div{
+      width: 30px;
+      height: 30px;
+    }
+  }
+
   @keyframes lds-ring {
     0% {
       transform: rotate(0deg);

@@ -30,6 +30,7 @@ class Invoice extends Component {
   };
   componentDidMount() {
     this.props.fetchPosDispatch();
+    this.props.fetchTruckDispatch();
     this.setState({ suppliesState: this.props.supplies });
     document.addEventListener('keydown', this.onKeyDownHandler, false);
   }
@@ -160,7 +161,7 @@ class Invoice extends Component {
       </div>
     </Auxillary>;
 
-    const spinner = this.props.fetchLoading ? <Spinner color="grey" /> : mainBody;
+    const spinner = this.props.fetchLoading || this.props.fetchLoadingTruck ? <Spinner color="grey" /> : mainBody;
 
     return (
       <div className={styles.invoiceMain}>
@@ -181,7 +182,9 @@ const mapStateToProps = state => ({
   customerNo: state.invoicePOS.customerNo,
   activeCustomer: state.invoicePOS.customer,
   fetchLoading: state.invoicePOS.fetchLoading,
-  fetchError: state.invoicePOS.fetchError
+  fetchError: state.invoicePOS.fetchError,
+  fetchLoadingTruck: state.truckSettings.loading,
+  fetchErrorTruck: state.truckSettings.loading
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -191,7 +194,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.toggleFinalPopup(toggle)),
   onEditAddressDispatch: value => dispatch(actions.editAddress(value)),
   onRemoveItem: () => dispatch(actions.voidItem()),
-  fetchPosDispatch: () => dispatch(actions.fetchPOS())
+  fetchPosDispatch: () => dispatch(actions.fetchPOS()),
+  fetchTruckDispatch: () => dispatch(actions.fetchTruck(1))
 });
 
 export default connect(

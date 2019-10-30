@@ -25,7 +25,6 @@ class Truck extends Component {
   }
 
   setTruck = () => {
-    this.props.fetchTruckDispatch();
     this.setState({
       copyTrucks: this.props.trucks.map((truck, i) => ({
         ...truck,
@@ -47,7 +46,7 @@ class Truck extends Component {
   render() {
     const disabled = this.props.activeCustomer.length === 0 ? true : false;
     return (
-      this.props.fetchLoadingTruck ? <Spinner color="grey" /> : <Auxillary>
+      <Auxillary>
         <div className={styles.search}>
           <div />
           <span className={styles.searchIcon}>&#9906;</span>
@@ -102,16 +101,14 @@ const mapStateToProps = state => ({
   trucks: state.truckSettings.availableTrucks,
   activeTruck: state.invoicePOS.truck,
   truckSearchForm: state.invoicePOS.truckSearchInput,
-  activeCustomer: state.invoicePOS.customer,
-  fetchLoadingTruck: state.truckSettings.fetchLoading,
-  fetchErrorTruck: state.truckSettings.fetchLoading
+  activeCustomer: state.invoicePOS.customer
 });
 
 const mapDispatchToProps = dispatch => ({
   setTruckDispatch: truck => dispatch(actions.setTruck(truck)),
   editTruckSearchFormDispatch: value =>
     dispatch(actions.editTruckSearchForm(value)),
-  fetchTruckDispatch: () => dispatch(actions.fetchTruck(1))
+
 });
 
 export default connect(

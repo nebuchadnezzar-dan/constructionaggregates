@@ -14,7 +14,6 @@ const initialState = {
   activeRow: '',
   displayCustomer: 'display',
   customerNo: 0,
-  invoice: [],
   fetchLoading: false,
   fetchError: false,
   posLoading: false,
@@ -159,7 +158,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         posLoading: false,
-        invoice: action.payload,
+        customerNo: action.payload,
         finalPopup: false
       }
     case actionTypes.POST_POS_FAIL:

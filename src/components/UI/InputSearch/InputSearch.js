@@ -171,7 +171,10 @@ class InputSearch extends Component {
 
   render() {
     const { props } = this;
-    let suggestion = this.props.loading ? <div className={styles.suggestItem}><Spinner color="grey" /></div> :
+    const spinnerBody = <div className={styles.spinner}><Spinner color="grey" small /></div>;
+    const spinnerCustomer = this.props.loading && this.props.component === 'customer' ? spinnerBody : null;
+    const spinnerSupply = this.props.supplyLoading && this.props.component === 'supplies' ? spinnerBody : null;
+    let suggestion =
       this.state.searchForm.length > 0 && !this.state.hideSuggestClick ? (
         <div className={styles.autosuggest}>
           {' '}
@@ -207,6 +210,8 @@ class InputSearch extends Component {
           onKeyDown={this.onKeyPressHandler}
           onBlur={this.onFocusInput.bind(null, 'blur')}
         />
+        {spinnerCustomer}
+        {spinnerSupply}
         {suggestion}
       </div>
     );

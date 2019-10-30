@@ -109,11 +109,11 @@ export const postPosFail = () => ({
 });
 
 export const postPos = (id, body) => {
-  return dispatch => {
+  return async dispatch => {
     try {
       dispatch(postPosStart());
-      const data = axios.post(`/pos/${id}`, body);
-      dispatch(postPosSuccess(data.data));
+      const data = await axios.post(`/pos/${id}`, body);
+      dispatch(postPosSuccess(data.data.count));
     } catch (e) {
       dispatch(postPosFail());
     }

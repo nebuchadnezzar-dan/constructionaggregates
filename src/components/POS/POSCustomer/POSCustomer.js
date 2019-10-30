@@ -37,6 +37,7 @@ class POSCustomer extends Component {
             />
           </div>
         );
+    const disabled = this.props.fetchLoadingTruck ? true : false;
     return (
       <div className={styles.customerWrapper}>
         <div className={styles.customerImgWrapper}>
@@ -52,6 +53,7 @@ class POSCustomer extends Component {
             {display}
             {this.props.displayCustomer === 'display' ? (
               <Button
+                disabled={disabled}
                 color="blue"
                 cName="searchCustomerPOS"
                 click={this.toggleSearch.bind(null, 'input')}
@@ -82,7 +84,8 @@ class POSCustomer extends Component {
 const mapStateToProps = state => ({
   customersRedux: state.customer.customer,
   activeCustomer: state.invoicePOS.customer,
-  displayCustomer: state.invoicePOS.displayCustomer
+  displayCustomer: state.invoicePOS.displayCustomer,
+  fetchLoadingTruck: state.truckSettings.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

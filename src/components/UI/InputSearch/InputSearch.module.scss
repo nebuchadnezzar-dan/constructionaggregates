@@ -47,3 +47,9 @@
 .isActive {
   background-color: $blue-light;
 }
+
+.spinner {
+  position: absolute;
+  top: -2px;
+  right: 12px;
+}
