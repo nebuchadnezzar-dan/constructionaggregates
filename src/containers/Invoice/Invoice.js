@@ -4,7 +4,11 @@ import styles from './Invoice.module.scss';
 
 import { connect } from 'react-redux';
 
+import axios from '../../axios-orders';
+
 import * as actions from '../../store/actions/index';
+
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import Head from '../../components/UI/Head/Head';
 import HeadChild from '../../components/UI/HeadChild/HeadChild';
@@ -19,6 +23,7 @@ import Auxillary from '../../hoc/Auxillary/Auxillary';
 import Truck from '../../components/POS/Truck/Truck';
 import POSButtons from '../../components/POS/POSButtons/POSButtons';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import ErrorBody from '../../components/UI/ErrorBody/ErrorBody';
 
 class Invoice extends Component {
   state = {
@@ -81,6 +86,7 @@ class Invoice extends Component {
     ) : null;
 
     let mainBody = <Auxillary>
+      {this.props.children}
       <Head classname="blue" svgname="invoice">
         <HeadChild>Invoice</HeadChild>
       </Head>
@@ -161,7 +167,9 @@ class Invoice extends Component {
       </div>
     </Auxillary>;
 
-    const spinner = this.props.fetchLoading || this.props.fetchLoadingTruck ? <Spinner color="grey" /> : mainBody;
+    let mainBodyError = this.props.fetchError || this.props.fetchErrorTruck ? <ErrorBody>{this.props.children}</ErrorBody> : mainBody;
+
+    const spinner = this.props.fetchLoading || this.props.fetchLoadingTruck ? <Spinner color="grey" /> : mainBodyError;
 
     return (
       <div className={styles.invoiceMain}>
@@ -201,4 +209,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Invoice);
+)(withErrorHandler(Invoice, axios));

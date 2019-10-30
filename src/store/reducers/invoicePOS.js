@@ -17,7 +17,8 @@ const initialState = {
   fetchLoading: false,
   fetchError: false,
   posLoading: false,
-  posError: false
+  posError: false,
+  popupError: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -67,6 +68,12 @@ const reducer = (state = initialState, action) => {
         actionButton: action.payload.name,
         popup: false
       };
+    case actionTypes.POPUP_ERROR_TOGGLE:
+      return {
+        ...state,
+        popupError: false,
+        finalPopup: false
+      }
     case actionTypes.VOID_ITEM:
       return {
         ...state,
@@ -165,7 +172,9 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         posLoading: false,
-        posError: true
+        posError: true,
+        errorMessage: action.payload,
+        popupError: true
       }
     default:
       return state;

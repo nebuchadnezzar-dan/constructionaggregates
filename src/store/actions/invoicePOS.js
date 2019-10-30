@@ -104,8 +104,9 @@ export const postPosSuccess = data => ({
   payload: data
 });
 
-export const postPosFail = () => ({
-  type: actionTypes.POST_POS_FAIL
+export const postPosFail = (message) => ({
+  type: actionTypes.POST_POS_FAIL,
+  payload: message
 });
 
 export const postPos = (id, body) => {
@@ -113,9 +114,17 @@ export const postPos = (id, body) => {
     try {
       dispatch(postPosStart());
       const data = await axios.post(`/pos/${id}`, body);
-      dispatch(postPosSuccess(data.data.count));
+      if (data.data.error) {
+        dispatch(postPosFail(data.data.error));
+      } else {
+        dispatch(postPosSuccess(data.data.count));
+      }
     } catch (e) {
       dispatch(postPosFail());
     }
   }
-}
+};
+
+export const popupErrorToggle = () => ({
+  type: actionTypes.POPUP_ERROR_TOGGLE
+})

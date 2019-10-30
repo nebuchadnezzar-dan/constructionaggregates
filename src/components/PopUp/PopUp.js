@@ -15,7 +15,7 @@ import styles from './PopUp.module.scss';
 
 class PopUp extends Component {
   state = {
-    change: '',
+    change: 0,
     payment: ''
   };
 
@@ -32,21 +32,26 @@ class PopUp extends Component {
       }
     }
   };
-  onEditButtonHandler = action => {
+  onEditButtonHandler = async action => {
     // console.log(action);
     if (action === 'edit') this.props.editQuantityDispatch(this.state.payment);
     if (action === 'discount')
       this.props.addDiscountDispatch(this.state.payment);
     if (action === 'pay') {
-      this.props.postPosDispatch(this.props.customer.id, {
+      await this.props.postPosDispatch(this.props.customer.id, {
         purchased: this.props.items.map(el => ({ id: el.id, quantity: +el.quantity })),
         mode: this.props.discount === 0 ? 'fully paid' : 'discounted',
         trucks: [{ id: this.props.truck.id }],
         address: this.props.address,
-        payment: +this.state.payment
+        payment: +this.state.payment - this.state.change
       });
-      this.props.resetPosDispatch();
-      this.props.fetchPosDispatch();
+      if (this.props.posError) {
+        this.props.onPopUpShowDispatch();
+      } else {
+        this.props.resetPosDispatch();
+        this.props.fetchPosDispatch();
+      }
+
     }
   };
   onCreditButtonHandler = credit => {
@@ -61,6 +66,10 @@ class PopUp extends Component {
     );
     this.props.resetPosDispatch();
   };
+
+  onCloseButtonError = () => {
+    this.props.popupErrorDispatch();
+  }
 
   render() {
     const { props } = this;
@@ -168,6 +177,21 @@ class PopUp extends Component {
         console.log('none were satisfied');
     }
 
+    if (this.props.popupError) {
+      action = (
+        <div className={styles.actionWrapper}>
+          <div className={[styles.header, styles.headerRed].join(' ')}>
+            ERROR
+          </div>
+          {this.props.errorMessage}
+          <hr />
+          <div style={{ textAlign: 'center' }}>
+            <Button color="red" click={this.onCloseButtonError} >Close</Button>
+          </div>
+        </div>
+      );
+    }
+
     const toBeShown = props.type === 'simple' ? props.children : action;
     return (
       <div className={styles.popupWrapper}>
@@ -193,7 +217,10 @@ const mapStateToProps = state => ({
   discount: state.invoicePOS.discount,
   customer: state.invoicePOS.customer,
   creditRedux: state.customer.credit,
-  activeRow: state.invoicePOS.activeRow
+  activeRow: state.invoicePOS.activeRow,
+  posError: state.invoicePOS.posError,
+  errorMessage: state.invoicePOS.errorMessage,
+  popupError: state.invoicePOS.popupError
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -204,7 +231,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.addCredit(customer, credit)),
   editQuantityDispatch: value => dispatch(actions.editQuantity(value)),
   postPosDispatch: (id, data) => dispatch(actions.postPos(id, data)),
-  fetchPosDispatch: () => dispatch(actions.fetchPOS())
+  fetchPosDispatch: () => dispatch(actions.fetchPOS()),
+  onPopUpShowDispatch: () => dispatch(actions.toggleFinalPopup({ name: 'error', toggle: true })),
+  popupErrorDispatch: () => dispatch(actions.popupErrorToggle())
 });
 
 export default connect(
