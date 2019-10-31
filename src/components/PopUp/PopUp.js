@@ -29,6 +29,8 @@ class PopUp extends Component {
         this.props.addDiscountDispatch(e.target.value);
       } else if (action === 'edit') {
         this.props.editQuantityDispatch(e.target.value);
+      } else if (action === 'pay') {
+        this.onEditButtonHandler(action);
       }
     }
   };
@@ -41,7 +43,7 @@ class PopUp extends Component {
       await this.props.postPosDispatch(this.props.customer.id, {
         purchased: this.props.items.map(el => ({ id: el.id, quantity: +el.quantity })),
         mode: this.props.discount === 0 ? 'fully paid' : 'discounted',
-        trucks: [{ id: this.props.truck.id }],
+        trucks: this.props.truck.length > 0 ? [{ id: this.props.truck.id }] : [],
         address: this.props.address,
         payment: +this.state.payment - this.state.change
       });
@@ -183,8 +185,10 @@ class PopUp extends Component {
           <div className={[styles.header, styles.headerRed].join(' ')}>
             ERROR
           </div>
-          {this.props.errorMessage}
-          <hr />
+          <div className={styles.errorMessage}>
+            {'Something went wrong. Please try again!'}
+          </div>
+          <hr style={{ margin: '1rem 0' }} />
           <div style={{ textAlign: 'center' }}>
             <Button color="red" click={this.onCloseButtonError} >Close</Button>
           </div>

@@ -166,7 +166,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         posLoading: false,
         customerNo: action.payload,
-        finalPopup: false
+        finalPopup: false,
+        errorMessage: '',
+        popupError: false,
+        posError: false
       }
     case actionTypes.POST_POS_FAIL:
       return {

@@ -5,6 +5,9 @@ import Button from '../../UI/Button/Button';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
 
 const payment = props => {
+    const change = props.payment - props.total < 0
+        ? 0
+        : props.payment - props.total;
     return (
         <Auxillary>
             <div className={styles.totalWrapper}>
@@ -38,9 +41,7 @@ const payment = props => {
             <div className={styles.changeWrapper}>
                 <div>Change</div>
                 <div>
-                    {props.payment - props.total < 0
-                        ? 0
-                        : props.payment - props.total}
+                    {change}
                 </div>
             </div>
             <hr />
