@@ -76,7 +76,6 @@ class Truck extends Component {
             )
             .map((truck, i) => {
               const exist = this.props.activeTruck.findIndex(el => el.id === truck.id);
-              console.log(['TRUCK'], exist);
               return (
                 <div
                   key={i}

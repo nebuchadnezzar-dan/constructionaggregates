@@ -12,7 +12,7 @@ class Discount extends Component {
                 <div>Discount</div>
                 <div>
                     <input
-                        onKeyDown={props.keyDown.bind(this, props.action)}
+                        onKeyDown={props.keyDown.bind(this, props.action, null)}
                         placeholder="0"
                         type="number"
                         onChange={props.change.bind(this, props.action)}

@@ -10,6 +10,7 @@ import Edit from './Edit/Edit';
 import Credit from './Credit/Credit';
 import Discount from './Discount/Discount';
 import CreditSummary from './CreditSummary/CreditSummary';
+import Spinner from '../UI/Spinner/Spinner';
 
 import styles from './PopUp.module.scss';
 
@@ -23,13 +24,13 @@ class PopUp extends Component {
     this.setState({ payment: e.target.value });
   };
 
-  keyDownHandler = (action, e) => {
+  keyDownHandler = (action, disabled, e) => {
     if (e.keyCode === 13) {
       if (action === 'discount') {
         this.props.addDiscountDispatch(e.target.value);
       } else if (action === 'edit') {
         this.props.editQuantityDispatch(e.target.value);
-      } else if (action === 'pay') {
+      } else if (action === 'pay' && !disabled) {
         this.onEditButtonHandler(action);
       }
     }
@@ -52,6 +53,7 @@ class PopUp extends Component {
       } else {
         this.props.resetPosDispatch();
         this.props.fetchPosDispatch();
+        this.props.onPopUpShowDispatch();
       }
 
     }
@@ -69,8 +71,12 @@ class PopUp extends Component {
     this.props.resetPosDispatch();
   };
 
-  onCloseButtonError = () => {
-    this.props.popupErrorDispatch();
+  onCloseButtonError = (mode) => {
+    if (mode === 'error') {
+      this.props.popupErrorDispatch();
+    } else {
+      this.props.popupResponseDispatch();
+    }
   }
 
   render() {
@@ -190,7 +196,24 @@ class PopUp extends Component {
           </div>
           <hr style={{ margin: '1rem 0' }} />
           <div style={{ textAlign: 'center' }}>
-            <Button color="red" click={this.onCloseButtonError} >Close</Button>
+            <Button color="red" click={this.onCloseButtonError.bind(null, 'error')} >Close</Button>
+          </div>
+        </div>
+      );
+    }
+
+    if (this.props.responded) {
+      action = (
+        <div className={styles.actionWrapper}>
+          <div className={[styles.header, styles.headerGreen].join(' ')}>
+            Success
+          </div>
+          <div className={styles.errorMessage}>
+            {'Transaction successfully done!'}
+          </div>
+          <hr style={{ margin: '1rem 0' }} />
+          <div style={{ textAlign: 'center' }}>
+            <Button color="green" click={this.onCloseButtonError.bind(null, 'success')} >Close</Button>
           </div>
         </div>
       );
@@ -207,7 +230,7 @@ class PopUp extends Component {
           X
         </Button>
         {/* <div className={styles.closeButton}>X</div> */}
-        <div className={styles[props.cName]}>{toBeShown}</div>
+        <div className={styles[props.cName]}>{this.props.loading ? <Spinner color="grey" /> : toBeShown}</div>
       </div>
     );
   }
@@ -224,7 +247,9 @@ const mapStateToProps = state => ({
   activeRow: state.invoicePOS.activeRow,
   posError: state.invoicePOS.posError,
   errorMessage: state.invoicePOS.errorMessage,
-  popupError: state.invoicePOS.popupError
+  popupError: state.invoicePOS.popupError,
+  responded: state.invoicePOS.responded,
+  loading: state.invoicePOS.posLoading
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -237,7 +262,8 @@ const mapDispatchToProps = dispatch => ({
   postPosDispatch: (id, data) => dispatch(actions.postPos(id, data)),
   fetchPosDispatch: () => dispatch(actions.fetchPOS()),
   onPopUpShowDispatch: () => dispatch(actions.toggleFinalPopup({ name: 'error', toggle: true })),
-  popupErrorDispatch: () => dispatch(actions.popupErrorToggle())
+  popupErrorDispatch: () => dispatch(actions.popupErrorToggle()),
+  popupResponseDispatch: () => dispatch(actions.popupRespondToggle())
 });
 
 export default connect(

@@ -23,7 +23,7 @@ const payment = props => {
                 <div>Payment</div>
                 <div>
                     <input
-                        onKeyDown={props.keyDown.bind(this, props.action)}
+                        onKeyDown={props.keyDown.bind(this, props.action, disabled)}
                         placeholder="0"
                         type="number"
                         onChange={props.change.bind(this, props.action)}

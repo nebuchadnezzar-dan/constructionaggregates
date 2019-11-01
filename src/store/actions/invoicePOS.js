@@ -17,13 +17,10 @@ export const onChangeQuantity = value => ({
   payload: value
 });
 
-export const setTruck = truck => {
-  console.log(truck);
-  return ({
-    type: actionTypes.SET_TRUCK,
-    payload: truck
-  })
-};
+export const setTruck = truck => ({
+  type: actionTypes.SET_TRUCK,
+  payload: truck
+});
 
 export const toggleFinalPopup = action => ({
   type: actionTypes.TOGGLE_FINAL_POP_UP,
@@ -130,4 +127,8 @@ export const postPos = (id, body) => {
 
 export const popupErrorToggle = () => ({
   type: actionTypes.POPUP_ERROR_TOGGLE
-})
+});
+
+export const popupRespondToggle = () => ({
+  type: actionTypes.POPUP_RESPOND_TOGGLE
+});

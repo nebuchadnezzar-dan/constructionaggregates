@@ -18,7 +18,8 @@ const initialState = {
   fetchError: false,
   posLoading: false,
   posError: false,
-  popupError: false
+  popupError: false,
+  responded: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -59,7 +60,6 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SET_TRUCK:
       let truckCopy = [...state.trucks];
       const id = truckCopy.findIndex(el => action.payload.id === el.id);
-      console.log(id);
       if (id !== -1) {
         truckCopy.splice(id, 1);
       } else {
@@ -82,6 +82,12 @@ const reducer = (state = initialState, action) => {
         popupError: false,
         finalPopup: false
       }
+    case actionTypes.POPUP_RESPOND_TOGGLE:
+      return {
+        ...state,
+        responded: false,
+        finalPopup: false
+      }
     case actionTypes.VOID_ITEM:
       return {
         ...state,
@@ -100,7 +106,7 @@ const reducer = (state = initialState, action) => {
         itemsToBuy: [],
         popup: false,
         quantityForm: 1,
-        truck: '',
+        trucks: [],
         finalPopup: false,
         address: '',
         truckSearchInput: '',
@@ -168,16 +174,18 @@ const reducer = (state = initialState, action) => {
         ...state,
         posLoading: true,
         posError: false,
+        responded: false
       }
     case actionTypes.POST_POS_SUCCESS:
       return {
         ...state,
         posLoading: false,
-        customerNo: action.payload,
+        customerNo: action.payload.count,
         finalPopup: false,
         errorMessage: '',
         popupError: false,
-        posError: false
+        posError: false,
+        responded: true
       }
     case actionTypes.POST_POS_FAIL:
       return {
@@ -185,7 +193,8 @@ const reducer = (state = initialState, action) => {
         posLoading: false,
         posError: true,
         errorMessage: action.payload,
-        popupError: true
+        popupError: true,
+        responded: false
       }
     default:
       return state;
