@@ -8,6 +8,7 @@ const payment = props => {
     const change = props.payment - props.total < 0
         ? 0
         : props.payment - props.total;
+    const disabled = props.total > props.payment ? true : false;
     return (
         <Auxillary>
             <div className={styles.totalWrapper}>
@@ -31,6 +32,7 @@ const payment = props => {
                 </div>
                 <div>
                     <Button
+                        disabled={disabled}
                         color="green"
                         click={props.clickButton.bind(null, props.action)}
                     >
@@ -58,7 +60,7 @@ const payment = props => {
                 </div>
                 <div>
                     <div>Truck:</div>
-                    <div>{props.truck.plateNo}</div>
+                    <div>{props.truck.map(el => el.plateNo).join(', ')}</div>
                 </div>
             </div>
         </Auxillary>

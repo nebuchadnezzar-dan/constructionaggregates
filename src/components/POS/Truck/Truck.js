@@ -39,8 +39,8 @@ class Truck extends Component {
     this.props.editTruckSearchFormDispatch(e.target.value);
   };
 
-  onTruckClickHandler = i => {
-    this.props.setTruckDispatch(this.state.copyTrucks[i]);
+  onTruckClickHandler = truck => {
+    this.props.setTruckDispatch({ id: truck.id, plateNo: truck.plateNo });
   };
 
   render() {
@@ -61,10 +61,10 @@ class Truck extends Component {
         </div>
         <div className={styles.truckLabel}>
           {'Plate No: '}
-          {this.props.activeTruck !== '' ? (
-            <span>{this.props.activeTruck.plateNo}</span>
+          {this.props.activeTruck.length > 0 ? (
+            <span>{this.props.activeTruck.map(el => el.plateNo).join(',')}</span>
           ) : (
-              <span>Please choose a Truck to deliver the goods</span>
+              <span>Please choose a Truck/s to deliver the goods</span>
             )}
         </div>
         {disabled ? null : <div className={styles.truckWrapper}>
@@ -75,15 +75,17 @@ class Truck extends Component {
                 .includes(this.props.truckSearchForm.toLowerCase())
             )
             .map((truck, i) => {
+              const exist = this.props.activeTruck.findIndex(el => el.id === truck.id);
+              console.log(['TRUCK'], exist);
               return (
                 <div
                   key={i}
-                  onClick={this.onTruckClickHandler.bind(null, truck.index)}
+                  onClick={this.onTruckClickHandler.bind(null, truck)}
                   className={[
                     styles.truck,
-                    this.props.activeTruck.index === truck.index
-                      ? styles.activeTruck
-                      : null
+                    exist === -1
+                      ? null
+                      : styles.activeTruck
                   ].join(' ')}
                   style={{ backgroundColor: truck.color.padEnd(7, 0) }}
                 >
@@ -99,7 +101,7 @@ class Truck extends Component {
 
 const mapStateToProps = state => ({
   trucks: state.truckSettings.availableTrucks,
-  activeTruck: state.invoicePOS.truck,
+  activeTruck: state.invoicePOS.trucks,
   truckSearchForm: state.invoicePOS.truckSearchInput,
   activeCustomer: state.invoicePOS.customer
 });

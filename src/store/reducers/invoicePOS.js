@@ -4,7 +4,7 @@ const initialState = {
   itemsToBuy: [],
   popup: false,
   quantityForm: 1,
-  truck: '',
+  trucks: [],
   finalPopup: false,
   actionButton: '',
   address: '',
@@ -57,9 +57,17 @@ const reducer = (state = initialState, action) => {
         quantityForm: action.payload
       };
     case actionTypes.SET_TRUCK:
+      let truckCopy = [...state.trucks];
+      const id = truckCopy.findIndex(el => action.payload.id === el.id);
+      console.log(id);
+      if (id !== -1) {
+        truckCopy.splice(id, 1);
+      } else {
+        truckCopy = truckCopy.concat(action.payload);
+      }
       return {
         ...state,
-        truck: action.payload
+        trucks: truckCopy
       };
     case actionTypes.TOGGLE_FINAL_POP_UP:
       return {

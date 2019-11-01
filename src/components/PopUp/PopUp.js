@@ -43,7 +43,7 @@ class PopUp extends Component {
       await this.props.postPosDispatch(this.props.customer.id, {
         purchased: this.props.items.map(el => ({ id: el.id, quantity: +el.quantity })),
         mode: this.props.discount === 0 ? 'fully paid' : 'discounted',
-        trucks: this.props.truck.length > 0 ? [{ id: this.props.truck.id }] : [],
+        trucks: this.props.truck.length > 0 ? this.props.truck.map(el => ({ id: el.id })) : [],
         address: this.props.address,
         payment: +this.state.payment - this.state.change
       });
@@ -215,7 +215,7 @@ class PopUp extends Component {
 
 const mapStateToProps = state => ({
   items: state.invoicePOS.itemsToBuy,
-  truck: state.invoicePOS.truck,
+  truck: state.invoicePOS.trucks,
   action: state.invoicePOS.actionButton,
   address: state.invoicePOS.address,
   discount: state.invoicePOS.discount,
