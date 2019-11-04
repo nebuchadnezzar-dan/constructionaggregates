@@ -40,13 +40,13 @@ class PopUp extends Component {
     if (action === 'edit') this.props.editQuantityDispatch(this.state.payment);
     if (action === 'discount')
       this.props.addDiscountDispatch(this.state.payment);
-    if (action === 'pay') {
+    if (action === 'pay' || action === 'credit') {
       await this.props.postPosDispatch(this.props.customer.id, {
         purchased: this.props.items.map(el => ({ id: el.id, quantity: +el.quantity })),
-        mode: this.props.discount === 0 ? 'fully paid' : 'discounted',
+        discount: action === 'credit' ? 0 : this.props.discount,
         trucks: this.props.truck.length > 0 ? this.props.truck.map(el => ({ id: el.id })) : [],
         address: this.props.address,
-        payment: +this.state.payment - this.state.change
+        payment: action === 'credit' ? 0 : +this.state.payment
       });
       if (this.props.posError) {
         this.props.onPopUpShowDispatch();
@@ -131,7 +131,7 @@ class PopUp extends Component {
               customer={props.customer}
               address={props.address}
               truck={props.truck}
-              creditButton={this.onCreditButtonHandler}
+              creditButton={this.onEditButtonHandler}
             />
           </div>
         );

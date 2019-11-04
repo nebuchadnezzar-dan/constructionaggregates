@@ -6,7 +6,6 @@ import * as actions from '../../../store/actions/index';
 
 import styles from './Truck.module.scss';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
-import Spinner from '../../../components/UI/Spinner/Spinner';
 
 class Truck extends Component {
   _isMounted = false;

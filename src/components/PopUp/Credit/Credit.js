@@ -47,13 +47,13 @@ class Credit extends Component {
                     </div>
                     <div>
                         <div>Truck:</div>
-                        <div>{props.truck.plateNo}</div>
+                        <div>{props.truck.length === 0 ? 'N/A' : props.truck.map(el => el.plateNo).join(', ')}</div>
                     </div>
                 </div>
                 <div className={styles.creditButton}>
                     <Button
                         color="blue"
-                        click={props.creditButton.bind(null, props.total)}
+                        click={props.creditButton.bind(null, props.action)}
                     >
                         Save
               </Button>

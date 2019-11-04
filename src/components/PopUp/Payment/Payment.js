@@ -60,7 +60,7 @@ const payment = props => {
                 </div>
                 <div>
                     <div>Truck:</div>
-                    <div>{props.truck.map(el => el.plateNo).join(', ')}</div>
+                    <div>{props.truck.length === 0 ? 'N/A' : props.truck.map(el => el.plateNo).join(', ')}</div>
                 </div>
             </div>
         </Auxillary>
