@@ -61,6 +61,7 @@ class Invoice extends Component {
   };
   buttonSummaryHandler = name => {
     // console.log(toggle);
+    this.props.fetchCreditSummary(+this.props.activeCustomer.id);
     this.props.onToggleFinalPopupDispatch({ name, toggle: true });
   };
 
@@ -203,7 +204,8 @@ const mapDispatchToProps = dispatch => ({
   onEditAddressDispatch: value => dispatch(actions.editAddress(value)),
   onRemoveItem: () => dispatch(actions.voidItem()),
   fetchPosDispatch: () => dispatch(actions.fetchPOS()),
-  fetchTruckDispatch: () => dispatch(actions.fetchTruck(1))
+  fetchTruckDispatch: () => dispatch(actions.fetchTruck(1)),
+  fetchCreditSummary: id => dispatch(actions.fetchCustomerCreditSummary(id))
 });
 
 export default connect(

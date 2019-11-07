@@ -173,4 +173,31 @@ export const searchCustomer = (page, customer) => {
       dispatch(searchCustomerFail());
     }
   }
-}
+};
+
+export const fetchCustomerCreditSummaryStart = () => ({
+  type: actionTypes.FETCH_CUSTOMER_CREDIT_SUMMARY_START
+});
+
+export const fetchCustomerCreditSummarySuccess = data => ({
+  type: actionTypes.FETCH_CUSTOMER_CREDIT_SUMMARY_SUCCESS,
+  payload: data
+});
+
+export const fetchCustomerCreditSummaryFail = () => ({
+  type: actionTypes.FETCH_CUSTOMER_CREDIT_SUMMARY_FAIL
+});
+
+export const fetchCustomerCreditSummary = (id) => {
+  return async dispatch => {
+    try {
+      console.log('start', id);
+      dispatch(fetchCustomerCreditSummaryStart());
+      const data = await axios.get(`/customers/${id}/credit`);
+      console.log(data);
+      dispatch(fetchCustomerCreditSummarySuccess(data.data));
+    } catch (e) {
+      dispatch(fetchCustomerCreditSummaryFail());
+    }
+  }
+};

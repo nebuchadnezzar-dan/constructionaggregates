@@ -21,16 +21,9 @@
   .table {
     width: 100%;
     text-align: center;
-    &Head {
-      background-color: $red-light;
-      color: #fff;
-    }
+
     &Credit {
       background-color: $blue-light;
-      color: #fff;
-    }
-    &CreditSummary {
-      background-color: $orange-light;
       color: #fff;
     }
   }

@@ -45,5 +45,5 @@ export {
   popupErrorToggle,
   popupRespondToggle
 } from './invoicePOS';
-export { addCustomer, addCredit, toggleCustomerView, fetchCustomers, fetchCustomer, postCustomer, putCustomer, deleteCustomer, searchCustomer } from './customer';
+export { addCustomer, addCredit, toggleCustomerView, fetchCustomers, fetchCustomer, postCustomer, putCustomer, deleteCustomer, searchCustomer, fetchCustomerCreditSummary } from './customer';
 export { toggleGlobalModal, toggleLocalPopupSettings } from './modal';

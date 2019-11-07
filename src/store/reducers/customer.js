@@ -53,6 +53,7 @@ const initialState = {
     //   timesPurchased: 10
     // }
   ],
+  creditSummary: [],
   credit: [
     {
       customer: 'Loaf',
@@ -142,7 +143,9 @@ const initialState = {
   putLoading: false,
   putError: false,
   searchError: false,
-  searchLoading: false
+  searchLoading: false,
+  fetchCreditLoading: false,
+  fetchCreditError: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -302,6 +305,25 @@ const reducer = (state = initialState, action) => {
         ...state,
         searchLoading: false,
         searchError: true
+      }
+    case actionTypes.FETCH_CUSTOMER_CREDIT_SUMMARY_START:
+      return {
+        ...state,
+        fetchCreditLoading: true,
+        fetchCreditError: false
+      }
+    case actionTypes.FETCH_CUSTOMER_CREDIT_SUMMARY_SUCCESS:
+      return {
+        ...state,
+        fetchCreditLoading: false,
+        fetchCreditError: false,
+        creditSummary: action.payload
+      }
+    case actionTypes.FETCH_CUSTOMER_CREDIT_SUMMARY_FAIL:
+      return {
+        ...state,
+        fetchCreditLoading: false,
+        fetchCreditError: true
       }
     default:
       return state;
