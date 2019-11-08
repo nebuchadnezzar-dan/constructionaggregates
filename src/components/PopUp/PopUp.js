@@ -243,7 +243,7 @@ const mapStateToProps = state => ({
   address: state.invoicePOS.address,
   discount: state.invoicePOS.discount,
   customer: state.invoicePOS.customer,
-  creditRedux: state.customer.credit,
+  creditRedux: state.customer.creditSummary,
   activeRow: state.invoicePOS.activeRow,
   posError: state.invoicePOS.posError,
   errorMessage: state.invoicePOS.errorMessage,

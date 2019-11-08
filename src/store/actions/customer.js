@@ -191,10 +191,8 @@ export const fetchCustomerCreditSummaryFail = () => ({
 export const fetchCustomerCreditSummary = (id) => {
   return async dispatch => {
     try {
-      console.log('start', id);
       dispatch(fetchCustomerCreditSummaryStart());
       const data = await axios.get(`/customers/${id}/credit`);
-      console.log(data);
       dispatch(fetchCustomerCreditSummarySuccess(data.data));
     } catch (e) {
       dispatch(fetchCustomerCreditSummaryFail());
