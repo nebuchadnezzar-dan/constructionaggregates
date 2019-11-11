@@ -1,0 +1,16 @@
+@import '../../../../styles/colors.scss';
+
+.headerWrapper{
+    background-color: $orange-light;
+    padding: 1rem 1.5rem;
+    & div {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    & p {
+        font-size: 1.7rem;
+        color: #fff;
+        text-transform: uppercase;
+    }
+}

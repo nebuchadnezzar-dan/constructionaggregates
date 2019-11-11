@@ -11,6 +11,7 @@ import Auxillary from '../../../hoc/Auxillary/Auxillary';
 import Modal from '../../../components/UI/Modal/Modal';
 import Confirmation from '../../../components/UI/Confirmation/Confirmation';
 import Spinner from '../../../components/UI/Spinner/Spinner';
+import CreditHistory from '../../../components/Customer/CreditHistory/CreditHistory';
 
 class Customer extends Component {
 
@@ -158,6 +159,7 @@ class Customer extends Component {
                 {modalBody}
                 {mainBody}
             </div>
+            <CreditHistory />
         </Auxillary>
 
         let spinner = this.props.loading ? <Spinner color="grey" /> : tempBody;

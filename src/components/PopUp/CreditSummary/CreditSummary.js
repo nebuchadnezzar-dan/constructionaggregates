@@ -70,11 +70,8 @@ class CreditSummary extends Component {
 
 const mapStateToProps = state => ({
     creditLoading: state.customer.fetchCreditLoading,
-    creditSum: state.customer.creditSummary,
-});
-
-const mapDispatchToProps = dispatch => ({
+    // creditSum: state.customer.creditSummary,
 });
 
 
-export default CreditSummary;
+export default connect(mapStateToProps)(CreditSummary);
