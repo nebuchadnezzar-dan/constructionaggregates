@@ -24,11 +24,15 @@ class Content extends Component {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Water</td>
-                    <td>200</td>
-                    <td>300</td>
-                </tr>
+                {this.props.purchases.map((el, i) => {
+                    return (
+                        <tr key={i}>
+                            <td>{el.supply}</td>
+                            <td>{el.qty}</td>
+                            <td>{el.price}</td>
+                        </tr>
+                    )
+                })}
             </tbody>
         </table>;
 

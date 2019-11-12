@@ -188,11 +188,11 @@ export const fetchCustomerCreditSummaryFail = () => ({
   type: actionTypes.FETCH_CUSTOMER_CREDIT_SUMMARY_FAIL
 });
 
-export const fetchCustomerCreditSummary = (id) => {
+export const fetchCustomerCreditSummary = (id, page) => {
   return async dispatch => {
     try {
       dispatch(fetchCustomerCreditSummaryStart());
-      const data = await axios.get(`/customers/${id}/credit`);
+      const data = await axios.get(`/customers/${id}/credit?page=${page}`);
       dispatch(fetchCustomerCreditSummarySuccess(data.data));
     } catch (e) {
       dispatch(fetchCustomerCreditSummaryFail());

@@ -24,7 +24,8 @@ class Customer extends Component {
         },
         feedback: false,
         confirmation: false,
-        button: ''
+        button: '',
+        shownHistory: ''
     }
 
 
@@ -68,11 +69,20 @@ class Customer extends Component {
         this.props.fetchCustomers(1);
     }
 
+    onClickButtons = (name) => {
+        if (name === 'credits') {
+            this.props.fetchCustomerCreditHistoryDispatch(this.props.data.id, 1);
+        }
+
+        this.setState({ shownHistory: name });
+    }
+
 
     render() {
         let { id, lastName, firstName, contactNo, dateRegistered } = this.props.data;
         const name = `${this.props.data.lastName}, ${this.props.data.firstName}`;
-
+        const spinnerComp = <Spinner color="grey" />;
+        const toBeShown = this.state.shownHistory === 'credits' ? <CreditHistory data={this.props.creditHistory} /> : null;
         let buttonMode = this.state.mode === 'view' ? <Auxillary>
             <Button color="blue" click={this.onChangeMode.bind(null, 'edit')}>Edit</Button>
             <Button color="red" click={this.onConfirm.bind(null, 'delete')}>Delete</Button>
@@ -128,7 +138,7 @@ class Customer extends Component {
 
                 <div>
                     {buttonMode}
-                    <Button color="orange">Credits</Button>
+                    <Button color="orange" click={this.onClickButtons.bind(null, 'credits')}>Credits</Button>
                     <Button color="violet">Purchase History</Button>
                 </div>
             </div>
@@ -159,10 +169,10 @@ class Customer extends Component {
                 {modalBody}
                 {mainBody}
             </div>
-            <CreditHistory />
+            {this.props.creditLoading ? spinnerComp : toBeShown}
         </Auxillary>
 
-        let spinner = this.props.loading ? <Spinner color="grey" /> : tempBody;
+        let spinner = this.props.loading ? spinnerComp : tempBody;
 
         return spinner;
     }
@@ -176,7 +186,9 @@ const maptStateToProps = state => ({
     localPopup: state.modal.localModalCustomerTable,
     globalPopup: state.modal.showGlobalModal,
     deletedModal: state.modal.localModalDeleteSettings,
-    deleted: state.customer.deleted
+    deleted: state.customer.deleted,
+    creditHistory: state.customer.creditSummary,
+    creditLoading: state.customer.fetchCreditLoading
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -185,7 +197,8 @@ const mapDispatchToProps = dispatch => ({
     putCustomerDispatch: (id, customer) => dispatch(actions.putCustomer(id, customer)),
     deleteCustomerDispatch: id => dispatch(actions.deleteCustomer(id)),
     toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode)),
-    fetchCustomers: page => dispatch(actions.fetchCustomers(page))
+    fetchCustomers: page => dispatch(actions.fetchCustomers(page)),
+    fetchCustomerCreditHistoryDispatch: (id, page) => dispatch(actions.fetchCustomerCreditSummary(id, page))
 });
 
 export default connect(maptStateToProps, mapDispatchToProps)(Customer);

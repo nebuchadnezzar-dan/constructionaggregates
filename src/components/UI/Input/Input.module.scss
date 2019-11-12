@@ -76,3 +76,11 @@
     outline-color: $cat-light-blue;
   }
 }
+
+.selectorange{
+  border: 1px solid $orange-light;
+  color: $darkslategrey;
+  &:focus{
+    outline-color: $orange-solid;
+  }
+}

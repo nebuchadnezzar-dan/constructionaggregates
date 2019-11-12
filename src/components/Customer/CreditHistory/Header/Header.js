@@ -6,10 +6,10 @@ const header = (props) => {
 
     return <div className={styles.headerWrapper}>
         <div>
-            <p>Total:</p>
-            <p>Date: </p>
+            <p>Total: {props.total}</p>
+            <p>Date: {props.date}</p>
         </div>
-        <p>Partially Paid:</p>
+        <p>Partially Paid: {props.payment}</p>
     </div>
 
 }

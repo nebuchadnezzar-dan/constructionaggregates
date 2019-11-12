@@ -22,7 +22,7 @@ const input = props => {
     case 'select':
       inputElement = (
         <select
-          className={styles.select}
+          className={[styles.select, styles[`select${props.color}`]].join(' ')}
           onChange={props.change.bind(this, props.ind, props.name)}
           value={props.value}
         >
@@ -38,29 +38,32 @@ const input = props => {
     default:
       inputElement = null;
   }
-
-  return (
-    <div
-      className={[styles.formWrapper, styles[props.formWrapperSupply]].join(
-        ' '
-      )}
-    >
+  if (props.from === 'history') {
+    return inputElement;
+  } else {
+    return (
       <div
-        className={[styles.labelWrapper, styles[props.labelWrapSupply]].join(
+        className={[styles.formWrapper, styles[props.formWrapperSupply]].join(
           ' '
         )}
       >
-        <label className={styles.label}>{props.name}</label>
+        <div
+          className={[styles.labelWrapper, styles[props.labelWrapSupply]].join(
+            ' '
+          )}
+        >
+          <label className={styles.label}>{props.name}</label>
+        </div>
+        <div
+          className={[styles.inputWrapper, styles[props.inputWrapSupply]].join(
+            ' '
+          )}
+        >
+          {inputElement}
+        </div>
       </div>
-      <div
-        className={[styles.inputWrapper, styles[props.inputWrapSupply]].join(
-          ' '
-        )}
-      >
-        {inputElement}
-      </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default input;
