@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import styles from './Content.module.scss';
 
-import Button from '../../../UI/Button/Button';
-
 class Content extends Component {
 
     state = {

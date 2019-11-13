@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 
-import { connect } from 'react-redux';
-
 import styles from './CreditHistory.module.scss';
 
 import Header from './Header/Header';
 import Content from './Content/Content';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
-import Spinner from '../../UI/Spinner/Spinner';
 import Input from '../../UI/Input/Input';
 
 import { formFunction } from '../../../util/inputHelper';
@@ -63,9 +60,5 @@ class CreditHistory extends Component {
     }
 
 }
-
-const mapStateToProps = state => ({
-    creditLoading: state.customer.fetchCreditLoading,
-});
 
 export default CreditHistory;

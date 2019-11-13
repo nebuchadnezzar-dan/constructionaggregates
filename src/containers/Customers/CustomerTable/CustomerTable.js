@@ -24,29 +24,31 @@ const sort = (arr, property, dir) => {
       typeof a[property] === 'string' ? a[property].toLowerCase() : a[property];
     const next =
       typeof b[property] === 'string' ? b[property].toLowerCase() : b[property];
+    let compare;
     if (typeof a[property] === 'string') {
       if (dir === 'up') {
         if (prev < next) {
-          return -1;
+          compare = -1;
         } else if (prev > next) {
-          return 1;
+          compare = 1;
         }
-        return 0;
+        compare = 0;
       } else if (dir === 'down') {
         if (prev < next) {
-          return 1;
+          compare = 1;
         } else if (prev > next) {
-          return -1;
+          compare = -1;
         }
-        return 0;
+        compare = 0;
       }
     } else {
       if (dir === 'up') {
-        return prev - next;
+        compare = prev - next;
       } else if (dir === 'down') {
-        return next - prev;
+        compare = next - prev;
       }
     }
+    return compare;
   });
 };
 

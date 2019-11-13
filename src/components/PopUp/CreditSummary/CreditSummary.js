@@ -8,12 +8,10 @@ import Button from '../../UI/Button/Button';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
 import Spinner from '../../UI/Spinner/Spinner';
 
-import * as actions from '../../../store/actions/index';
 
 class CreditSummary extends Component {
     render() {
         const { props } = this;
-        const a = [].reduce
         const preTotal = props.creditRedux.reduce((pre, cur) => pre + cur.total, 0);
         const preTotalPayment = props.creditRedux.reduce((pre, cur) => cur.payment, 0);
         const mainBody = <Auxillary>
