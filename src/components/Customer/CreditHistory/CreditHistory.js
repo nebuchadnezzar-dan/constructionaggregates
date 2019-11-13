@@ -6,6 +6,7 @@ import Header from './Header/Header';
 import Content from './Content/Content';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
 import Input from '../../UI/Input/Input';
+import Button from '../../UI/Button/Button';
 
 import { formFunction } from '../../../util/inputHelper';
 
@@ -29,7 +30,17 @@ class CreditHistory extends Component {
         mainBody = <Auxillary>
             <hr />
             <div className={styles.mainHead}>
-                <p>Credit History</p>
+                <div className={styles.title}>
+                    <p>Credit History</p>
+                    <div>|</div>
+                    <span><Button cName={
+                        this.props.activeButton === 'paid' ? 'headButtonActive' : 'headButton'
+                    } click={this.props.filterClick.bind(null, 'paid')}>Paid</Button></span>
+                    <div>|</div>
+                    <span><Button cName={
+                        this.props.activeButton === 'credit' ? 'headButtonActive' : 'headButton'
+                    } click={this.props.filterClick.bind(null, 'credit')}>Credit</Button></span>
+                </div>
                 <div className={styles.sort}>
                     <div>Sort by</div>
                     <Input
@@ -49,7 +60,7 @@ class CreditHistory extends Component {
                     <Header total={el.total} date={el.date} payment={el.payment} />
                     <Content purchases={el.purchases} />
                 </div>
-            }) : <div>No Credits</div>}
+            }) : <div>{this.props.data.length === 0 && this.props.activeButton === 'paid' ? 'Customer has not purchased anything yet!' : 'Customer has no Credits!'}</div>}
         </Auxillary>;
         return mainBody;
         //div wrapper for loading and stuff

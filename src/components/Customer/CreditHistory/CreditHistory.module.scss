@@ -10,9 +10,21 @@
     align-items: center;
     
     margin-top: 1rem;
+    
+}
+
+.title {
+    display: flex;
+    align-items: center;
     & p {
         font-size: 2rem;
         font-weight: bold;
+        margin-right: 1rem;
+    }
+    & > div {
+        margin: 0 1rem;
+        font-size: 3rem;
+        font-weight: 300;
     }
 }
 

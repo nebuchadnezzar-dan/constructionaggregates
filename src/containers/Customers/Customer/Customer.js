@@ -25,7 +25,7 @@ class Customer extends Component {
         feedback: false,
         confirmation: false,
         button: '',
-        shownHistory: ''
+        shownHistory: 'hidden'
     }
 
 
@@ -70,10 +70,9 @@ class Customer extends Component {
     }
 
     onClickButtons = (name) => {
-        if (name === 'credits') {
-            this.props.fetchCustomerCreditHistoryDispatch(this.props.data.id, 1);
+        if (name !== 'hidden') {
+            this.props.fetchCustomerCreditHistoryDispatch(this.props.data.id, 1, name);
         }
-
         this.setState({ shownHistory: name });
     }
 
@@ -82,7 +81,11 @@ class Customer extends Component {
         let { id, lastName, firstName, contactNo, dateRegistered } = this.props.data;
         const name = `${this.props.data.lastName}, ${this.props.data.firstName}`;
         const spinnerComp = <Spinner color="grey" />;
-        const toBeShown = this.state.shownHistory === 'credits' ? <CreditHistory data={this.props.creditHistory} /> : null;
+        const toBeShown = this.state.shownHistory === 'hidden' ? null :
+            <CreditHistory
+                data={this.props.creditHistory}
+                filterClick={this.onClickButtons}
+                activeButton={this.state.shownHistory} />;
         let buttonMode = this.state.mode === 'view' ? <Auxillary>
             <Button color="blue" click={this.onChangeMode.bind(null, 'edit')}>Edit</Button>
             <Button color="red" click={this.onConfirm.bind(null, 'delete')}>Delete</Button>
@@ -90,6 +93,15 @@ class Customer extends Component {
                 <Button color="blue" click={this.onChangeMode.bind(null, 'view')}>Cancel</Button>
                 <Button color="green" click={this.onConfirm.bind(null, 'edit')}>Save</Button>
             </Auxillary>;
+        const historyButton = this.state.shownHistory === 'hidden' ?
+            <Button color="orange"
+                click={this.onClickButtons.bind(null, 'paid')}>
+                Show Purchase History
+            </Button> :
+            <Button color="violet"
+                click={this.onClickButtons.bind(null, 'hidden')}>
+                Hide Purchase History
+            </Button>;
 
         if (this.state.mode === 'edit') {
             lastName = <input type="text" placeholder="Last Name" value={this.state.form.lastName} onChange={this.onChangeInput.bind(this, 'lastName')} />;
@@ -138,8 +150,7 @@ class Customer extends Component {
 
                 <div>
                     {buttonMode}
-                    <Button color="orange" click={this.onClickButtons.bind(null, 'credits')}>Credits</Button>
-                    <Button color="violet">Purchase History</Button>
+                    {historyButton}
                 </div>
             </div>
         </div>;
@@ -198,7 +209,7 @@ const mapDispatchToProps = dispatch => ({
     deleteCustomerDispatch: id => dispatch(actions.deleteCustomer(id)),
     toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode)),
     fetchCustomers: page => dispatch(actions.fetchCustomers(page)),
-    fetchCustomerCreditHistoryDispatch: (id, page) => dispatch(actions.fetchCustomerCreditSummary(id, page))
+    fetchCustomerCreditHistoryDispatch: (id, page, filter) => dispatch(actions.fetchCustomerCreditSummary(id, page, filter))
 });
 
 export default connect(maptStateToProps, mapDispatchToProps)(Customer);

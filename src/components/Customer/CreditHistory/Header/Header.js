@@ -9,7 +9,7 @@ const header = (props) => {
             <p>Total: {props.total}</p>
             <p>Date: {props.date}</p>
         </div>
-        <p>Partially Paid: {props.payment}</p>
+        <p>Paid: {props.payment}</p>
     </div>
 
 }
