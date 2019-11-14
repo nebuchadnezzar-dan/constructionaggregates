@@ -12,6 +12,7 @@ import Modal from '../../../components/UI/Modal/Modal';
 import Confirmation from '../../../components/UI/Confirmation/Confirmation';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import CreditHistory from '../../../components/Customer/CreditHistory/CreditHistory';
+import Pagination from '../../../components/UI/Pagination/Pagination';
 
 class Customer extends Component {
 
@@ -25,7 +26,9 @@ class Customer extends Component {
         feedback: false,
         confirmation: false,
         button: '',
-        shownHistory: 'hidden'
+        shownHistory: 'hidden',
+        currentpage: 1,
+        pageIndex: 5
     }
 
 
@@ -76,16 +79,31 @@ class Customer extends Component {
         this.setState({ shownHistory: name });
     }
 
+    onChangePage = (page, pageIndex) => {
+        this.setState({ currentpage: page, pageIndex });
+        this.props.fetchCustomerCreditHistoryDispatch(this.props.data.id, page, this.state.shownHistory);
+    }
+
 
     render() {
         let { id, lastName, firstName, contactNo, dateRegistered } = this.props.data;
         const name = `${this.props.data.lastName}, ${this.props.data.firstName}`;
         const spinnerComp = <Spinner color="grey" />;
         const toBeShown = this.state.shownHistory === 'hidden' ? null :
-            <CreditHistory
-                data={this.props.creditHistory}
-                filterClick={this.onClickButtons}
-                activeButton={this.state.shownHistory} />;
+            <Auxillary>
+                <CreditHistory
+                    data={this.props.creditHistory}
+                    filterClick={this.onClickButtons}
+                    activeButton={this.state.shownHistory} />
+                <Pagination
+                    currentpage={this.props.pages < this.state.currentpage ? 1 : this.state.currentpage}
+                    pages={this.props.pages}
+                    color='orange'
+                    pageIndex={this.state.pageIndex}
+                    clickButton={this.onChangePage}
+                />
+            </Auxillary>
+            ;
         let buttonMode = this.state.mode === 'view' ? <Auxillary>
             <Button color="blue" click={this.onChangeMode.bind(null, 'edit')}>Edit</Button>
             <Button color="red" click={this.onConfirm.bind(null, 'delete')}>Delete</Button>
@@ -199,7 +217,8 @@ const maptStateToProps = state => ({
     deletedModal: state.modal.localModalDeleteSettings,
     deleted: state.customer.deleted,
     creditHistory: state.customer.creditSummary,
-    creditLoading: state.customer.fetchCreditLoading
+    creditLoading: state.customer.fetchCreditLoading,
+    pages: state.customer.historyPages
 });
 
 const mapDispatchToProps = dispatch => ({

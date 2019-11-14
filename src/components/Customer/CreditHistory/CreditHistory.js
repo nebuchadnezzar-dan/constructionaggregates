@@ -31,7 +31,7 @@ class CreditHistory extends Component {
             <hr />
             <div className={styles.mainHead}>
                 <div className={styles.title}>
-                    <p>Credit History</p>
+                    <p>Transaction History</p>
                     <div>|</div>
                     <span><Button cName={
                         this.props.activeButton === 'paid' ? 'headButtonActive' : 'headButton'

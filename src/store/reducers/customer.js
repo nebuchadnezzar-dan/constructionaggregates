@@ -317,7 +317,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         fetchCreditLoading: false,
         fetchCreditError: false,
-        creditSummary: action.payload
+        creditSummary: action.payload.data,
+        historyPages: action.payload.pages
       }
     case actionTypes.FETCH_CUSTOMER_CREDIT_SUMMARY_FAIL:
       return {
