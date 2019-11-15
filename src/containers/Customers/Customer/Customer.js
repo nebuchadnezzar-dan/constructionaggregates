@@ -28,7 +28,8 @@ class Customer extends Component {
         button: '',
         shownHistory: 'hidden',
         currentpage: 1,
-        pageIndex: 5
+        pageIndex: 5,
+        sortValue: 'date'
     }
 
 
@@ -70,19 +71,25 @@ class Customer extends Component {
     onClickBack = () => {
         this.props.toggleViewModeDispatch('table');
         this.props.fetchCustomers(1);
-    }
+    };
 
     onClickButtons = (name) => {
         if (name !== 'hidden') {
-            this.props.fetchCustomerCreditHistoryDispatch(this.props.data.id, 1, name);
+            this.props.fetchCustomerCreditHistoryDispatch(this.props.data.id, 1, name, this.state.sortValue);
         }
         this.setState({ shownHistory: name });
-    }
+    };
 
     onChangePage = (page, pageIndex) => {
         this.setState({ currentpage: page, pageIndex });
-        this.props.fetchCustomerCreditHistoryDispatch(this.props.data.id, page, this.state.shownHistory);
-    }
+        this.props.fetchCustomerCreditHistoryDispatch(this.props.data.id, page, this.state.shownHistory, this.state.sortValue);
+    };
+
+    onChangeValueHandler = async (index, name, event) => {
+        this.setState({ sortValue: event.target.value, currentpage: 1 });
+        this.props.fetchCustomerCreditHistoryDispatch(this.props.data.id, 1, this.state.shownHistory, event.target.value);
+        // this.props.valueChangeDispatch(index, name, event.target.value);
+    };
 
 
     render() {
@@ -94,6 +101,8 @@ class Customer extends Component {
                 <CreditHistory
                     data={this.props.creditHistory}
                     filterClick={this.onClickButtons}
+                    sort={this.state.sortValue}
+                    sortClick={this.onChangeValueHandler}
                     activeButton={this.state.shownHistory} />
                 <Pagination
                     currentpage={this.props.pages < this.state.currentpage ? 1 : this.state.currentpage}
@@ -228,7 +237,7 @@ const mapDispatchToProps = dispatch => ({
     deleteCustomerDispatch: id => dispatch(actions.deleteCustomer(id)),
     toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode)),
     fetchCustomers: page => dispatch(actions.fetchCustomers(page)),
-    fetchCustomerCreditHistoryDispatch: (id, page, filter) => dispatch(actions.fetchCustomerCreditSummary(id, page, filter))
+    fetchCustomerCreditHistoryDispatch: (id, page, filter, sort) => dispatch(actions.fetchCustomerCreditSummary(id, page, filter, sort))
 });
 
 export default connect(maptStateToProps, mapDispatchToProps)(Customer);

@@ -24,7 +24,7 @@ class Customers extends Component {
   state = {
     activeView: 'form',
     currentpage: 1,
-    pageIndex: 5
+    pageIndex: 5,
   };
 
   async componentDidMount() {

@@ -19,10 +19,11 @@ const sort = [
 class CreditHistory extends Component {
 
     state = {
-        sort: formFunction('select', null, null, sort)
+        sort: formFunction('select', null, null, sort),
+        sortValue: 'date'
     }
     onChangeValueHandler = async (index, name, event) => {
-        console.log('changed');
+        this.setState({ sortValue: event.target.value });
         // this.props.valueChangeDispatch(index, name, event.target.value);
     };
     render() {
@@ -47,8 +48,8 @@ class CreditHistory extends Component {
                         name="Sort"
                         elementInputType={this.state.sort.elementType}
                         elementConfig={this.state.sort.elementConfig}
-                        change={this.onChangeValueHandler}
-                        value={'date'}
+                        change={this.props.sortClick}
+                        value={this.props.sort}
                         ind={0}
                         color="orange"
                         from="history"
