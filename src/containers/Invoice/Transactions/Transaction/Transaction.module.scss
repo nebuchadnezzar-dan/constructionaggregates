@@ -1,0 +1,83 @@
+@import '../../../../styles/colors.scss';
+
+.transWrap{
+    background-color: #fff;
+    padding: 2rem 1rem;
+}
+
+.CreditWrapper{
+
+    &  > div:first-child {
+        padding: 4rem 1.5rem;
+        background-color: $blue-light;
+        color:#fff;
+        font-size: 4rem;
+    }
+}
+
+.invoiceHeading{
+    display: flex;
+    justify-content: space-between;
+    padding: 4rem 2rem;
+
+    & > div:last-child {
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: 40%;
+        text-align: right;
+    }
+
+    & > div:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+     & p {
+         text-transform: capitalize;
+     }
+
+     & p:first-of-type{
+         margin-bottom: 1rem;
+         color: $grey;
+     }
+}
+
+.total{
+    font-size: 5rem;
+    color: $blue-light;
+}
+
+.table {
+
+    & table {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+    }
+
+    & th {
+        color: $blue-light;
+        border-top: 4px solid $blue-light;
+        padding: 2rem 1rem;
+    }
+
+    & tbody > tr:not(:last-child) {
+        border-bottom: 1px solid $lightgrey;
+        
+    }
+
+    & td {
+        text-transform: capitalize;
+        padding: 2rem 1rem;
+    }
+}
+
+.subTotal {
+    & td {
+        padding-top: 7rem;
+    }
+    
+    &  td:nth-child(3) {
+        color: $blue-light;
+    }
+}
