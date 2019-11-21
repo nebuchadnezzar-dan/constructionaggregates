@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 
-import * as actions from '../../../../store/actions/index';
 
 import { ReactComponent as Dashboard } from '../../../../assets/svg/stats-dots.svg';
 import { ReactComponent as User } from '../../../../assets/svg/user.svg';
@@ -19,7 +17,8 @@ import styles from './MainNavLink.module.scss';
 
 class MainNavLinks extends Component {
   activeRouteClick = route => {
-    this.props.setActiveRoute(route);
+    console.log(route);
+    // this.props.setActiveRoute(route);
   };
   onDisabledLinkClick = (e) => {
     e.preventDefault();
@@ -80,11 +79,5 @@ class MainNavLinks extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  setActiveRoute: route => dispatch(actions.activeRoute(route))
-});
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(MainNavLinks);
+export default MainNavLinks;

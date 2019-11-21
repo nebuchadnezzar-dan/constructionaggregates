@@ -28,7 +28,9 @@ class Customers extends Component {
   };
 
   async componentDidMount() {
+    const route = this.props.location.pathname.match(/[a-zA-z]+/g);
     this.props.fetchCustomers(1);
+    this.props.activeRouteDispatch(route);
   }
 
 
@@ -100,7 +102,8 @@ const mapStateToProps = state => ({
 
 const maptDispatchToProps = dispatch => ({
   fetchCustomers: page => dispatch(actions.fetchCustomers(page)),
-  toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode))
+  toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode)),
+  activeRouteDispatch: routes => dispatch(actions.activeRoute(routes))
 });
 
 export default connect(mapStateToProps, maptDispatchToProps)(withErrorHandler(Customers, axios));

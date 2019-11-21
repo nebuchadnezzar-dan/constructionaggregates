@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import { NavLink } from 'react-router-dom'
+import * as actions from '../../../store/actions/index';
 
 import styles from './Transactions.module.scss';
 
 import Button from '../../../components/UI/Button/Button';
 
 class Transactions extends Component {
+
+    componentDidMount() {
+        const route = window.location.pathname.match(/[a-zA-z]+/g);
+        this.props.activeRouteDispatch(route);
+    }
 
     render() {
         return (
@@ -63,4 +70,8 @@ class Transactions extends Component {
 
 }
 
-export default Transactions;
+const mapDispatchToProps = dispatch => ({
+    activeRouteDispatch: routes => dispatch(actions.activeRoute(routes))
+});
+
+export default connect(null, mapDispatchToProps)(Transactions);

@@ -28,6 +28,8 @@ class Supply extends Component {
   };
 
   componentDidMount() {
+    const route = this.props.location.pathname.match(/[a-zA-z]+/g);
+    this.props.activeRouteDispatch(route);
     this.props.fetchSupplyDispatch(1);
   }
 
@@ -97,6 +99,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  activeRouteDispatch: routes => dispatch(actions.activeRoute(routes)),
   fetchSupplyDispatch: (page) => dispatch(actions.fetchSupply(page))
 });
 
