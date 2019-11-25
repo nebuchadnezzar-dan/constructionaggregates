@@ -56,7 +56,6 @@ export {
   deleteCustomer,
   searchCustomer,
   fetchCustomerCreditSummary,
-  fetchInvoice,
-  clearInvoiceSearch
 } from './customer';
+export { searchInvoice, clearInvoiceSearch, fetchinvoice } from './invoice';
 export { toggleGlobalModal, toggleLocalPopupSettings } from './modal';

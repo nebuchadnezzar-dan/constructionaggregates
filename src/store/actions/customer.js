@@ -17,9 +17,7 @@ export const toggleCustomerView = (view) => ({
   payload: view
 });
 
-export const clearInvoiceSearch = () => ({
-  type: actionTypes.CLEAR_INVOICE_SEARCH
-});
+
 
 /************************************************************ */
 /************************************************************ */
@@ -224,34 +222,3 @@ export const fetchCustomerCreditSummary = (id, page, filter, sort) => {
   }
 };
 
-/************************************************************ */
-/************************************************************ */
-
-export const fetchInvoiceStart = () => ({
-  type: actionTypes.SEARCH_INVOICE_START
-});
-
-export const fetchInvoiceSuccess = (invoice) => ({
-  type: actionTypes.SEARCH_INVOICE_SUCCESS,
-  payload: invoice
-});
-
-export const fetchInvoiceFail = () => ({
-  type: actionTypes.SEARCH_INVOICE_FAIL
-});
-
-export const fetchInvoice = (id) => {
-  return async dispatch => {
-    try {
-      dispatch(fetchInvoiceStart());
-      const data = await axios.get(`/invoices/${id}`);
-      dispatch(fetchInvoiceSuccess(data.data));
-    } catch (e) {
-      dispatch(fetchInvoiceFail());
-    }
-  }
-}
-
-
-/************************************************************ */
-/************************************************************ */

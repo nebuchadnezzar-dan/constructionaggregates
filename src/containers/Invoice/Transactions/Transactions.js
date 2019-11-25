@@ -20,6 +20,10 @@ class Transactions extends Component {
         this.props.activeRouteDispatch(route);
     }
 
+    componentWillUnmount() {
+        this.props.clearInvoiceDispatch();
+    }
+
     onChangeInput = (e) => {
         this.setState({ input: e.target.value })
     }
@@ -78,14 +82,14 @@ class Transactions extends Component {
 }
 
 const mapStateToProps = state => ({
-    invoiceResult: state.customer.invoicedSearch,
-    loading: state.customer.searchInvoiceLoading,
-    error: state.customer.searchInvoiceError
+    invoiceResult: state.invoice.invoicedSearch,
+    loading: state.invoice.searchInvoiceLoading,
+    error: state.invoice.searchInvoiceError
 });
 
 const mapDispatchToProps = dispatch => ({
     activeRouteDispatch: routes => dispatch(actions.activeRoute(routes)),
-    fetchInvoiceDispatch: id => dispatch(actions.fetchInvoice(id)),
+    fetchInvoiceDispatch: id => dispatch(actions.searchInvoice(id)),
     clearInvoiceDispatch: () => dispatch(actions.clearInvoiceSearch())
 });
 
