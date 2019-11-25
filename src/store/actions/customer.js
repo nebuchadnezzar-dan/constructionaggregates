@@ -17,6 +17,12 @@ export const toggleCustomerView = (view) => ({
   payload: view
 });
 
+export const clearInvoiceSearch = () => ({
+  type: actionTypes.CLEAR_INVOICE_SEARCH
+});
+
+/************************************************************ */
+/************************************************************ */
 export const fetchCustomersStart = () => ({
   type: actionTypes.FETCH_CUSTOMERS_START
 });
@@ -42,7 +48,8 @@ export const fetchCustomers = page => {
   }
 };
 
-
+/************************************************************ */
+/************************************************************ */
 export const fetchCustomerStart = () => ({
   type: actionTypes.FETCH_CUSTOMER_START
 });
@@ -68,7 +75,8 @@ export const fetchCustomer = id => {
   }
 };
 
-
+/************************************************************ */
+/************************************************************ */
 export const postCustomerStart = () => ({
   type: actionTypes.POST_CUSTOMER_START
 });
@@ -98,6 +106,9 @@ export const postCustomer = customer => {
   }
 };
 
+/************************************************************ */
+/************************************************************ */
+
 export const putCustomerStart = () => ({
   type: actionTypes.PUT_CUSTOMER_START
 });
@@ -123,6 +134,9 @@ export const putCustomer = (id, customer) => {
     }
   }
 };
+
+/************************************************************ */
+/************************************************************ */
 
 export const deleteCustomerStart = () => ({
   type: actionTypes.DELETE_CUSTOMER_START
@@ -150,6 +164,9 @@ export const deleteCustomer = id => {
   }
 };
 
+/************************************************************ */
+/************************************************************ */
+
 export const searchCustomerStart = () => ({
   type: actionTypes.SEARCH_CUSTOMER_START
 });
@@ -174,6 +191,9 @@ export const searchCustomer = (page, customer) => {
     }
   }
 };
+
+/************************************************************ */
+/************************************************************ */
 
 export const fetchCustomerCreditSummaryStart = () => ({
   type: actionTypes.FETCH_CUSTOMER_CREDIT_SUMMARY_START
@@ -203,3 +223,35 @@ export const fetchCustomerCreditSummary = (id, page, filter, sort) => {
     }
   }
 };
+
+/************************************************************ */
+/************************************************************ */
+
+export const fetchInvoiceStart = () => ({
+  type: actionTypes.SEARCH_INVOICE_START
+});
+
+export const fetchInvoiceSuccess = (invoice) => ({
+  type: actionTypes.SEARCH_INVOICE_SUCCESS,
+  payload: invoice
+});
+
+export const fetchInvoiceFail = () => ({
+  type: actionTypes.SEARCH_INVOICE_FAIL
+});
+
+export const fetchInvoice = (id) => {
+  return async dispatch => {
+    try {
+      dispatch(fetchInvoiceStart());
+      const data = await axios.get(`/invoices/${id}`);
+      dispatch(fetchInvoiceSuccess(data.data));
+    } catch (e) {
+      dispatch(fetchInvoiceFail());
+    }
+  }
+}
+
+
+/************************************************************ */
+/************************************************************ */

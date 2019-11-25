@@ -3,137 +3,9 @@ import { newDate } from '../../util/dateHelper';
 
 const initialState = {
   viewedCustomer: '',
-  customer: [
-    // {
-    //   lastName: 'Collins',
-    //   firstName: 'Phil',
-    //   contactNo: 9473827382,
-    //   partialPaid: 0,
-    //   dateRegistered: '2019-06-26',
-    //   timesPurchased: 15
-    // },
-    // {
-    //   lastName: 'Banasen',
-    //   firstName: 'Daniel',
-    //   partialPaid: 0,
-    //   contactNo: 9273917382,
-    //   dateRegistered: '2019-06-26',
-    //   timesPurchased: 5
-    // },
-    // {
-    //   lastName: 'Loaf',
-    //   firstName: 'Meat',
-    //   contactNo: 9612374817,
-    //   partialPaid: 0,
-    //   dateRegistered: '2019-06-26',
-    //   timesPurchased: 3
-    // },
-    // {
-    //   lastName: 'Orange',
-    //   firstName: 'Lemons',
-    //   contactNo: 9351728367,
-    //   partialPaid: 0,
-    //   dateRegistered: '2019-06-26',
-    //   timesPurchased: 3
-    // },
-    // {
-    //   lastName: 'Turner',
-    //   firstName: 'Tina',
-    //   contactNo: 9928616273,
-    //   partialPaid: 0,
-    //   dateRegistered: '2019-06-26',
-    //   timesPurchased: 8
-    // },
-    // {
-    //   lastName: 'Higson',
-    //   firstName: 'Charlie',
-    //   contactNo: 9162838492,
-    //   partialPaid: 0,
-    //   dateRegistered: '2017-04-01',
-    //   timesPurchased: 10
-    // }
-  ],
+  customer: [],
   creditSummary: [],
-  credit: [
-    {
-      customer: 'Loaf',
-      truck: {
-        maxLoad: '3',
-        plateNo: 'def',
-        status: 'maintenance',
-        color: '#437cb6',
-        index: 1
-      },
-      items: [
-        {
-          materials: 'gravel',
-          amount: '50',
-          price: '2100',
-          quantity: 1
-        },
-        {
-          materials: 'river Mixed',
-          amount: '60',
-          price: '2100',
-          quantity: 1
-        }
-      ],
-      address: 'Baguio',
-      date: '2019-06-30'
-    },
-    {
-      customer: 'Banasen',
-      truck: {
-        maxLoad: '2',
-        plateNo: 'abc',
-        status: 'maintenance',
-        color: '#47799f',
-        index: 0
-      },
-      items: [
-        {
-          materials: 'cement',
-          amount: '150',
-          price: '150',
-          quantity: '50'
-        },
-        {
-          materials: 'gravel',
-          amount: '50',
-          price: '2100',
-          quantity: 1
-        }
-      ],
-      address: 'Baguio City',
-      date: '2019-06-30'
-    },
-    {
-      customer: 'Loaf',
-      truck: {
-        maxLoad: '3',
-        plateNo: 'def',
-        status: 'maintenance',
-        color: '#437cb6',
-        index: 1
-      },
-      items: [
-        {
-          materials: 'gravel',
-          amount: '50',
-          price: '2100',
-          quantity: 2
-        },
-        {
-          materials: 'river Mixed',
-          amount: '60',
-          price: '2100',
-          quantity: 3
-        }
-      ],
-      address: 'Baguio',
-      date: '2019-06-29'
-    }
-  ],
+  invoicedSearch: [],
   viewMode: 'table',
   deleted: false,
   fetchLoading: false,
@@ -146,6 +18,8 @@ const initialState = {
   searchLoading: false,
   fetchCreditLoading: false,
   fetchCreditError: false,
+  searchInvoiceLoading: false,
+  searchInvoiceError: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -325,6 +199,29 @@ const reducer = (state = initialState, action) => {
         ...state,
         fetchCreditLoading: false,
         fetchCreditError: true
+      }
+    case actionTypes.SEARCH_INVOICE_START:
+      return {
+        ...state,
+        searchInvoiceLoading: true
+      }
+    case actionTypes.SEARCH_INVOICE_SUCCESS:
+      return {
+        ...state,
+        searchInvoiceError: false,
+        searchInvoiceLoading: false,
+        invoicedSearch: action.payload
+      }
+    case actionTypes.SEARCH_INVOICE_FAIL:
+      return {
+        ...state,
+        searchInvoiceError: true,
+        searchInvoiceLoading: false
+      }
+    case actionTypes.CLEAR_INVOICE_SEARCH:
+      return {
+        ...state,
+        invoicedSearch: []
       }
     default:
       return state;

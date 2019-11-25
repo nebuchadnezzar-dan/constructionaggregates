@@ -18,7 +18,7 @@ class HeadNavigation extends Component {
       if (i === 0) {
         return <NavLink key={i} to={`/${el}`} >{routes[el]}</NavLink>
       } else {
-        return <div key={i}>/{routes[el]}</div>
+        return <div key={i}><span style={{ margin: '0 0.5rem', fontSize: '2rem' }}>/</span>{routes[el]}</div>
       }
     })
 

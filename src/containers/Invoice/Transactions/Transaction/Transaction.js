@@ -8,12 +8,15 @@ import styles from './Transaction.module.scss';
 
 import Button from '../../../../components/UI/Button/Button';
 import Modal from '../../../../components/UI/Modal/Modal';
+import Confirmation from '../../../../components/UI/Confirmation/Confirmation';
 
 class Transaction extends Component {
 
 
     state = {
-        pay: false
+        pay: false,
+        confirmation: false,
+        feedback: false
     }
 
     componentDidMount() {
@@ -26,7 +29,21 @@ class Transaction extends Component {
     }
 
     onClickPay = () => {
+        this.setState({ confirmation: true, feedback: false });
         this.props.localPopupDispatchDispatch({ from: 'localModalTransaction', value: true, global: true });
+    }
+
+    onSendPostRequest = () => {
+        console.log('Hey')
+        // this.props.globalPopupDispatch();
+        // this.props.postCustomerDispatch(this.state.form);
+        // this.props.localPopupDispatchDispatch({ from: 'localModalCustomerForm', value: true, global: true });
+        // this.setState({ form: { lastName: '', firstName: '', contactNo: '' }, confirmation: false, feedback: true });
+    }
+
+    onCloseModalHandler = () => {
+        this.props.globalPopupDispatch();
+        this.setState({ confirmation: false, feedback: false });
     }
 
     render() {
@@ -47,7 +64,14 @@ class Transaction extends Component {
         return (
             <div className={styles.transWrap}>
                 <Modal>
-                    Hi Sisters
+                    <Confirmation
+                        confirmation={this.state.confirmation}
+                        error={false}
+                        proceed={this.onSendPostRequest.bind(null)}
+                        feedback={this.state.feedback}
+                        okClose={this.onCloseModalHandler.bind(null)}
+
+                    />
                 </Modal>
                 <div className={styles.CreditWrapper}>
                     <div>
@@ -138,6 +162,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    globalPopupDispatch: () => dispatch(actions.toggleGlobalModal()),
     localPopupDispatchDispatch: local => dispatch(actions.toggleLocalPopupSettings(local)),
     activeRouteDispatch: routes => dispatch(actions.activeRoute(routes))
 });
