@@ -27,6 +27,7 @@ class CreditSummary extends Component {
                 <table className={styles.tableCreditSummaryTable}>
                     <thead className={styles.tableCreditSummary}>
                         <tr>
+                            <th>ID</th>
                             <th>Date</th>
                             <th>Credit</th>
                         </tr>
@@ -36,6 +37,7 @@ class CreditSummary extends Component {
                             .map((credit, i) => {
                                 return (
                                     <tr key={i}>
+                                        <td>{credit.id}</td>
                                         <td>{credit.date}</td>
                                         <td>{credit.total}</td>
                                     </tr>

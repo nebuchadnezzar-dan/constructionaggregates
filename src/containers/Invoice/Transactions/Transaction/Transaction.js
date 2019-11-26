@@ -18,7 +18,8 @@ class Transaction extends Component {
         pay: false,
         confirmation: false,
         feedback: false,
-        loaded: false
+        loaded: false,
+        hidden: true
     }
 
     async componentDidMount() {
@@ -50,13 +51,17 @@ class Transaction extends Component {
         this.setState({ confirmation: false, feedback: false });
     }
 
+    toggleHide = () => {
+        this.setState({ hidden: !this.state.hidden });
+    }
+
     render() {
         // console.log(this.props.invoiceDetails);
-        let paymentShown;
+        let paymentShown, paymentTable;
         const spinner = <Spinner color="grey" />;
         let paymentButton = <Button color="blue" click={this.onClickShow}>Pay</Button>;
 
-        let id, first_name, last_name, date, purchase, total;
+        let id, first_name, last_name, date, purchase, total, paid;
         if (this.props.invoiceDetails.invoice) {
             id = this.props.invoiceDetails.invoice.id;
             first_name = this.props.invoiceDetails.invoice.first_name;
@@ -86,6 +91,38 @@ class Transaction extends Component {
                     <Button color="orange" click={this.onClickPay}>Pay</Button>
                 </div>);
         }
+        if (this.props.invoiceDetails.payments) {
+            if (this.props.invoiceDetails.payments.length === 0) {
+                paymentTable = <div>No payment history found!</div>;
+                paid = 0;
+            } else {
+                paymentTable = (
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Payment</th>
+                                <th>Discount</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.props.invoiceDetails.payments.map((el, i) => {
+                                return (
+                                    <tr key={i}>
+                                        <td>{el.payment}</td>
+                                        <td>{el.discount ? el.discount : 0}</td>
+                                        <td>{el.date}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>);
+
+                paid = this.props.invoiceDetails.payments.reduce((acc, curr) => +curr.payment + acc, 0);
+            }
+
+        }
+
 
         const body = (
             <div className={styles.CreditWrapper}>
@@ -112,7 +149,7 @@ class Transaction extends Component {
                     <div>
                         <div>
                             <p>Invoice Total</p>
-                            <p className={styles.total}>{total}</p>
+                            <p className={styles.total}>{total - paid ? total - paid : 0}</p>
                         </div>
                     </div>
                 </div>
@@ -129,9 +166,31 @@ class Transaction extends Component {
                             </thead>
                             <tbody>
                                 {purchase}
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Subtotal</th>
+                                    <th>{total}</th>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Paid</td>
+                                    <td>{paid}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <div className={styles.paymentSummary}>
+                    <div className={styles.toggleButton}>
+                        <button onClick={this.toggleHide} >
+                            {this.state.hidden ? <span className={styles.hidden}></span> : <span className={styles.notHidden}></span>}
+                            <span>Payment History</span>
+                        </button>
+                    </div>
+                    {this.state.hidden ? null : paymentTable}
                 </div>
 
                 <div>

@@ -72,7 +72,7 @@
     }
     & tbody td,
     & thead th {
-      width: 50%; /* 49% is less than (100% / 5 cols) = 20% */
+      width: 33.333334%; /* 49% is less than (100% / 5 cols) = 20% */
       float: left;
     }
   }

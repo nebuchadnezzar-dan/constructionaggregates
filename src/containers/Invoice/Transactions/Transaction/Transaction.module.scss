@@ -92,3 +92,96 @@
         border: 1px solid $blue-light;
     }   
 }
+
+.paymentSummary{
+    margin: 1.5rem 0;
+    padding: 2rem 0;
+    background-color: #fff;
+    color: $grey;
+    & table{
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+        & thead{
+            // background-color: $darkgrey;
+            & th {
+              padding: .6rem;
+              font-size: 1.6rem;
+              text-transform: uppercase;
+            }
+        }
+        & tbody {
+            & td {
+                font-size: 1.4rem;
+                padding: .5rem;
+            }
+            // background-color: $darkgrey;
+        }
+    }
+    & button {
+        border: none;
+        background-color: transparent;
+        color: #fff;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        &:focus{
+            outline: none;
+        }
+    }
+}
+
+.hidden, .notHidden {
+    border-radius: 50%;
+    font-size: 1.6rem;
+    height: 2rem;
+    width: 2rem;
+    /* padding: .2rem; */
+    border: none;
+    color: $blue-light;
+    background-color: #fff;
+    margin-right: 1rem;
+    display: inline-block;
+    position: relative;
+}
+
+.hidden{
+    &:after {
+        content: '';
+        display: inline-block;
+        width: .5rem;
+        height: .5rem;
+        border-top: 0.2rem solid $blue-light;
+        border-right: 0.2rem solid $blue-light;
+        transform: rotate(45deg);
+        position: absolute;
+        top: 35%;
+        left: 30%;
+      }
+}
+
+.notHidden{
+    &:after {
+        content: '';
+        display: inline-block;
+        width: .5rem;
+        height: .5rem;
+        border-top: 0.2rem solid $blue-light;
+        border-right: 0.2rem solid $blue-light;
+        -moz-transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+        position: absolute;
+        top: 30%;
+        left: 30%;
+      }
+}
+
+.toggleButton{
+    background-color: $blue-light;
+    border-radius: .5rem;
+    /* align-items: center; */
+    align-content: center;
+    padding: .5rem;
+}

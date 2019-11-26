@@ -204,7 +204,7 @@ class CustomerTable extends Component {
 
 const mapStateToProps = state => ({
   customersRedux: state.customer.customer,
-  customerCreditRedux: state.customer.credit,
+  customerCreditRedux: state.customer.creditSummary,
   loading: state.customer.searchLoading,
   pages: state.customer.pages
 });

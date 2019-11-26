@@ -58,7 +58,7 @@ class CreditHistory extends Component {
             </div>
             {this.props.data.length ? this.props.data.map((el, i) => {
                 return <div key={i} className={styles.creditContent}>
-                    <Header total={el.total} date={el.date} payment={el.payment} />
+                    <Header total={el.total} date={el.date} payment={el.payment} id={el.id} />
                     <Content purchases={el.purchases} />
                 </div>
             }) : <div>{this.props.data.length === 0 && this.props.activeButton === 'paid' ? 'Customer has not purchased anything yet!' : 'Customer has no Credits!'}</div>}
