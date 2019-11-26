@@ -4,7 +4,9 @@ const initialState = {
     searchInvoiceLoading: false,
     searchInvoiceError: false,
     invoicedSearch: [],
-    invoiceDetails: {}
+    invoiceDetails: {},
+    postInvLoading: false,
+    postInvError: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -49,6 +51,23 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 searchInvoiceError: true,
                 searchInvoiceLoading: false
+            }
+        case actionTypes.POST_INVOICE_START:
+            return {
+                ...state,
+                postInvLoading: true
+            }
+        case actionTypes.POST_INVOICE_SUCCESS:
+            return {
+                ...state,
+                postInvLoading: false,
+                postInvError: false
+            }
+        case actionTypes.POST_INVOICE_FAIL:
+            return {
+                ...state,
+                postInvError: true,
+                postInvLoading: false
             }
         default:
             return state;

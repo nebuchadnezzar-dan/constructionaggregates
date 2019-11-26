@@ -64,3 +64,30 @@ export const fetchinvoice = id => {
 /************************************************************ */
 /************************************************************ */
 
+export const postInvoiceStart = () => ({
+    type: actionTypes.POST_INVOICE_START
+});
+
+export const postInvoiceSuccess = () => ({
+    type: actionTypes.POST_INVOICE_SUCCESS
+});
+
+export const postInvoiceFail = () => ({
+    type: actionTypes.POST_INVOICE_FAIL
+});
+
+export const postInvoice = (id, body) => {
+    return async dispatch => {
+        try {
+            dispatch(postInvoiceStart());
+            const data = await axios.post(`/pos/invoice/${id}`, body);
+            dispatch(postInvoiceSuccess());
+        } catch (e) {
+            dispatch(postInvoiceFail());
+        }
+    }
+}
+
+/************************************************************ */
+/************************************************************ */
+

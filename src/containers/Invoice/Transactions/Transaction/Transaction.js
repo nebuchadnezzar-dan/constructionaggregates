@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 import * as actions from '../../../../store/actions/index';
 
@@ -15,18 +16,25 @@ class Transaction extends Component {
 
 
     state = {
+        input: '',
         pay: false,
         confirmation: false,
         feedback: false,
         loaded: false,
-        hidden: true
+        hidden: true,
+        id: ''
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         const route = this.props.location.pathname.match(/[a-zA-z]+/g);
         const ids = +this.props.location.pathname.match(/\d+/)[0];
+        this.setState({ id: ids });
         this.props.activeRouteDispatch(route);
-        await this.props.fetchInvoiceDispatch(ids);
+        this.props.fetchInvoiceDispatch(ids);
+    }
+
+    onInputPayment = (e) => {
+        this.setState({ input: e.target.value });
     }
 
     onClickShow = () => {
@@ -38,12 +46,13 @@ class Transaction extends Component {
         this.props.localPopupDispatchDispatch({ from: 'localModalTransaction', value: true, global: true });
     }
 
-    onSendPostRequest = () => {
+    onSendPostRequest = async () => {
         console.log('Hey')
-        // this.props.globalPopupDispatch();
-        // this.props.postCustomerDispatch(this.state.form);
-        // this.props.localPopupDispatchDispatch({ from: 'localModalCustomerForm', value: true, global: true });
-        // this.setState({ form: { lastName: '', firstName: '', contactNo: '' }, confirmation: false, feedback: true });
+        this.props.globalPopupDispatch();
+        await this.props.postInvoiceDispatch(this.state.id, { payment: +this.state.input });
+        this.props.fetchInvoiceDispatch(this.state.id);
+        this.props.localPopupDispatchDispatch({ from: 'localModalTransaction', value: true, global: true });
+        this.setState({ input: '', confirmation: false, feedback: true });
     }
 
     onCloseModalHandler = () => {
@@ -61,7 +70,9 @@ class Transaction extends Component {
         const spinner = <Spinner color="grey" />;
         let paymentButton = <Button color="blue" click={this.onClickShow}>Pay</Button>;
 
-        let id, first_name, last_name, date, purchase, total, paid;
+        const disabled = +this.state.input > 0 ? false : true;
+
+        let id, first_name, last_name, date, purchase, total, paid, discount;
         if (this.props.invoiceDetails.invoice) {
             id = this.props.invoiceDetails.invoice.id;
             first_name = this.props.invoiceDetails.invoice.first_name;
@@ -81,20 +92,23 @@ class Transaction extends Component {
             total = this.props.invoiceDetails.purchase.reduce((acc, curr) => +curr.amount + acc, 0)
         }
 
-
         if (this.state.pay) {
             paymentButton = null;
             paymentShown = (
                 <div className={styles.paymentWrap}>
-                    <input name="payment" placeholder="0" />
+                    <input name="payment" type="number"
+                        placeholder="0"
+                        onChange={this.onInputPayment.bind(this)}
+                        value={this.state.input} />
                     <Button color="red" click={this.onClickShow}>Cancel</Button>
-                    <Button color="orange" click={this.onClickPay}>Pay</Button>
+                    <Button color="green" click={this.onClickPay} disabled={disabled}>Pay</Button>
                 </div>);
         }
         if (this.props.invoiceDetails.payments) {
             if (this.props.invoiceDetails.payments.length === 0) {
                 paymentTable = <div>No payment history found!</div>;
                 paid = 0;
+                discount = 0;
             } else {
                 paymentTable = (
                     <table>
@@ -119,6 +133,10 @@ class Transaction extends Component {
                     </table>);
 
                 paid = this.props.invoiceDetails.payments.reduce((acc, curr) => +curr.payment + acc, 0);
+
+                discount = this.props.invoiceDetails.payments.reduce((acc, curr) => +curr.discount + acc, 0);
+
+                if (total - (paid + discount) === 0) paymentButton = null;
             }
 
         }
@@ -149,7 +167,7 @@ class Transaction extends Component {
                     <div>
                         <div>
                             <p>Invoice Total</p>
-                            <p className={styles.total}>{total - paid ? total - paid : 0}</p>
+                            <p className={styles.total}>{total - (paid + discount) ? total - (paid + discount) : 0}</p>
                         </div>
                     </div>
                 </div>
@@ -169,14 +187,16 @@ class Transaction extends Component {
                                 <tr>
                                     <th></th>
                                     <th></th>
-                                    <th>Subtotal</th>
-                                    <th>{total}</th>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Paid</td>
-                                    <td>{paid}</td>
+                                    <th>
+                                        <div>Subtotal</div>
+                                        <div>Discount</div>
+                                        <div>Paid</div>
+                                    </th>
+                                    <th>
+                                        <div>{total}</div>
+                                        <div>{discount}</div>
+                                        <div>{paid}</div>
+                                    </th>
                                 </tr>
                             </tbody>
                         </table>
@@ -193,10 +213,10 @@ class Transaction extends Component {
                     {this.state.hidden ? null : paymentTable}
                 </div>
 
-                <div>
+                <div className={styles.endButtons}>
                     {paymentButton}
-                    <Button>Print</Button>
-                    <Button>Back</Button>
+                    <Button color="violet">Print</Button>
+                    <Button color="orange"><NavLink to="/pos">Back</NavLink></Button>
                 </div>
 
                 {paymentShown}
@@ -210,7 +230,7 @@ class Transaction extends Component {
                 <Modal>
                     <Confirmation
                         confirmation={this.state.confirmation}
-                        error={false}
+                        error={this.props.postError}
                         proceed={this.onSendPostRequest.bind(null)}
                         feedback={this.state.feedback}
                         okClose={this.onCloseModalHandler.bind(null)}
@@ -227,14 +247,17 @@ class Transaction extends Component {
 const mapStateToProps = state => ({
     invoiceDetails: state.invoice.invoiceDetails,
     error: state.invoice.searchInvoiceError,
-    loading: state.invoice.searchInvoiceLoading
+    loading: state.invoice.searchInvoiceLoading,
+    postError: state.invoice.postInvError,
+    postLoading: state.invoice.postInvLoading
 });
 
 const mapDispatchToProps = dispatch => ({
     globalPopupDispatch: () => dispatch(actions.toggleGlobalModal()),
     localPopupDispatchDispatch: local => dispatch(actions.toggleLocalPopupSettings(local)),
     activeRouteDispatch: routes => dispatch(actions.activeRoute(routes)),
-    fetchInvoiceDispatch: id => dispatch(actions.fetchinvoice(id))
+    fetchInvoiceDispatch: id => dispatch(actions.fetchinvoice(id)),
+    postInvoiceDispatch: (id, body) => dispatch(actions.postInvoice(id, body))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Transaction);

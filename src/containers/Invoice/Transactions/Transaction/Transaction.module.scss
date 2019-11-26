@@ -70,6 +70,28 @@
         text-transform: capitalize;
         padding: 2rem 1rem;
     }
+
+    & tbody th {
+        border-top: 1px solid $lightgrey;
+    }
+
+    & tbody tr th {
+        padding-top: 8rem;
+    } 
+
+    & tbody th:nth-child(3) > div {
+        text-transform: capitalize;
+        color: $blue-light;
+        text-align: end;
+    }
+
+    & tbody th > div {
+        text-transform: capitalize;
+        font-size: 1.7rem;
+        margin: .5rem 0;
+        color: #000;
+        font-weight: 400;
+    }
 }
 
 .subTotal {
@@ -88,7 +110,8 @@
     justify-content: center;
     & input {
         border-radius: 4px;
-        font-size: 3.5rem;
+        font-size: 3rem;
+        padding: 1rem;
         border: 1px solid $blue-light;
     }   
 }
@@ -184,4 +207,17 @@
     /* align-items: center; */
     align-content: center;
     padding: .5rem;
+}
+
+.endButtons {
+    display: flex;
+
+    & button:last-child{
+        margin-left: auto;
+    }
+
+    & a {
+        font-size: 1.6rem;
+        color: #fff;
+    }
 }

@@ -105,6 +105,10 @@ export const FETCH_INVOICE_START = 'FETCH_INVOICE_START';
 export const FETCH_INVOICE_SUCCESS = 'FETCH_INVOICE_SUCCESS';
 export const FETCH_INVOICE_FAIL = 'FETCH_INVOICE_FAIL';
 
+export const POST_INVOICE_START = 'POST_INVOICE_START';
+export const POST_INVOICE_SUCCESS = 'POST_INVOICE_SUCCESS';
+export const POST_INVOICE_FAIL = 'POST_INVOICE_FAIL';
+
 /********************************************************* */
 
 export const ADD_TRUCK = 'ADD_TRUCK';
