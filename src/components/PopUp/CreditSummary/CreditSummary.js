@@ -13,11 +13,11 @@ class CreditSummary extends Component {
     render() {
         const { props } = this;
         const preTotal = props.creditRedux.reduce((pre, cur) => pre + cur.total, 0);
-        const preTotalPayment = props.creditRedux.reduce((pre, cur) => cur.payment, 0);
+        const preTotalPayment = props.creditRedux.reduce((pre, cur) => cur.payment + pre, 0);
         const mainBody = <Auxillary>
             <div className={styles.totalWrapper}>
                 <div>Total:</div>
-                <div>{preTotal}</div>
+                <div>{preTotal - preTotalPayment}</div>
             </div>
             <div className={styles.discountWrapper}>
                 <div>Partially Paid:</div>
@@ -39,7 +39,7 @@ class CreditSummary extends Component {
                                     <tr key={i}>
                                         <td>{credit.id}</td>
                                         <td>{credit.date}</td>
-                                        <td>{credit.total}</td>
+                                        <td>{credit.total - credit.payment}</td>
                                     </tr>
                                 );
                             })}

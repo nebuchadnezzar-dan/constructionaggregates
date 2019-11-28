@@ -80,7 +80,7 @@ export const postInvoice = (id, body) => {
     return async dispatch => {
         try {
             dispatch(postInvoiceStart());
-            const data = await axios.post(`/pos/invoice/${id}`, body);
+            await axios.post(`/pos/invoice/${id}`, body);
             dispatch(postInvoiceSuccess());
         } catch (e) {
             dispatch(postInvoiceFail());

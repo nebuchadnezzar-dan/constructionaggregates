@@ -37,6 +37,7 @@ class PopUp extends Component {
   };
   onEditButtonHandler = async action => {
     // console.log(action);
+    const subtotal = this.props.items.reduce((acc, item) => acc + +item.price * +item.quantity, 0) - +this.props.discount;
     if (action === 'edit') this.props.editQuantityDispatch(this.state.payment);
     if (action === 'discount')
       this.props.addDiscountDispatch(this.state.payment);
@@ -46,7 +47,8 @@ class PopUp extends Component {
         discount: action === 'credit' ? 0 : this.props.discount,
         trucks: this.props.truck.length > 0 ? this.props.truck.map(el => ({ id: el.id })) : [],
         address: this.props.address,
-        payment: action === 'credit' ? 0 : +this.state.payment
+        payment: action === 'credit' ? 0 : +this.state.payment,
+        change: +this.state.payment - subtotal < 0 ? 0 : +this.state.payment - subtotal
       });
       if (this.props.posError) {
         this.props.onPopUpShowDispatch();

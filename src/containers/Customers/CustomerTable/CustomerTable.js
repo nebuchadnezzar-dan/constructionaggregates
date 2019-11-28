@@ -124,35 +124,7 @@ class CustomerTable extends Component {
         </thead>
         <tbody>
           {this.props.customersRedux
-            // .filter(
-            //   customer =>
-            //     customer.lastName
-            //       .toLowerCase()
-            //       .includes(this.state.customerSearchForm.toLowerCase()) ||
-            //     customer.firstName
-            //       .toLowerCase()
-            //       .includes(this.state.customerSearchForm.toLowerCase()) ||
-            //     customer.dateRegistered
-            //       .toLowerCase()
-            //       .includes(this.state.customerSearchForm.toLowerCase())
-            // )
             .map((customer, i) => {
-              const totalCredit =
-                this.props.customerCreditRedux
-                  .filter(
-                    customerCred =>
-                      customerCred.customer === customer.lastName
-                  )
-                  .reduce(
-                    (acc, customerFilter) =>
-                      acc +
-                      customerFilter.items.reduce(
-                        (accItem, item) =>
-                          accItem + +item.price * +item.quantity,
-                        0
-                      ),
-                    0
-                  ) - customer.partialPaid;
               return (
                 <tr
                   key={i}
@@ -160,7 +132,7 @@ class CustomerTable extends Component {
                 >
                   <td>{`${customer.lastName}, ${customer.firstName}`}</td>
                   <td>{customer.contactNo}</td>
-                  <td>{totalCredit}</td>
+                  <td>{customer.credit}</td>
                   <td>{customer.dateRegistered}</td>
                   <td>{customer.timesPurchased}</td>
                   <td>

@@ -183,7 +183,7 @@ class Invoice extends Component {
           POS
         </HeadChild>
       </Head>
-      {this.state.activeView === 'view' ? POSbody : <Transactions />}
+      {this.state.activeView === 'view' ? <Transactions /> : POSbody}
     </Auxillary>;
 
     let mainBodyError = this.props.fetchError || this.props.fetchErrorTruck ? <ErrorBody>{this.props.children}</ErrorBody> : mainBody;
