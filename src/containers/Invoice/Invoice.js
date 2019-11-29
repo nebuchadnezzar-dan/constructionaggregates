@@ -36,6 +36,8 @@ class Invoice extends Component {
     activeView: 'form'
   };
   componentDidMount() {
+    const route = this.props.location.pathname.match(/[a-zA-z]+/g);
+    this.props.activeRouteDispatch(route);
     this.props.fetchPosDispatch();
     this.props.fetchTruckDispatch();
     document.addEventListener('keydown', this.onKeyDownHandler, false);
@@ -223,6 +225,7 @@ const mapDispatchToProps = dispatch => ({
   onRemoveItem: () => dispatch(actions.voidItem()),
   fetchPosDispatch: () => dispatch(actions.fetchPOS()),
   fetchTruckDispatch: () => dispatch(actions.fetchTruck(1)),
+  activeRouteDispatch: routes => dispatch(actions.activeRoute(routes)),
   fetchCreditSummary: id => dispatch(actions.fetchCustomerCreditSummary(id))
 });
 

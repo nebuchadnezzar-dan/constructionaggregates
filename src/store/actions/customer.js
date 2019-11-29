@@ -17,6 +17,11 @@ export const toggleCustomerView = (view) => ({
   payload: view
 });
 
+export const setCustomerSorting = (sort, order) => ({
+  type: actionTypes.SET_CUSTOMER_SORTING,
+  payload: { sort, order }
+});
+
 
 
 /************************************************************ */
@@ -34,11 +39,11 @@ export const fetchCustomersFail = () => ({
   type: actionTypes.FETCH_CUSTOMERS_FAIL
 });
 
-export const fetchCustomers = page => {
+export const fetchCustomers = (page, sort, order) => {
   return async dispatch => {
     try {
       dispatch(fetchCustomersStart());
-      const data = await axios.get(`/customers?page=${page}`);
+      const data = await axios.get(`/customers?page=${page}&sort=${sort}&order=${order}`);
       dispatch(fetchCustomersSuccess(data.data.customer, data.data.pages));
     } catch (e) {
       dispatch(fetchCustomersFail());

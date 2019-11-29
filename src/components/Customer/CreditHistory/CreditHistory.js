@@ -56,6 +56,12 @@ class CreditHistory extends Component {
                     />
                 </div>
             </div>
+
+            <div className={styles.summary}>
+                <span>TOTAL PURCHASED: {this.props.total}</span>
+                <span>TOTAL PAID: {this.props.paid} </span>
+                <span>TOTAL CREDIT: {this.props.total - this.props.paid}</span>
+            </div>
             {this.props.data.length ? this.props.data.map((el, i) => {
                 return <div key={i} className={styles.creditContent}>
                     <Header total={el.total} date={el.date} payment={el.payment} id={el.id} />

@@ -70,7 +70,7 @@ class Customer extends Component {
 
     onClickBack = () => {
         this.props.toggleViewModeDispatch('table');
-        this.props.fetchCustomers(1);
+        this.props.fetchCustomers(1, this.props.sort, this.props.order);
     };
 
     onClickButtons = (name) => {
@@ -100,6 +100,8 @@ class Customer extends Component {
             <Auxillary>
                 <CreditHistory
                     data={this.props.creditHistory}
+                    paid={this.props.data.totalPayment}
+                    total={this.props.data.totalPurchased}
                     filterClick={this.onClickButtons}
                     sort={this.state.sortValue}
                     sortClick={this.onChangeValueHandler}
@@ -227,7 +229,9 @@ const maptStateToProps = state => ({
     deleted: state.customer.deleted,
     creditHistory: state.customer.creditSummary,
     creditLoading: state.customer.fetchCreditLoading,
-    pages: state.customer.historyPages
+    pages: state.customer.historyPages,
+    sort: state.customer.sort,
+    order: state.customer.order
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -236,7 +240,7 @@ const mapDispatchToProps = dispatch => ({
     putCustomerDispatch: (id, customer) => dispatch(actions.putCustomer(id, customer)),
     deleteCustomerDispatch: id => dispatch(actions.deleteCustomer(id)),
     toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode)),
-    fetchCustomers: page => dispatch(actions.fetchCustomers(page)),
+    fetchCustomers: (page, sort, order) => dispatch(actions.fetchCustomers(page, sort, order)),
     fetchCustomerCreditHistoryDispatch: (id, page, filter, sort) => dispatch(actions.fetchCustomerCreditSummary(id, page, filter, sort))
 });
 

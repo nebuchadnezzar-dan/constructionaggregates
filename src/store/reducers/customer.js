@@ -17,6 +17,8 @@ const initialState = {
   searchLoading: false,
   fetchCreditLoading: false,
   fetchCreditError: false,
+  sort: 'lastName',
+  order: 'asc'
 };
 
 const reducer = (state = initialState, action) => {
@@ -49,6 +51,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         viewMode: action.payload
+      }
+    case actionTypes.SET_CUSTOMER_SORTING:
+      return {
+        ...state,
+        sort: action.payload.sort,
+        order: action.payload.order
       }
     case actionTypes.FETCH_CUSTOMERS_START:
       return {

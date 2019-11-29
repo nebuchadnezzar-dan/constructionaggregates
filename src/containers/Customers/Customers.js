@@ -29,19 +29,19 @@ class Customers extends Component {
 
   async componentDidMount() {
     const route = this.props.location.pathname.match(/[a-zA-z]+/g);
-    this.props.fetchCustomers(1);
+    this.props.fetchCustomers(1, 'lastName', 'asc');
     this.props.activeRouteDispatch(route);
   }
 
 
   onChangePage = (page, pageIndex) => {
     this.setState({ currentpage: page, pageIndex });
-    this.props.fetchCustomers(page);
+    this.props.fetchCustomers(page, this.props.sort, this.props.order);
   }
 
   onToggleView = view => {
     if (view === 'form') {
-      this.props.fetchCustomers(1);
+      this.props.fetchCustomers(1, 'lastName', 'asc');
     }
     if (this.props.viewMode === 'editing') {
       this.props.toggleViewModeDispatch('editing');
@@ -97,11 +97,13 @@ const mapStateToProps = state => ({
   loading: state.customer.fetchLoading,
   error: state.customer.fetchError,
   viewMode: state.customer.viewMode,
-  pages: state.customer.pages
+  pages: state.customer.pages,
+  sort: state.customer.sort,
+  order: state.customer.order
 });
 
 const maptDispatchToProps = dispatch => ({
-  fetchCustomers: page => dispatch(actions.fetchCustomers(page)),
+  fetchCustomers: (page, sort, order) => dispatch(actions.fetchCustomers(page, sort, order)),
   toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode)),
   activeRouteDispatch: routes => dispatch(actions.activeRoute(routes))
 });

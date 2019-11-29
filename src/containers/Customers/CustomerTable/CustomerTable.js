@@ -18,40 +18,6 @@ const tableHead = [
   { display: 'no. of times purchased', sort: 'timesPurchased' }
 ];
 
-const sort = (arr, property, dir) => {
-  return arr.sort((a, b) => {
-    const prev =
-      typeof a[property] === 'string' ? a[property].toLowerCase() : a[property];
-    const next =
-      typeof b[property] === 'string' ? b[property].toLowerCase() : b[property];
-    let compare;
-    if (typeof a[property] === 'string') {
-      if (dir === 'up') {
-        if (prev < next) {
-          compare = -1;
-        } else if (prev > next) {
-          compare = 1;
-        }
-        compare = 0;
-      } else if (dir === 'down') {
-        if (prev < next) {
-          compare = 1;
-        } else if (prev > next) {
-          compare = -1;
-        }
-        compare = 0;
-      }
-    } else {
-      if (dir === 'up') {
-        compare = prev - next;
-      } else if (dir === 'down') {
-        compare = next - prev;
-      }
-    }
-    return compare;
-  });
-};
-
 class CustomerTable extends Component {
   state = {
     localCustomers: [],
@@ -73,8 +39,8 @@ class CustomerTable extends Component {
   }
 
   sortClick = (direction, head) => {
-    let customerCopy = [...this.state.localCustomers];
-    this.setState({ localCustomers: sort(customerCopy, head, direction) });
+    this.props.sortDispatch(head, direction === 'down' ? 'desc' : 'asc');
+    this.props.fetchCustomersDispatch(1, head, direction === 'down' ? 'desc' : 'asc');
   };
 
   onViewClick = (index) => {
@@ -184,7 +150,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchCustomer: id => dispatch(actions.fetchCustomer(id)),
   toggleViewModeDispatch: mode => dispatch(actions.toggleCustomerView(mode)),
-  searchCustomerDispatch: (page, data) => dispatch(actions.searchCustomer(page, data))
+  searchCustomerDispatch: (page, data) => dispatch(actions.searchCustomer(page, data)),
+  sortDispatch: (sort, order) => dispatch(actions.setCustomerSorting(sort, order)),
+  fetchCustomersDispatch: (page, sort, order) => dispatch(actions.fetchCustomers(page, sort, order))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomerTable);
