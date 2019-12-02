@@ -71,7 +71,7 @@ class POSCustomer extends Component {
               )}
           </div>
           <p>
-            {this.props.activeCustomer.credit > 0
+            {this.props.activeCustomer.totalPurchased - this.props.activeCustomer.totalPayment > 0
               ? 'Customer with Credit'
               : 'Customer without Credit'}
           </p>
