@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import styles from './CreditSummary.module.scss';
 
@@ -10,6 +11,11 @@ import Spinner from '../../UI/Spinner/Spinner';
 
 
 class CreditSummary extends Component {
+
+    onClickedRow = (id) => {
+        this.props.history.push({ pathname: `/pos/${id}/invoice` });
+    }
+
     render() {
         const { props } = this;
         const preTotal = props.creditRedux.reduce((pre, cur) => pre + cur.total, 0);
@@ -36,7 +42,7 @@ class CreditSummary extends Component {
                         {props.creditRedux
                             .map((credit, i) => {
                                 return (
-                                    <tr key={i}>
+                                    <tr key={i} onClick={this.onClickedRow.bind(null, credit.id)} className={styles.rowClick}>
                                         <td>{credit.id}</td>
                                         <td>{credit.date}</td>
                                         <td>{credit.total - credit.payment}</td>
@@ -74,4 +80,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps)(CreditSummary);
+export default connect(mapStateToProps)(withRouter(CreditSummary));

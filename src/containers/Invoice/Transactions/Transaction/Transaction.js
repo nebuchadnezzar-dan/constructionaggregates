@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import axios from '../../../../axios-orders';
 
 import * as actions from '../../../../store/actions/index';
 
@@ -11,6 +11,9 @@ import Button from '../../../../components/UI/Button/Button';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
 import Modal from '../../../../components/UI/Modal/Modal';
 import Confirmation from '../../../../components/UI/Confirmation/Confirmation';
+import ErrorBody from '../../../../components/UI/ErrorBody/ErrorBody';
+
+import withErrorHandler from '../../../../hoc/withErrorHandler/withErrorHandler';
 
 class Transaction extends Component {
 
@@ -62,6 +65,11 @@ class Transaction extends Component {
 
     toggleHide = () => {
         this.setState({ hidden: !this.state.hidden });
+    }
+
+    onBackClicked = () => {
+        this.props.history.goBack();
+        // console.log(this.props.history);
     }
 
     render() {
@@ -216,7 +224,7 @@ class Transaction extends Component {
                 <div className={styles.endButtons}>
                     {paymentButton}
                     <Button color="violet">Print</Button>
-                    <Button color="orange"><NavLink to="/pos">Back</NavLink></Button>
+                    <Button color="orange" click={this.onBackClicked}>Back</Button>
                 </div>
 
                 {paymentShown}
@@ -224,22 +232,24 @@ class Transaction extends Component {
             </div>
         );
 
+        const mainBody = this.props.postError || this.props.error ?
+            <ErrorBody>{this.props.children}</ErrorBody> :
+            (
+                <div className={styles.transWrap}>
+                    <Modal>
+                        <Confirmation
+                            confirmation={this.state.confirmation}
+                            error={this.props.postError}
+                            proceed={this.onSendPostRequest.bind(null)}
+                            feedback={this.state.feedback}
+                            okClose={this.onCloseModalHandler.bind(null)}
 
-        return (
-            <div className={styles.transWrap}>
-                <Modal>
-                    <Confirmation
-                        confirmation={this.state.confirmation}
-                        error={this.props.postError}
-                        proceed={this.onSendPostRequest.bind(null)}
-                        feedback={this.state.feedback}
-                        okClose={this.onCloseModalHandler.bind(null)}
-
-                    />
-                </Modal>
-                {this.props.loading ? spinner : body}
-            </div>
-        );
+                        />
+                    </Modal>
+                    {body}
+                </div>
+            );
+        return this.props.loading ? spinner : mainBody;
     }
 
 }
@@ -260,4 +270,4 @@ const mapDispatchToProps = dispatch => ({
     postInvoiceDispatch: (id, body) => dispatch(actions.postInvoice(id, body))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Transaction);
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Transaction, axios));

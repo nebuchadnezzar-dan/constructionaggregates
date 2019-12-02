@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import styles from './Header.module.scss';
 
@@ -9,7 +10,11 @@ const header = (props) => {
             <p>{`#${props.id} | Total: ${props.total} `}</p>
             <p>Date: {props.date}</p>
         </div>
-        <p>Paid: {props.payment}</p>
+        <div>
+            <p>Paid: {props.payment}</p>
+            <p><NavLink to={`/pos/${props.id}/invoice`}>&#9656;Go To Transaction</NavLink></p>
+        </div>
+
     </div>
 
 }

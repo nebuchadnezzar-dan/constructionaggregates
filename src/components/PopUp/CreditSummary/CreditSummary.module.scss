@@ -92,3 +92,11 @@
     text-align: right;
     margin-top: 1rem;
   }
+
+  .rowClick{
+    cursor: pointer;
+    transition: all .4s;
+    &:hover{
+      background-color: $orange-light;
+    }
+  }

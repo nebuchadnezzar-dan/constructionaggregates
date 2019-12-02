@@ -67,7 +67,7 @@ class CreditHistory extends Component {
                     <Header total={el.total} date={el.date} payment={el.payment} id={el.id} />
                     <Content purchases={el.purchases} />
                 </div>
-            }) : <div>{this.props.data.length === 0 && this.props.activeButton === 'paid' ? 'Customer has not purchased anything yet!' : 'Customer has no Credits!'}</div>}
+            }) : <div className={styles.alter}>{this.props.data.length === 0 && this.props.activeButton === 'paid' ? 'Customer has not purchased anything yet!' : 'Customer has no Credits!'}</div>}
         </Auxillary>;
         return mainBody;
         //div wrapper for loading and stuff
