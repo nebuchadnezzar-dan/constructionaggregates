@@ -80,7 +80,7 @@ class Transaction extends Component {
 
         const disabled = +this.state.input > 0 ? false : true;
 
-        let id, first_name, last_name, date, purchase, total, paid, discount;
+        let id, first_name, last_name, date, purchase, total, paid, discount, change;
         if (this.props.invoiceDetails.invoice) {
             id = this.props.invoiceDetails.invoice.id;
             first_name = this.props.invoiceDetails.invoice.first_name;
@@ -143,8 +143,8 @@ class Transaction extends Component {
                 paid = this.props.invoiceDetails.payments.reduce((acc, curr) => +curr.payment + acc, 0);
 
                 discount = this.props.invoiceDetails.payments.reduce((acc, curr) => +curr.discount + acc, 0);
-
-                if (total - (paid + discount) === 0) paymentButton = null;
+                change = this.props.invoiceDetails.payments.reduce((acc, curr) => +curr.change + acc, 0);
+                if (total - (paid + discount - change) === 0) paymentButton = null;
             }
 
         }
@@ -175,7 +175,7 @@ class Transaction extends Component {
                     <div>
                         <div>
                             <p>Invoice Total</p>
-                            <p className={styles.total}>{total - (paid + discount) ? total - (paid + discount) : 0}</p>
+                            <p className={styles.total}>{total - (paid + discount) ? total - (paid + discount - change) : 0}</p>
                         </div>
                     </div>
                 </div>

@@ -211,10 +211,10 @@ export const fetchCustomerCreditSummaryFail = () => ({
   type: actionTypes.FETCH_CUSTOMER_CREDIT_SUMMARY_FAIL
 });
 
-export const fetchCustomerCreditSummary = (id, page, filter, sort) => {
+export const fetchCustomerCreditSummary = (id, page, filter, sort, summary) => {
   return async dispatch => {
     try {
-      let request = `/customers/${id}/history`;
+      let request = `/customers/${id}/history?summary=${summary}`;
       if (page) {
         request = `/customers/${id}/history?page=${page}&filter=${filter}&sort=${sort}`;
       }

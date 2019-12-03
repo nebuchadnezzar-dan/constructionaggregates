@@ -64,7 +64,12 @@ class Invoice extends Component {
   };
   buttonSummaryHandler = name => {
     // console.log(toggle);
-    this.props.fetchCreditSummary(+this.props.activeCustomer.id);
+    if (name === 'credit Summary') {
+      this.props.fetchCreditSummary(+this.props.activeCustomer.id, null, null, null, 'credit');
+    } else {
+      this.props.fetchCreditSummary(+this.props.activeCustomer.id, null, null, null, 'purchase');
+    }
+
     this.props.onToggleFinalPopupDispatch({ name, toggle: true });
   };
 
@@ -113,13 +118,16 @@ class Invoice extends Component {
               disabled={disabled}
               cName="posButton"
               color="orange"
-              click={this.buttonSummaryHandler.bind(null, 'creditSummary')}
+              click={this.buttonSummaryHandler.bind(null, 'credit Summary')}
             >
               Credit
             </Button>
           </div>
           <div className={styles.button}>
-            <Button disabled={disabled} cName="posButton" color="blue">
+            <Button disabled={disabled}
+              cName="posButton"
+              color="blue"
+              click={this.buttonSummaryHandler.bind(null, 'purchase History')}>
               Cash
             </Button>
           </div>
@@ -226,7 +234,7 @@ const mapDispatchToProps = dispatch => ({
   fetchPosDispatch: () => dispatch(actions.fetchPOS()),
   fetchTruckDispatch: () => dispatch(actions.fetchTruck(1)),
   activeRouteDispatch: routes => dispatch(actions.activeRoute(routes)),
-  fetchCreditSummary: id => dispatch(actions.fetchCustomerCreditSummary(id))
+  fetchCreditSummary: (id, page, filter, sort, summary) => dispatch(actions.fetchCustomerCreditSummary(id, page, filter, sort, summary))
 });
 
 export default connect(

@@ -21,6 +21,12 @@
       background-color: $orange-light;
       color: #fff;
     }
+
+    &PurchaseSummary {
+      background-color: $blue-light;
+      color: #fff;
+    }
+
   }
 
   .discountWrapper {
@@ -96,7 +102,10 @@
   .rowClick{
     cursor: pointer;
     transition: all .4s;
-    &:hover{
+    &Credit:hover{
       background-color: $orange-light;
+    }
+    &Purchase:hover{
+      background-color: $blue-light;
     }
   }

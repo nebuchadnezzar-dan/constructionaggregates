@@ -156,29 +156,29 @@ class PopUp extends Component {
           </div>
         );
         break;
-      case 'creditSummary':
-        const totalCredit =
-          props.creditRedux
-            .filter(
-              customerCred => customerCred.customer === props.customer.lastName
-            )
-            .reduce(
-              (acc, customerFilter) =>
-                acc +
-                customerFilter.items.reduce(
-                  (accItem, item) => accItem + +item.price * +item.quantity,
-                  0
-                ),
-              0
-            ) - props.customer.partialPaid;
+      case 'credit Summary':
         action = (
           <div className={styles.actionWrapper}>
             <div className={[styles.header, styles.headerOrange].join(' ')}>
               {props.action}
             </div>
-            <CreditSummary totalCredit={totalCredit}
+            <CreditSummary
               customer={props.customer}
               creditRedux={props.creditRedux}
+              summary="credit"
+            />
+          </div>
+        );
+        break;
+      case 'purchase History':
+        action = (
+          <div className={styles.actionWrapper}>
+            <div className={[styles.header, styles.headerBlue].join(' ')}>
+              {props.action}
+            </div>
+            <CreditSummary
+              customer={props.customer}
+              purchase={props.creditRedux}
             />
           </div>
         );
@@ -246,6 +246,7 @@ const mapStateToProps = state => ({
   discount: state.invoicePOS.discount,
   customer: state.invoicePOS.customer,
   creditRedux: state.customer.creditSummary,
+  purchaseSummary: state.customer.purchaseSummary,
   activeRow: state.invoicePOS.activeRow,
   posError: state.invoicePOS.posError,
   errorMessage: state.invoicePOS.errorMessage,

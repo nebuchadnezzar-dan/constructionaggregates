@@ -5,6 +5,7 @@ const initialState = {
   viewedCustomer: '',
   customer: [],
   creditSummary: [],
+  purchaseSummary: [],
   viewMode: 'table',
   deleted: false,
   fetchLoading: false,
