@@ -80,7 +80,7 @@ class Transaction extends Component {
 
         const disabled = +this.state.input > 0 ? false : true;
 
-        let id, first_name, last_name, date, purchase, total, paid, discount, change;
+        let id, first_name, last_name, date, purchase, total, paid, discount, change; let trucks = 'N/A';
         if (this.props.invoiceDetails.invoice) {
             id = this.props.invoiceDetails.invoice.id;
             first_name = this.props.invoiceDetails.invoice.first_name;
@@ -149,6 +149,10 @@ class Transaction extends Component {
 
         }
 
+        if (this.props.invoiceDetails.trucks) {
+            trucks = this.props.invoiceDetails.trucks.map(el => el.plateNo).join(', ');
+        }
+
 
         const body = (
             <div className={styles.CreditWrapper}>
@@ -159,8 +163,14 @@ class Transaction extends Component {
                 </div>
                 <div className={styles.invoiceHeading}>
                     <div>
-                        <p>Billed To</p>
-                        <p>{`${first_name} ${last_name}`}</p>
+                        <div>
+                            <p>Billed To</p>
+                            <p>{`${first_name} ${last_name}`}</p>
+                        </div>
+                        <div>
+                            <p>Trucks</p>
+                            <p>{trucks}</p>
+                        </div>
                     </div>
                     <div>
                         <div>

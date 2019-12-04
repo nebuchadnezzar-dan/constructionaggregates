@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   // get back here
-  activeRoute: ['Dashboard']
+  activeRoute: ['Dashboard'],
+  sideBar: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,6 +13,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         activeRoute: action.payload
       };
+    case actionTypes.TOGGLE_SIDE_BAR:
+      return {
+        ...state,
+        sideBar: action.payload
+      }
     default:
       return state;
   }

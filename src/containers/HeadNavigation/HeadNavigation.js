@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import * as actions from '../../store/actions/index';
 import { routes } from '../../util/routeHelper';
 
 import styles from './HeadNavigation.module.scss';
@@ -12,6 +14,9 @@ import { ReactComponent as Profile } from '../../assets/svg/user.svg';
 
 class HeadNavigation extends Component {
 
+  onSideClick = () => {
+    this.props.toggleSideBarDispatch();
+  }
   render() {
 
     const mappedLink = this.props.children.map((el, i) => {
@@ -26,6 +31,7 @@ class HeadNavigation extends Component {
       <header className={styles.header}>
         <div className={styles.headNavWrapper}>
           <div className={styles.headNav}>
+            <div className={styles.hamBurger} onClick={this.onSideClick} ><div className={styles.ham} /></div>
             {mappedLink}
           </div>
           <div className={styles.svgWrapper}>
@@ -52,4 +58,8 @@ class HeadNavigation extends Component {
 }
 
 
-export default HeadNavigation;
+const mapDispatchToProps = dispatch => ({
+  toggleSideBarDispatch: () => dispatch(actions.toggleSideBar(true))
+});
+
+export default connect(null, mapDispatchToProps)(HeadNavigation);

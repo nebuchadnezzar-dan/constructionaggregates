@@ -27,7 +27,7 @@
         text-align: right;
     }
 
-    & > div:nth-child(2) {
+    & > div:nth-child(2), & > div:first-child {
         display: flex;
         flex-direction: column;
         justify-content: space-between;

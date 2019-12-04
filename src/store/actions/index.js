@@ -24,7 +24,7 @@ export {
   deleteSupply,
   searchSupply
 } from './supplySettings';
-export { activeRoute } from './route';
+export { activeRoute, toggleSideBar } from './route';
 export {
   addItemsToSales,
   togglePopup,
