@@ -11,7 +11,8 @@ const button = props => {
         styles['button' + props.cName],
         styles['button' + props.active],
         styles['color' + props.color],
-        styles['hover' + props.hover]
+        styles['hover' + props.hover],
+        styles['register' + props.register]
       ].join(' ')}
       onClick={props.click}
     >

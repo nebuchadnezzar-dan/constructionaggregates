@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import { Route } from 'react-router-dom';
 
@@ -9,10 +9,19 @@ import Customers from './containers/Customers/Customers';
 import Truck from './containers/settings/TruckBuilder/TruckBuilder';
 import Supply from './containers/settings/Supply/Supply';
 import Transaction from './containers/Invoice/Transactions/Transaction/Transaction';
+import Auth from './containers/Auth/Auth';
 
-const app = () => {
-  return (
-    <Auxillary>
+class App extends Component {
+  state = {
+    signin: true
+  }
+
+  onSwitch = () => {
+    this.setState({ signin: !this.state.signin });
+  }
+
+  render() {
+    const display = (
       <Layout>
         <Route path="/" exact render={() => <div>Dashboard</div>} />
         {/* <Route path="/settings" component={Settings} /> */}
@@ -26,8 +35,16 @@ const app = () => {
         <Route path="/support" render={() => <div>Support</div>} />
         {/* <Settings /> */}
       </Layout>
-    </Auxillary>
-  );
+    );
+    return (
+      <Auxillary>
+        {this.state.signin ? <Route path="/auth" component={Auth} /> : display}
+
+        <button onClick={this.onSwitch}>Switch</button>
+      </Auxillary>
+    );
+  }
+
 };
 
-export default app;
+export default App;

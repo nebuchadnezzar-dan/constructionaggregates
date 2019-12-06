@@ -185,3 +185,23 @@
 }
 
 
+.register {
+  &regular{
+    background-color: transparent;
+    border: 1px solid #fff;
+    border-radius: 500px;
+    padding: 1rem 4rem;
+  }
+
+  &icons {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    border: 1px solid $lightgrey;
+    background-color: transparent;
+    color: #000;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+}

@@ -1,0 +1,96 @@
+@import './../../../../styles/colors.scss';
+
+.out{
+    position: relative;
+}
+.circle{
+    content: "";
+    display: inline-block;
+    width: 30rem;
+    height: 30rem;
+    border-radius: 50%;
+    background-color: $cat-light-green;
+    position: fixed;
+    z-index: -1000;
+    top: 450px;
+    left: -100px;
+}
+
+.triangle{
+    content: "";
+    display: inline-block;
+    width: 50rem;
+    height: 40rem;
+    background-color: $cat-dark-blue;
+    -webkit-clip-path: polygon(100% 18%, 0 75%, 100% 87%);
+    clip-path: polygon(100% 18%, 0 75%, 100% 87%);
+    position: fixed;
+    z-index: -1000;
+    top: -86px;
+    right: -5px;
+
+}
+
+.innerBody{
+    display: flex;
+    background-color: #fff;
+    border-radius: 10px;
+    width: 86%;
+    margin-left: 7%;
+    margin-top: 5%;
+    overflow: hidden;
+}
+
+.logo{
+    margin-bottom: 6rem;
+}
+
+.login{
+    flex: 0 0 35%;
+    background-color: $cat-yellow;
+    color: #fff;
+}
+
+.loginCenter{
+    text-align: center;
+    padding: 5rem 0;
+
+    & > div:first-child{
+        font-size: 4rem;
+        font-weight: 700;
+        margin: 1rem 0;
+        text-transform: capitalize;
+    }
+
+    & > div:nth-child(2){
+        text-transform: capitalize;
+        padding: 1.5rem 0;
+        font-size: 1.4rem;
+        margin-bottom: 3rem;
+    }
+}
+
+.register {
+    flex: 1;
+    & > div:first-child {
+        text-align: center;
+        padding: 5rem 10rem;
+    }
+}
+
+.buttonWrap {
+    margin: 1.5rem 0;
+    & button {
+        margin: 0 1rem;
+    }
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+
+    & > input {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+}
