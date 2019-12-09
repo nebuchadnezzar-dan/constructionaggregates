@@ -20,6 +20,23 @@
   }
 }
 
+@mixin inputItcon {
+  display: inline-block;
+  font-size: 3rem;
+  line-height: 1;
+  position: absolute;
+  top: 0.3rem;
+  left: 0.3rem;
+}
+
+@mixin inputWithIcon {
+  padding: 1.4rem 1rem;
+  border-radius: 5px;
+  text-indent: 2.5rem;
+  width: 100%;
+}
+
+
 @mixin clearfix {
   &:after {
     content: '';

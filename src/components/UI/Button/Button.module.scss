@@ -203,5 +203,11 @@
     font-size: 2rem;
     font-weight: bold;
   }
+
+  &reg{
+    border-radius: 500px;
+    padding: 1rem 4rem;
+    background-color: $cat-yellow;
+  }
   
 }

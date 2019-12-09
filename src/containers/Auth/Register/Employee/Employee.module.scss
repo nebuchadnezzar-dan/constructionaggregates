@@ -1,4 +1,5 @@
 @import './../../../../styles/colors.scss';
+@import './../../../../styles/utility.scss';
 
 .out{
     position: relative;
@@ -32,13 +33,13 @@
 }
 
 .innerBody{
-    display: flex;
     background-color: #fff;
     border-radius: 10px;
     width: 86%;
     margin-left: 7%;
     margin-top: 5%;
     overflow: hidden;
+    position: relative;
 }
 
 .logo{
@@ -46,9 +47,20 @@
 }
 
 .login{
-    flex: 0 0 35%;
+    float: left;
+}
+
+.login, .regis{
+    width: 35%;
+    height: 57.5rem;
     background-color: $cat-yellow;
     color: #fff;
+}
+
+.regis {
+    // animation: logintoreg 1s;
+    animation-fill-mode: forwards;
+    z-index: 1000;
 }
 
 .loginCenter{
@@ -71,11 +83,29 @@
 }
 
 .register {
-    flex: 1;
+    width: 65%;
+    height: 57.5rem;
+    float: right;
+}
+
+.register, .logs {
     & > div:first-child {
         text-align: center;
         padding: 5rem 10rem;
     }
+}
+
+.logs{
+    animation: regtologin 1s;
+    animation-fill-mode: forwards;
+}
+
+.regTitle{
+    font-size: 4rem;
+        font-weight: 700;
+        margin: 1rem 0;
+        text-transform: capitalize;
+        color: $cat-yellow; 
 }
 
 .buttonWrap {
@@ -85,12 +115,61 @@
     }
 }
 
+.field{
+    position: relative;
+    text-align: center;
+    width: 100%;
+
+    & svg{
+        fill: $grey;
+    }
+}
+
 .form{
     display: flex;
     flex-direction: column;
 
-    & > input {
-        padding: 1rem;
+    & input {
+        @include inputWithIcon;
+        border: 1px solid transparent;
         margin-bottom: 1rem;
+        background-color: $cat-yellow-light;
+
+        &:focus {
+            outline-color: $cat-dark-blue;
+        }
+    }
+
+    & span {
+        @include inputItcon;
+    }
+
+    & button{
+        text-transform: uppercase;
+        padding: 1.3rem 5rem;
+        margin-top: 1rem;
+    }
+}
+
+@keyframes logintoreg {
+
+    0%{
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(59.1rem);
+        float: left;
+    }
+
+} 
+
+@keyframes regtologin{
+    0%{
+        transform: translateX(0);
+    }
+    100%{
+        transform: translateX(-32.3rem);
+        float: right;
     }
 }
