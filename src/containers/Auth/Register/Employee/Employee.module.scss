@@ -36,31 +36,119 @@
     background-color: #fff;
     border-radius: 10px;
     width: 86%;
+    height: 100%;
     margin-left: 7%;
     margin-top: 5%;
     overflow: hidden;
     position: relative;
+    max-width: 100%;
+    min-height: 57.5rem;
 }
 
 .logo{
     margin-bottom: 6rem;
 }
 
-.login{
-    float: left;
-}
 
-.login, .regis{
+.welcomeContainer{
+    position: absolute;
     width: 35%;
-    height: 57.5rem;
-    background-color: $cat-yellow;
+    height: 100%;
     color: #fff;
+    top: 0;
+    overflow: hidden;
+    // transition: transform 0.6s ease-in-out;
+    z-index: 100;
 }
 
-.regis {
-    // animation: logintoreg 1s;
+.welcome{
+    height: 100%;
+    width: 286%;
+    // left:-186%;
+    background-color: $cat-yellow;
+    position: relative;
+    // transform: translateX(-65%);
+	transition: transform 0.6s ease-in-out;
+    
+    &Panel{
+        position: absolute;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 4rem;
+        height: 100%;
+        width: 35%;
+        text-align: center;
+        // background-color: $cat-yellow;
+        transform: translateX(0);
+	    transition: transform 0.6s ease-in-out;
+    }
+
+    &Left{
+        // left: 0;
+        // opacity: 0;
+        transform: translateX(0);
+    }
+
+    &Right {
+        right: 0;
+        transform: translateX(20%);
+        // 186
+    }
+}
+
+.formContainer {
+    background-color: #fff;
+    width: 65%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 35%;
+    text-align: center;
+    padding: 2rem 4rem;
+    transition: all 0.6s ease-in-out;
+    // z-index: 100;
+}
+
+.SignUpContainer{
+    z-index: 2;   
+}
+
+.SignInContainer{
+    z-index: 1;
+    opacity: 0;
+}
+
+
+.innerBody.leftPanelActive .SignUpContainer {
+    transform: translateX(-54%);
+}
+
+.innerBody.leftPanelActive .welcomeContainer{
+    // transform: translateX(186%);
+    animation: hide .6s linear;
     animation-fill-mode: forwards;
-    z-index: 1000;
+
+    & .welcomeRight{
+        transform: translateX(0);
+    }
+
+    & .welcomeLeft{
+        transform: translateX(-20%);
+    }
+}
+
+.innerBody.leftPanelActive .SignInContainer{
+    transform: translateX(-54%);
+    z-index: 5;
+    opacity: 1;
+    animation: show .6s;
+}
+
+.innerBody.leftPanelActive .welcome{
+    transform: translateX(-65%);
 }
 
 .loginCenter{
@@ -82,12 +170,6 @@
     }
 }
 
-.register {
-    width: 65%;
-    height: 57.5rem;
-    float: right;
-}
-
 .register, .logs {
     & > div:first-child {
         text-align: center;
@@ -95,9 +177,32 @@
     }
 }
 
-.logs{
-    animation: regtologin 1s;
-    animation-fill-mode: forwards;
+
+
+@keyframes show {
+
+    0%, 69.99% {
+		opacity: 0;
+		z-index: 1;
+	}
+	
+	70%, 100% {
+		opacity: 1;
+		z-index: 5;
+	}
+
+} 
+
+@keyframes hide{
+    0%{
+        transform: translateX(0) scaleX(1);
+    }
+    50%{
+        transform: translateX(93%) scaleX(1.4);
+    }
+    100%{
+        transform: translateX(186%) scaleX(1);
+    }
 }
 
 .regTitle{
@@ -151,25 +256,3 @@
     }
 }
 
-@keyframes logintoreg {
-
-    0%{
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(59.1rem);
-        float: left;
-    }
-
-} 
-
-@keyframes regtologin{
-    0%{
-        transform: translateX(0);
-    }
-    100%{
-        transform: translateX(-32.3rem);
-        float: right;
-    }
-}
