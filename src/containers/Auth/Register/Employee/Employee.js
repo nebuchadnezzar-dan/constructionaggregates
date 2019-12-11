@@ -13,11 +13,13 @@ import Button from '../../../../components/UI/Button/Button';
 class Employee extends Component {
 
     state = {
-        default: true
+        default: true,
+        returnCtr: 0
     }
 
     changeView = () => {
-        this.setState({ default: !this.state.default });
+        const value = this.state.default ? 0 : 1;
+        this.setState({ default: !this.state.default, returnCtr: value });
     }
 
     submitHandler = (event) => {
@@ -31,8 +33,18 @@ class Employee extends Component {
             <div className={styles.out}>
                 <div className={styles.circle} />
                 <div className={styles.triangle} />
-                <div className={[styles.innerBody, this.state.default ? null : styles.leftPanelActive].join(' ')}>
+                <div className={[styles.innerBody, this.state.default ? null : styles.leftPanelActive, this.state.returnCtr > 0 ? styles.leftPanelReturned : null].join(' ')}>
+                    <div className={styles.innerCircle} />
+                    <div className={styles.innerTriangle} />
                     <div className={styles.welcomeContainer}>
+                        <div>
+                            <div className={[styles.floater, styles.floaterdiamond].join(' ')} />
+                            <div className={[styles.floater, styles.floaterdiamond2].join(' ')} />
+
+                            <div className={[styles.floater, styles.floatertriangle2].join(' ')} />
+                            <div className={[styles.floater, styles.floaterrectangle1].join(' ')} />
+                            <div className={[styles.floater, styles.floatercircle].join(' ')} />
+                        </div>
                         <div className={styles.welcome}>
                             <div className={[styles.welcomePanel, styles.welcomeLeft].join(' ')}>
                                 <div className={styles.logo}>Logo</div>
@@ -53,12 +65,13 @@ class Employee extends Component {
                         </div>
                     </div>
                     <div className={[styles.formContainer, styles.SignUpContainer].join(' ')}>
-                        <div className={styles.regTitle}>Create An Account</div>
+                        <div className={styles.regTitle}>Create Account</div>
                         <div className={styles.buttonWrap}>
                             <Button register="icons">&#120307;</Button>
                             <Button register="icons">G+</Button>
                             <Button register="icons">in</Button>
                         </div>
+                        <div className={styles.midText}>or use your email for registration</div>
                         <div className={styles.registerField}>
                             <form className={styles.form}
                                 onSubmit={this.submitHandler}>
@@ -95,6 +108,7 @@ class Employee extends Component {
                             <Button register="icons">G+</Button>
                             <Button register="icons">in</Button>
                         </div>
+                        <div className={styles.midText}>or use your email account</div>
                         <div className={styles.registerField}>
                             <form className={styles.form}
                                 onSubmit={this.submitHandler}>
@@ -106,6 +120,7 @@ class Employee extends Component {
                                     <span><Lock /></span>
                                     <input type="password" placeholder="Password" />
                                 </div>
+                                <div><Button register="simple">Forgot Your Password?</Button></div>
                                 <div className={styles.submit}>
                                     <Button register="reg">Sign In</Button>
                                 </div>

@@ -10,11 +10,24 @@
     width: 30rem;
     height: 30rem;
     border-radius: 50%;
-    background-color: $cat-light-green;
+    background-color: #00918e;
     position: fixed;
     z-index: -1000;
     top: 450px;
     left: -100px;
+}
+
+.innerCircle{
+    display: inline-block;
+    width: 30rem;
+    height: 30rem;
+    border-radius: 50%;
+    background-color: #fff;
+    position: absolute;
+    top: 66.5%;
+    left: -16.5%;
+    z-index: 500;
+    opacity: .2;
 }
 
 .triangle{
@@ -22,14 +35,81 @@
     display: inline-block;
     width: 50rem;
     height: 40rem;
-    background-color: $cat-dark-blue;
-    -webkit-clip-path: polygon(100% 18%, 0 75%, 100% 87%);
-    clip-path: polygon(100% 18%, 0 75%, 100% 87%);
+    background-color: #6d351a;
+    -webkit-clip-path: polygon(100% 0, 0 57%, 100% 100%);
+    clip-path: polygon(100% 0, 0 57%, 100% 100%);
     position: fixed;
     z-index: -1000;
-    top: -86px;
-    right: -5px;
+    top: -133px;
+    right: -250px;
 
+}
+
+.innerTriangle{
+    display: inline-block;
+    width: 50rem;
+    height: 40rem;
+    background-color: #fff;
+    -webkit-clip-path: polygon(100% 0, 0 57%, 100% 100%);
+    clip-path: polygon(100% 0, 0 57%, 100% 100%);
+    position: absolute;
+    z-index: 500;
+    top: -187px;
+    right: -326px;
+    opacity: .2;
+}
+
+.floater {
+    display: inline-block;
+    background-color: #fff;
+    z-index: 500;
+    position: absolute;
+    opacity: .2;
+    transition: transform .6s ease-in;
+
+    &diamond{
+        width: 4rem;
+        height: 4rem;
+        -webkit-clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        top: 5rem;
+        left: 24rem;
+    }
+
+    &diamond2{
+        width: 2.5rem;
+        height: 2.5rem;
+        -webkit-clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        top: 28rem;
+        left: 93rem;
+    }
+
+    &triangle2{
+        width: 9rem;
+        height: 9rem;
+        -webkit-clip-path: polygon(14% 0, 0% 100%, 100% 46%);
+        clip-path: polygon(14% 0, 0% 100%, 100% 46%);
+        top: 83%;
+        left: 221%;
+    }
+
+    &rectangle1{
+        width: 3rem;
+        height: 5rem;
+        -webkit-clip-path: polygon(0 22%, 41% 0, 100% 77%, 56% 100%);
+        clip-path: polygon(0 22%, 41% 0, 100% 77%, 56% 100%);
+        top: 48rem;
+        left: 25rem;
+    }
+    &circle{
+        width: 4rem;
+        height: 4rem;
+        -webkit-clip-path: circle(50% at 50% 50%);
+        clip-path: circle(50% at 50% 50%);
+        top: 44rem;
+        left: 64rem;
+    }
 }
 
 .innerBody{
@@ -49,6 +129,11 @@
     margin-bottom: 6rem;
 }
 
+.midText{
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: $grey;
+}
 
 .welcomeContainer{
     position: absolute;
@@ -65,7 +150,13 @@
     height: 100%;
     width: 286%;
     // left:-186%;
-    background-color: $cat-yellow;
+    // background-color: $cat-yellow;
+    background: $cat-yellow;
+	background: -webkit-linear-gradient(to right, #ff7700, $cat-yellow);
+	background: linear-gradient(to right, #ff7700, $cat-yellow);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 0 0;
     position: relative;
     // transform: translateX(-65%);
 	transition: transform 0.6s ease-in-out;
@@ -108,7 +199,8 @@
     left: 35%;
     text-align: center;
     padding: 2rem 4rem;
-    transition: all 0.6s ease-in-out;
+    transition: all 0.6s ease-in 0.3s;
+    transition-property: transform;
     // z-index: 100;
 }
 
@@ -122,33 +214,63 @@
 }
 
 
-.innerBody.leftPanelActive .SignUpContainer {
-    transform: translateX(-54%);
-}
-
-.innerBody.leftPanelActive .welcomeContainer{
-    // transform: translateX(186%);
-    animation: hide .6s linear;
-    animation-fill-mode: forwards;
-
-    & .welcomeRight{
-        transform: translateX(0);
+.innerBody.leftPanelActive {
+    & .SignUpContainer {
+        transform: translateX(-54%);
     }
 
-    & .welcomeLeft{
-        transform: translateX(-20%);
+    & .welcomeContainer{
+        transform: translateX(186%);
+        animation: hide .6s linear;
+    
+        & .welcomeRight{
+            transform: translateX(0);
+        }
+    
+        & .welcomeLeft{
+            transform: translateX(-20%);
+        }
     }
+
+    & .SignInContainer{
+        transform: translateX(-54%);
+        z-index: 5;
+        opacity: 1;
+        animation: show .6s;
+    }
+
+    & .welcome{
+        transform: translateX(-65%);
+    }
+
+    & .floater{
+        &diamond{
+            transform: translateX(-800%);
+        }
+        &diamond2{
+            transform: translateX(-64rem);
+        }
+        &triangle2{
+            transform: translateX(-60rem);
+        }
+        &rectangle1{
+            transform: translateX(-58rem)
+        }
+        &circle{
+            transform: translateX(-60rem);
+        }
+    }
+
 }
 
-.innerBody.leftPanelActive .SignInContainer{
-    transform: translateX(-54%);
-    z-index: 5;
-    opacity: 1;
-    animation: show .6s;
-}
+.innerBody.leftPanelReturned{
+    & .welcomeContainer {
+        animation: goback 0.6s linear;
+    }
 
-.innerBody.leftPanelActive .welcome{
-    transform: translateX(-65%);
+    & .SignInContainer {
+        animation: backForm .7s;
+    }
 }
 
 .loginCenter{
@@ -193,6 +315,19 @@
 
 } 
 
+@keyframes backForm {
+    0%, 69.99% {
+        // transform: translateX(-54%);
+        opacity: 1;
+        z-index: 6;
+    }
+    70%, 100% {
+        // transform: translateX(0);
+        opacity: 0;
+        z-index: 2;
+    }
+}
+
 @keyframes hide{
     0%{
         transform: translateX(0) scaleX(1);
@@ -202,6 +337,18 @@
     }
     100%{
         transform: translateX(186%) scaleX(1);
+    }
+}
+
+@keyframes goback{
+    0%{
+        transform: translateX(186%) scaleX(1);
+    }
+    50%{
+        transform: translateX(93%) scaleX(1.4);
+    }
+    100%{
+        transform: translateX(0) scaleX(1);
     }
 }
 
@@ -250,9 +397,13 @@
     }
 
     & button{
+        margin-top: 2rem;
+    }
+
+    & button:nth-child(2){
         text-transform: uppercase;
         padding: 1.3rem 5rem;
-        margin-top: 1rem;
     }
 }
+
 
