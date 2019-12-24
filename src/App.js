@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
+
+import { connect } from 'react-redux'
 
 import Auxillary from './hoc/Auxillary/Auxillary';
 import Layout from './hoc/Layout/Layout';
@@ -13,7 +15,17 @@ import Auth from './containers/Auth/Auth';
 
 class App extends Component {
   state = {
-    signin: true
+    isAuthenticated: false
+  }
+
+  componentDidMount() {
+    const token = window.sessionStorage.getItem('token')
+
+    if (token) {
+      this.props.history.push({ pathname: '/dashboard' })
+    } else {
+      this.props.history.push({ pathname: '/' })
+    }
   }
 
   onSwitch = () => {
@@ -23,7 +35,7 @@ class App extends Component {
   render() {
     const display = (
       <Layout>
-        <Route path="/" exact render={() => <div>Dashboard</div>} />
+        <Route path="/dashboard" render={() => <div>Dashboard</div>} />
         {/* <Route path="/settings" component={Settings} /> */}
         <Route path="/settings/truck" component={Truck} />
         <Route path="/settings/supply" component={Supply} />
@@ -38,13 +50,19 @@ class App extends Component {
     );
     return (
       <Auxillary>
-        {this.state.signin ? <Route path="/auth" component={Auth} /> : display}
+        {this.props.isAuthenticated ? display : <Route path="/" exact component={Auth} />}
 
-        <button onClick={this.onSwitch}>Switch</button>
+        {/* <button onClick={this.onSwitch}>Switch</button> */}
       </Auxillary>
     );
   }
 
 };
 
-export default App;
+const mapStateToProps = state => ({
+  loading: state.auth.loading,
+  error: state.auth.error,
+  isAuthenticated: state.auth.authenticated
+})
+
+export default connect(mapStateToProps)(withRouter(App));

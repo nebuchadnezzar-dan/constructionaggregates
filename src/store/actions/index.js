@@ -60,3 +60,5 @@ export {
 } from './customer';
 export { searchInvoice, clearInvoiceSearch, fetchinvoice, postInvoice } from './invoice';
 export { toggleGlobalModal, toggleLocalPopupSettings } from './modal';
+
+export { login } from './auth'

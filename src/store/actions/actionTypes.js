@@ -111,6 +111,14 @@ export const POST_INVOICE_FAIL = 'POST_INVOICE_FAIL';
 
 /********************************************************* */
 
+/***********************AUTHENTICATION REQ*****************/
+
+export const LOGIN_START = 'LOGIN_START'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_FAIL = 'LOGIN_FAIL'
+
+/********************************************************** */
+
 export const ADD_TRUCK = 'ADD_TRUCK';
 export const REMOVE_TRUCK = 'REMOVE_TRUCK';
 export const VALUE_CHANGE_TRUCK = 'VALUE_CHANGE_TRUCK';

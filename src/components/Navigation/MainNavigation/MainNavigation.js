@@ -10,7 +10,7 @@ const mainNavigation = () => {
       <div style={{ padding: '3.6rem' }}>LOGO</div>
       <div>
         <Unordered classname="ulNavigation">
-          <NavLinks name="dashboard" link="/" exact>
+          <NavLinks name="dashboard" link="/dashboard">
             Dashboard
           </NavLinks>
 

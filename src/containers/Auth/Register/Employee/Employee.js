@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 
 import styles from './Employee.module.scss';
 
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import * as actions from '../../../../store/actions/index'
+
 import { ReactComponent as User } from '../../../../assets/svg/user.svg';
 import { ReactComponent as Email } from '../../../../assets/svg/envelop.svg';
 import { ReactComponent as User1 } from '../../../../assets/svg/user-tie.svg';
@@ -9,12 +13,17 @@ import { ReactComponent as Contact } from '../../../../assets/svg/phone.svg';
 import { ReactComponent as Lock } from '../../../../assets/svg/lock.svg';
 
 import Button from '../../../../components/UI/Button/Button';
+import Spinner from '../../../../components/UI/Spinner/Spinner'
 
 class Employee extends Component {
 
     state = {
         default: true,
-        returnCtr: 0
+        returnCtr: 0,
+        signIn: {
+            email: '',
+            password: ''
+        }
     }
 
     changeView = () => {
@@ -22,14 +31,20 @@ class Employee extends Component {
         this.setState({ default: !this.state.default, returnCtr: value });
     }
 
-    submitHandler = (event) => {
+    editField = (from, e) => {
+        this.setState({ [from.type]: { ...this.state[from.type], [from.from]: e.target.value } })
+    }
+
+    submitHandler = async (event) => {
         event.preventDefault();
-        console.log(event);
+        await this.props.login({ email: this.state.signIn.email, password: this.state.signIn.password })
+        this.props.history.push({ pathname: '/dashboard' })
+        // console.log(event);
         // this.props.onAuth( this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup );
     }
 
     render() {
-        return (
+        const body = (
             <div className={styles.out}>
                 <div className={styles.circle} />
                 <div className={styles.triangle} />
@@ -114,11 +129,14 @@ class Employee extends Component {
                                 onSubmit={this.submitHandler}>
                                 <div className={styles.field}>
                                     <span><Email /></span>
-                                    <input type="email" placeholder="Email" />
+                                    <input type="email" placeholder="Email"
+                                        value={this.state.signIn.email}
+                                        onChange={this.editField.bind(this, { type: 'signIn', from: 'email' })} />
                                 </div>
                                 <div className={styles.field}>
                                     <span><Lock /></span>
-                                    <input type="password" placeholder="Password" />
+                                    <input type="password" placeholder="Password" value={this.state.signIn.password}
+                                        onChange={this.editField.bind(this, { type: 'signIn', from: 'password' })} />
                                 </div>
                                 <div><Button register="simple">Forgot Your Password?</Button></div>
                                 <div className={styles.submit}>
@@ -130,8 +148,18 @@ class Employee extends Component {
                 </div>
             </div>
         )
+        return this.props.loading ? <Spinner color="grey" /> : body
     }
 
 }
 
-export default Employee;
+const mapStateToProps = state => ({
+    loading: state.auth.loading,
+    error: state.auth.error
+})
+
+const mapDispatchToProps = dispatch => ({
+    login: login => dispatch(actions.login(login))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Employee));
