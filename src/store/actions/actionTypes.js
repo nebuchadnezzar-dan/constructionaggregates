@@ -117,6 +117,10 @@ export const LOGIN_START = 'LOGIN_START'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAIL = 'LOGIN_FAIL'
 
+export const LOGOUT_START = 'LOGOUT_START'
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
+export const LOGOUT_FAIL = 'LOGOUT_FAIL'
+
 /********************************************************** */
 
 export const ADD_TRUCK = 'ADD_TRUCK';
@@ -137,6 +141,7 @@ export const EDIT_SUPPLY_SETTINGS = 'EDIT_SUPPLY_SETTINGS';
 export const DELETE_SUPPLY_SETTINGS = 'DELETE_SUPPLY_SETTINGS';
 
 export const ACTIVE_ROUTE = 'ACTIVE_ROUTE';
+export const TRACK_ROUTE = 'TRACK_ROUTE'
 
 export const ADD_ITEMS_TO_SALES = 'ADD_ITEMS_TO_SALES';
 export const TOGGLE_POP_UP = 'SHOW_POP_UP';

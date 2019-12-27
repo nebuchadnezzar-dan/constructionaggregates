@@ -14,6 +14,12 @@ const reducer = (state = initialState, action) => {
             return { ...state, loading: false, authenticated: true }
         case actionTypes.LOGIN_FAIL:
             return { ...state, loading: false, error: true }
+        case actionTypes.LOGOUT_START:
+            return { ...state, loading: true }
+        case actionTypes.LOGOUT_SUCCESS:
+            return { ...state, loading: false, authenticated: false }
+        case actionTypes.LOGOUT_FAIL:
+            return { ...state, loading: false, error: true }
         default: return state
     }
 }

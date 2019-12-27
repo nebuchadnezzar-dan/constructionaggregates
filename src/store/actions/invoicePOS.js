@@ -87,7 +87,11 @@ export const fetchPOS = () => {
   return async dispatch => {
     try {
       dispatch(fetchPOSStart());
-      const data = await axios.get('/pos');
+      const data = await axios.get('/pos', {
+        headers: {
+          Authorization: sessionStorage.getItem('token')
+        }
+      });
       dispatch(fetchPOSSuccess(data.data.count));
     } catch (e) {
       dispatch(fetchPOSFail());

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import * as actions from '../../store/actions/index';
@@ -14,9 +14,26 @@ import { ReactComponent as Profile } from '../../assets/svg/user.svg';
 
 class HeadNavigation extends Component {
 
+  state = {
+    profileClicked: false
+  }
+
   onSideClick = () => {
     this.props.toggleSideBarDispatch();
   }
+
+  onNavButtonsClicked = (from) => {
+    if (from === 'profile') this.setState({ profileClicked: !this.state.profileClicked })
+  }
+
+  subHeadClicked = async (from) => {
+    if (from === 'logout') {
+      await this.props.logoutDispatch()
+      this.props.history.push({ pathname: '/' })
+      console.log(from)
+    }
+  }
+
   render() {
 
     const mappedLink = this.props.children.map((el, i) => {
@@ -46,10 +63,19 @@ class HeadNavigation extends Component {
               </Button>
             </div>
             <div>
-              <Button cName="nav">
-                <Profile />
+              <Button cName="nav" click={this.onNavButtonsClicked.bind(null, 'profile')}>
+                <Profile className={this.state.profileClicked ? styles.svgActive : null} />
               </Button>
             </div>
+          </div>
+        </div>
+        <div className={[styles.subhead, this.state.profileClicked ? null : styles.notClicked].join(' ')}>
+          <div className={styles.subheadContainer}>
+            <ul>
+              <li> <div>Profile</div></li>
+              <li className={styles.separator} />
+              <li> <div onClick={this.subHeadClicked.bind(null, 'logout')}>Logout</div></li>
+            </ul>
           </div>
         </div>
       </header>
@@ -59,7 +85,8 @@ class HeadNavigation extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
-  toggleSideBarDispatch: () => dispatch(actions.toggleSideBar(true))
+  toggleSideBarDispatch: () => dispatch(actions.toggleSideBar(true)),
+  logoutDispatch: () => dispatch(actions.logout())
 });
 
-export default connect(null, mapDispatchToProps)(HeadNavigation);
+export default connect(null, mapDispatchToProps)(withRouter(HeadNavigation));

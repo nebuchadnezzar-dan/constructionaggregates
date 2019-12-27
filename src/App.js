@@ -14,23 +14,25 @@ import Transaction from './containers/Invoice/Transactions/Transaction/Transacti
 import Auth from './containers/Auth/Auth';
 
 class App extends Component {
-  state = {
-    isAuthenticated: false
+  constructor() {
+    super()
+    this.state = {
+      isAuthenticated: false
+    }
+    this.token = window.sessionStorage.getItem('token')
   }
 
-  componentDidMount() {
-    const token = window.sessionStorage.getItem('token')
 
-    if (token) {
-      this.props.history.push({ pathname: '/dashboard' })
+  componentDidMount() {
+    console.log(this.props.activeRoute)
+    if (this.token) {
+      this.props.history.push({ pathname: sessionStorage.getItem('route') })
     } else {
       this.props.history.push({ pathname: '/' })
     }
   }
 
-  onSwitch = () => {
-    this.setState({ signin: !this.state.signin });
-  }
+
 
   render() {
     const display = (
@@ -50,7 +52,7 @@ class App extends Component {
     );
     return (
       <Auxillary>
-        {this.props.isAuthenticated ? display : <Route path="/" exact component={Auth} />}
+        {this.token || this.props.isAuthenticated ? display : <Route path="/" exact component={Auth} />}
 
         {/* <button onClick={this.onSwitch}>Switch</button> */}
       </Auxillary>

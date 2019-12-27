@@ -3,6 +3,7 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   // get back here
   activeRoute: ['Dashboard'],
+  trackRoute: '',
   sideBar: false
 };
 
@@ -17,6 +18,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         sideBar: action.payload
+      }
+    case actionTypes.TRACK_ROUTE:
+      return {
+        ...state,
+        trackRoute: action.payload
       }
     default:
       return state;

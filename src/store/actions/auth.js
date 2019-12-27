@@ -26,3 +26,32 @@ export const login = (loginData) => {
         }
     }
 }
+
+export const logoutStart = () => ({
+    type: actionTypes.LOGOUT_START
+})
+
+export const logoutSuccess = () => ({
+    type: actionTypes.LOGOUT_SUCCESS
+})
+
+export const logoutFail = () => ({
+    type: actionTypes.LOGOUT_FAIL
+})
+
+export const logout = () => {
+    return async dispatch => {
+        try {
+            dispatch(logoutStart())
+            const logoutData = await axios.post('/auth/logout', {}, {
+                headers: {
+                    Authorization: sessionStorage.getItem('token')
+                }
+            })
+            dispatch(logoutSuccess())
+            sessionStorage.clear()
+        } catch (e) {
+            dispatch(logoutFail())
+        }
+    }
+}

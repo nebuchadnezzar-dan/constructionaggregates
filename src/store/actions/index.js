@@ -24,7 +24,7 @@ export {
   deleteSupply,
   searchSupply
 } from './supplySettings';
-export { activeRoute, toggleSideBar } from './route';
+export { activeRoute, toggleSideBar, trackRoute } from './route';
 export {
   addItemsToSales,
   togglePopup,
@@ -61,4 +61,4 @@ export {
 export { searchInvoice, clearInvoiceSearch, fetchinvoice, postInvoice } from './invoice';
 export { toggleGlobalModal, toggleLocalPopupSettings } from './modal';
 
-export { login } from './auth'
+export { login, logout } from './auth'

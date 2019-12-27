@@ -51,7 +51,11 @@ export const fetchTruck = (page) => {
   return async dispatch => {
     try {
       dispatch(fetchTruckStart());
-      const data = await axios.get(`/settings/truck?page=${page}`);
+      const data = await axios.get(`/settings/truck?page=${page}`, {
+        headers: {
+          Authorization: sessionStorage.getItem('token')
+        }
+      });
       dispatch(fetchTruckSucces(data.data.truck, data.data.pages));
     } catch (e) {
       dispatch(fetchTruckFail());

@@ -37,6 +37,7 @@ class Invoice extends Component {
   };
   componentDidMount() {
     const route = this.props.location.pathname.match(/[a-zA-z]+/g);
+    this.props.trackRouteDispatch(this.props.location.pathname)
     this.props.activeRouteDispatch(route);
     this.props.fetchPosDispatch();
     this.props.fetchTruckDispatch();
@@ -221,7 +222,7 @@ const mapStateToProps = state => ({
   fetchLoading: state.invoicePOS.fetchLoading,
   fetchError: state.invoicePOS.fetchError,
   fetchLoadingTruck: state.truckSettings.loading,
-  fetchErrorTruck: state.truckSettings.loading
+  fetchErrorTruck: state.truckSettings.error
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -234,7 +235,8 @@ const mapDispatchToProps = dispatch => ({
   fetchPosDispatch: () => dispatch(actions.fetchPOS()),
   fetchTruckDispatch: () => dispatch(actions.fetchTruck(1)),
   activeRouteDispatch: routes => dispatch(actions.activeRoute(routes)),
-  fetchCreditSummary: (id, page, filter, sort, summary) => dispatch(actions.fetchCustomerCreditSummary(id, page, filter, sort, summary))
+  fetchCreditSummary: (id, page, filter, sort, summary) => dispatch(actions.fetchCustomerCreditSummary(id, page, filter, sort, summary)),
+  trackRouteDispatch: route => dispatch(actions.trackRoute(route))
 });
 
 export default connect(
