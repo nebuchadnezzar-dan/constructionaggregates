@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes'
+import { getHeader } from '../../util/headers'
 
 import axios from '../../axios-orders'
 
@@ -31,7 +32,7 @@ export const logoutStart = () => ({
     type: actionTypes.LOGOUT_START
 })
 
-export const logoutSuccess = () => ({
+export const logoutSuccess = (data) => ({
     type: actionTypes.LOGOUT_SUCCESS
 })
 
@@ -43,12 +44,8 @@ export const logout = () => {
     return async dispatch => {
         try {
             dispatch(logoutStart())
-            const logoutData = await axios.post('/auth/logout', {}, {
-                headers: {
-                    Authorization: sessionStorage.getItem('token')
-                }
-            })
-            dispatch(logoutSuccess())
+            const logoutData = await axios.post('/auth/logout', {}, getHeader())
+            dispatch(logoutSuccess(logoutData))
             sessionStorage.clear()
         } catch (e) {
             dispatch(logoutFail())

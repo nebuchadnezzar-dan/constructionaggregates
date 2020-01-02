@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import { getHeader } from '../../util/headers'
 import axios from '../../axios-orders';
 
 export const clearInvoiceSearch = () => ({
@@ -25,7 +26,7 @@ export const searchInvoice = (id) => {
     return async dispatch => {
         try {
             dispatch(searchInvoiceStart());
-            const data = await axios.get(`/invoices/${id}`);
+            const data = await axios.get(`/invoices/${id}`, getHeader());
             dispatch(searchInvoiceSuccess(data.data));
         } catch (e) {
             dispatch(searchInvoiceFail());
@@ -53,7 +54,7 @@ export const fetchinvoice = id => {
     return async dispatch => {
         try {
             dispatch(fetchInvoiceStart());
-            const data = await axios.get(`/pos/invoice/${id}`);
+            const data = await axios.get(`/pos/invoice/${id}`, getHeader());
             dispatch(fetchInvoiceSuccess(data.data));
         } catch (e) {
             dispatch(fetchInvoiceFail());
@@ -80,7 +81,7 @@ export const postInvoice = (id, body) => {
     return async dispatch => {
         try {
             dispatch(postInvoiceStart());
-            await axios.post(`/pos/invoice/${id}`, body);
+            await axios.post(`/pos/invoice/${id}`, body, getHeader());
             dispatch(postInvoiceSuccess());
         } catch (e) {
             dispatch(postInvoiceFail());

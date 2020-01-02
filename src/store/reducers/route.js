@@ -19,11 +19,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         sideBar: action.payload
       }
-    case actionTypes.TRACK_ROUTE:
-      return {
-        ...state,
-        trackRoute: action.payload
-      }
     default:
       return state;
   }

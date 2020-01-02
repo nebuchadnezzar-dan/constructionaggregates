@@ -30,7 +30,6 @@ class HeadNavigation extends Component {
     if (from === 'logout') {
       await this.props.logoutDispatch()
       this.props.history.push({ pathname: '/' })
-      console.log(from)
     }
   }
 

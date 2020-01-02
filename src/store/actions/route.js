@@ -10,10 +10,3 @@ export const toggleSideBar = (val) => ({
   payload: val
 });
 
-export const trackRoute = (route) => {
-  sessionStorage.setItem('route', route)
-  return {
-    type: actionTypes.TRACK_ROUTE,
-    payload: route
-  }
-}

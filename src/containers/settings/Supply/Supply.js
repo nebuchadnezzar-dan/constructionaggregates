@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import axios from '../../../axios-orders';
 
+import { storeRoute } from '../../../util/storeRoute'
+
 import Head from '../../../components/UI/Head/Head';
 import HeadChild from '../../../components/UI/HeadChild/HeadChild';
 import Table from '../../../components/UI/Table/Table';
@@ -28,6 +30,7 @@ class Supply extends Component {
   };
 
   componentDidMount() {
+    storeRoute(this.props.location.pathname)
     const route = this.props.location.pathname.match(/[a-zA-z]+/g);
     this.props.activeRouteDispatch(route);
     this.props.fetchSupplyDispatch(1);

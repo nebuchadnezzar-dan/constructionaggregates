@@ -24,12 +24,13 @@ class App extends Component {
 
 
   componentDidMount() {
-    console.log(this.props.activeRoute)
     if (this.token) {
+      this.setState({ isAuthenticated: true })
       this.props.history.push({ pathname: sessionStorage.getItem('route') })
     } else {
       this.props.history.push({ pathname: '/' })
     }
+    console.log(this.state.isAuthenticated)
   }
 
 
@@ -52,7 +53,7 @@ class App extends Component {
     );
     return (
       <Auxillary>
-        {this.token || this.props.isAuthenticated ? display : <Route path="/" exact component={Auth} />}
+        {this.token || this.props.isAuthenticated || this.state.isAuthenticated ? display : <Route path="/" exact component={Auth} />}
 
         {/* <button onClick={this.onSwitch}>Switch</button> */}
       </Auxillary>

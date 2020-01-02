@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import { getHeader } from '../../util/headers'
 
 import axios from '../../axios-orders';
 
@@ -43,7 +44,7 @@ export const fetchCustomers = (page, sort, order) => {
   return async dispatch => {
     try {
       dispatch(fetchCustomersStart());
-      const data = await axios.get(`/customers?page=${page}&sort=${sort}&order=${order}`);
+      const data = await axios.get(`/customers?page=${page}&sort=${sort}&order=${order}`, getHeader());
       dispatch(fetchCustomersSuccess(data.data.customer, data.data.pages));
     } catch (e) {
       dispatch(fetchCustomersFail());
@@ -70,7 +71,7 @@ export const fetchCustomer = id => {
   return async dispatch => {
     try {
       dispatch(fetchCustomerStart());
-      const data = await axios.get(`/customers/${id}`);
+      const data = await axios.get(`/customers/${id}`, getHeader());
       dispatch(fetchCustomerSuccess(data.data));
     } catch (e) {
       dispatch(fetchCustomerFail());
@@ -97,7 +98,7 @@ export const postCustomer = customer => {
   return async dispatch => {
     try {
       dispatch(postCustomerStart());
-      const data = await axios.post('/customers', customer);
+      const data = await axios.post('/customers', customer, getHeader());
       if (data.data.error) {
         dispatch(postCustomerFail());
       } else {
@@ -130,7 +131,7 @@ export const putCustomer = (id, customer) => {
   return async dispatch => {
     try {
       dispatch(putCustomerStart());
-      const data = await axios.put(`/customers/${id}`, customer);
+      const data = await axios.put(`/customers/${id}`, customer, getHeader());
       dispatch(putCustomerSuccess(data.data));
     } catch (error) {
       dispatch(putCustomerFail());
@@ -158,7 +159,7 @@ export const deleteCustomer = id => {
   return async dispatch => {
     try {
       dispatch(deleteCustomerStart());
-      const data = await axios.delete(`/customers/${id}`);
+      const data = await axios.delete(`/customers/${id}`, getHeader());
       dispatch(deleteCustomerSuccess(data.data));
     } catch (e) {
       dispatch(deleteCustomerFail());
@@ -187,7 +188,7 @@ export const searchCustomer = (page, customer) => {
   return async dispatch => {
     try {
       dispatch(searchCustomerStart());
-      const data = await axios.get(`/customers?search=${customer}&page=${page}`);
+      const data = await axios.get(`/customers?search=${customer}&page=${page}`, getHeader());
       dispatch(searchCustomerSuccess(data.data.customer, data.data.pages));
     } catch (e) {
       dispatch(searchCustomerFail());
@@ -219,7 +220,7 @@ export const fetchCustomerCreditSummary = (id, page, filter, sort, summary) => {
         request = `/customers/${id}/history?page=${page}&filter=${filter}&sort=${sort}`;
       }
       dispatch(fetchCustomerCreditSummaryStart());
-      const data = await axios.get(request);
+      const data = await axios.get(request, getHeader());
       dispatch(fetchCustomerCreditSummarySuccess(data.data));
     } catch (e) {
       dispatch(fetchCustomerCreditSummaryFail());

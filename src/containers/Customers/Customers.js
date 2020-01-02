@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import axios from '../../axios-orders';
 
 import * as actions from '../../store/actions/index';
+import { storeRoute } from '../../util/storeRoute'
 
 import styles from './Customers.module.scss';
 
@@ -28,6 +29,7 @@ class Customers extends Component {
   };
 
   async componentDidMount() {
+    storeRoute(this.props.location.pathname)
     const route = this.props.location.pathname.match(/[a-zA-z]+/g);
     this.props.fetchCustomers(1, 'lastName', 'asc');
     this.props.activeRouteDispatch(route);

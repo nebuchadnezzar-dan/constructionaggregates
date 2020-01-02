@@ -13,7 +13,7 @@ const confirmation = props => {
     const { confirmation, error, proceed, feedback, okClose } = props;
 
     let modalChild;
-    console.log(feedback, error);
+    // console.log(feedback, error);
     if (confirmation) {
         modalChild = <Auxillary><p>Are you sure you want to proceed?</p>
             <Button color="green" click={proceed} >Yes</Button>

@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import { getHeader } from '../../util/headers'
 
 import axios from '../../axios-orders';
 
@@ -51,11 +52,7 @@ export const fetchTruck = (page) => {
   return async dispatch => {
     try {
       dispatch(fetchTruckStart());
-      const data = await axios.get(`/settings/truck?page=${page}`, {
-        headers: {
-          Authorization: sessionStorage.getItem('token')
-        }
-      });
+      const data = await axios.get(`/settings/truck?page=${page}`, getHeader());
       dispatch(fetchTruckSucces(data.data.truck, data.data.pages));
     } catch (e) {
       dispatch(fetchTruckFail());
@@ -80,7 +77,7 @@ export const postTruck = (truckData) => {
   return async dispatch => {
     try {
       dispatch(postTruckStart());
-      const data = await axios.post('/settings/truck', truckData);
+      const data = await axios.post('/settings/truck', truckData, getHeader());
       if (data.data.error) {
         dispatch(postTruckFail());
       } else {
@@ -111,7 +108,7 @@ export const putTruck = (id, value) => {
     try {
       const valueMapped = { maxLoad: value.maxLoad, plateNo: value.plateNo, status: value.status }
       dispatch(putTruckStart());
-      const data = await axios.put(`/settings/truck/${id}`, valueMapped);
+      const data = await axios.put(`/settings/truck/${id}`, valueMapped, getHeader());
       dispatch(putTruckSuccess(data.data));
     } catch (e) {
       dispatch(putTruckFail());
@@ -135,7 +132,7 @@ export const deleteTruck = id => {
   return async dispatch => {
     try {
       dispatch(deleteStart());
-      const data = await axios.delete(`/settings/truck/${id}`);
+      const data = await axios.delete(`/settings/truck/${id}`, getHeader());
       dispatch(deleteTruckSuccess(data.data));
     } catch (e) {
       dispatch(deleteTruckFail());

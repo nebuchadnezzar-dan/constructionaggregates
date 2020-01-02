@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-
+import { getHeader } from '../../util/headers'
 import axios from '../../axios-orders';
 
 export const addItemsToSales = item => ({
@@ -87,11 +87,7 @@ export const fetchPOS = () => {
   return async dispatch => {
     try {
       dispatch(fetchPOSStart());
-      const data = await axios.get('/pos', {
-        headers: {
-          Authorization: sessionStorage.getItem('token')
-        }
-      });
+      const data = await axios.get('/pos', getHeader());
       dispatch(fetchPOSSuccess(data.data.count));
     } catch (e) {
       dispatch(fetchPOSFail());
@@ -117,7 +113,7 @@ export const postPos = (id, body) => {
   return async dispatch => {
     try {
       dispatch(postPosStart());
-      const data = await axios.post(`/pos/${id}`, body);
+      const data = await axios.post(`/pos/${id}`, body, getHeader());
       if (data.data.error) {
         dispatch(postPosFail(data.data.error));
       } else {

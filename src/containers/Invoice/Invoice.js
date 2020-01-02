@@ -8,6 +8,8 @@ import axios from '../../axios-orders';
 
 import * as actions from '../../store/actions/index';
 
+import { storeRoute } from '../../util/storeRoute'
+
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import Head from '../../components/UI/Head/Head';
@@ -37,7 +39,7 @@ class Invoice extends Component {
   };
   componentDidMount() {
     const route = this.props.location.pathname.match(/[a-zA-z]+/g);
-    this.props.trackRouteDispatch(this.props.location.pathname)
+    storeRoute(this.props.location.pathname)
     this.props.activeRouteDispatch(route);
     this.props.fetchPosDispatch();
     this.props.fetchTruckDispatch();
@@ -235,8 +237,7 @@ const mapDispatchToProps = dispatch => ({
   fetchPosDispatch: () => dispatch(actions.fetchPOS()),
   fetchTruckDispatch: () => dispatch(actions.fetchTruck(1)),
   activeRouteDispatch: routes => dispatch(actions.activeRoute(routes)),
-  fetchCreditSummary: (id, page, filter, sort, summary) => dispatch(actions.fetchCustomerCreditSummary(id, page, filter, sort, summary)),
-  trackRouteDispatch: route => dispatch(actions.trackRoute(route))
+  fetchCreditSummary: (id, page, filter, sort, summary) => dispatch(actions.fetchCustomerCreditSummary(id, page, filter, sort, summary))
 });
 
 export default connect(

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import axios from '../../../../axios-orders';
 
 import * as actions from '../../../../store/actions/index';
+import { storeRoute } from '../../../../util/storeRoute'
 
 import styles from './Transaction.module.scss';
 
@@ -29,6 +30,7 @@ class Transaction extends Component {
     }
 
     componentDidMount() {
+        storeRoute(this.props.location.pathname)
         const route = this.props.location.pathname.match(/[a-zA-z]+/g);
         const ids = +this.props.location.pathname.match(/\d+/)[0];
         this.setState({ id: ids });
@@ -80,7 +82,7 @@ class Transaction extends Component {
 
         const disabled = +this.state.input > 0 ? false : true;
 
-        let id, first_name, last_name, date, purchase, total, paid, discount, change; let trucks = 'N/A';
+        let id, first_name, last_name, date, purchase, total, paid, discount, change = 0; let trucks = 'N/A';
         if (this.props.invoiceDetails.invoice) {
             id = this.props.invoiceDetails.invoice.id;
             first_name = this.props.invoiceDetails.invoice.first_name;
@@ -152,7 +154,6 @@ class Transaction extends Component {
         if (this.props.invoiceDetails.trucks) {
             trucks = this.props.invoiceDetails.trucks.map(el => el.plateNo).join(', ');
         }
-
 
         const body = (
             <div className={styles.CreditWrapper}>

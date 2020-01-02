@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-orders';
+import { getHeader } from '../../util/headers'
 
 export const activeSupply = name => ({
   type: actionTypes.ACTIVE_SUPPLY,
@@ -47,7 +48,7 @@ export const fetchSupply = page => {
   return async dispatch => {
     try {
       dispatch(fetchSupplyStart());
-      const data = await axios.get(`/settings/supply?page=${page}`);
+      const data = await axios.get(`/settings/supply?page=${page}`, getHeader());
       dispatch(fetchSupplySuccess(data.data.supply, data.data.pages));
     } catch (e) {
       dispatch(fetchSupplyFail());
@@ -73,7 +74,7 @@ export const postSupply = data => {
   return async dispatch => {
     try {
       dispatch(postSupplyStart());
-      const supply = await axios.post('/settings/supply', data);
+      const supply = await axios.post('/settings/supply', data, getHeader());
       if (supply.data.error) {
         dispatch(postSupplyFail());
       } else {
@@ -102,7 +103,7 @@ export const putSupply = (id, supply) => {
   return async dispatch => {
     try {
       dispatch(putSupplyStart());
-      const data = await axios.put(`/settings/supply/${id}`, supply);
+      const data = await axios.put(`/settings/supply/${id}`, supply, getHeader());
       dispatch(putSupplySuccess(data.data));
     } catch (e) {
       dispatch(putSupplyFail());
@@ -126,7 +127,7 @@ export const deleteSupply = id => {
   return async dispatch => {
     try {
       dispatch(deleteSupplyStart());
-      const data = await axios.delete(`/settings/supply/${id}`);
+      const data = await axios.delete(`/settings/supply/${id}`, getHeader());
       console.log(data.data);
       dispatch(deleteSupplySuccess(data.data));
     } catch (e) {
@@ -152,7 +153,7 @@ export const searchSupply = search => {
   return async dispatch => {
     try {
       dispatch(searchSupplyStart());
-      const data = await axios(`/settings/supply?search=${search}`);
+      const data = await axios(`/settings/supply?search=${search}`, getHeader());
       dispatch(searchSupplySuccess(data.data));
     } catch (e) {
       dispatch(searchSupplyFail());

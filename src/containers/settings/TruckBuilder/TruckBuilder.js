@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import axios from '../../../axios-orders';
 
 import * as actions from '../../../store/actions/index';
+import { storeRoute } from '../../../util/storeRoute'
 
 import Head from '../../../components/UI/Head/Head';
 import HeadChild from '../../../components/UI/HeadChild/HeadChild';
@@ -28,6 +29,7 @@ class TruckBuilder extends Component {
   };
 
   componentDidMount() {
+    storeRoute(this.props.location.pathname)
     const route = this.props.location.pathname.match(/[a-zA-z]+/g);
     this.props.activeRouteDispatch(route);
     this.props.fetchTruckDispatch(1);
