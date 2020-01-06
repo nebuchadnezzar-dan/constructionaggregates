@@ -20,6 +20,8 @@ const reducer = (state = initialState, action) => {
             return { ...state, loading: false, authenticated: false }
         case actionTypes.LOGOUT_FAIL:
             return { ...state, loading: false, error: true }
+        case actionTypes.AUTHENTICATE_CHECK:
+            return { ...state, authenticated: true }
         default: return state
     }
 }

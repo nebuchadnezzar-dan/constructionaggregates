@@ -132,7 +132,7 @@ class CustomerTable extends Component {
               onKeyDown={this.onSearchPress}
             />
           </div>
-          <Button color="red" click={this.onSearchClick}>Search</Button>
+          <Button color="red" click={this.onSearchClick} disabled={this.state.customerSearchForm.length < 3 ? true : false}>Search</Button>
         </div>
         {this.props.loading ? <Spinner color="grey" /> : body}
       </Auxillary>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import * as actions from '../../store/actions/index';
@@ -26,10 +26,11 @@ class HeadNavigation extends Component {
     if (from === 'profile') this.setState({ profileClicked: !this.state.profileClicked })
   }
 
-  subHeadClicked = async (from) => {
+  subHeadClicked = (from) => {
     if (from === 'logout') {
-      await this.props.logoutDispatch()
-      this.props.history.push({ pathname: '/' })
+      this.props.logoutDispatch()
+      // return <Redirect to="/" />
+      // this.props.history.push({ pathname: '/' })
     }
   }
 
@@ -88,4 +89,4 @@ const mapDispatchToProps = dispatch => ({
   logoutDispatch: () => dispatch(actions.logout())
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(HeadNavigation));
+export default connect(null, mapDispatchToProps)(HeadNavigation);

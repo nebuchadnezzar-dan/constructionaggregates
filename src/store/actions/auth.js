@@ -28,6 +28,8 @@ export const login = (loginData) => {
     }
 }
 
+/**************************************************** */
+
 export const logoutStart = () => ({
     type: actionTypes.LOGOUT_START
 })
@@ -45,10 +47,17 @@ export const logout = () => {
         try {
             dispatch(logoutStart())
             const logoutData = await axios.post('/auth/logout', {}, getHeader())
-            dispatch(logoutSuccess(logoutData))
             sessionStorage.clear()
+            window.location.replace("/")
+            dispatch(logoutSuccess(logoutData))
         } catch (e) {
             dispatch(logoutFail())
         }
     }
 }
+
+/******************************* */
+
+export const authenticateCheck = () => ({
+    type: actionTypes.AUTHENTICATE_CHECK
+})

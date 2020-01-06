@@ -4,7 +4,9 @@ import { Route, withRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux'
 
-import Auxillary from './hoc/Auxillary/Auxillary';
+import * as actions from './store/actions/index'
+
+// import Auxillary from './hoc/Auxillary/Auxillary';
 import Layout from './hoc/Layout/Layout';
 import Invoice from './containers/Invoice/Invoice';
 import Customers from './containers/Customers/Customers';
@@ -12,6 +14,8 @@ import Truck from './containers/settings/TruckBuilder/TruckBuilder';
 import Supply from './containers/settings/Supply/Supply';
 import Transaction from './containers/Invoice/Transactions/Transaction/Transaction';
 import Auth from './containers/Auth/Auth';
+
+import Spinner from './components/UI/Spinner/Spinner'
 
 class App extends Component {
   constructor() {
@@ -25,7 +29,8 @@ class App extends Component {
 
   componentDidMount() {
     if (this.token) {
-      this.setState({ isAuthenticated: true })
+      console.log('authenitcate')
+      this.props.authenticateCheckDispatch()
       this.props.history.push({ pathname: sessionStorage.getItem('route') })
     } else {
       this.props.history.push({ pathname: '/' })
@@ -36,6 +41,7 @@ class App extends Component {
 
 
   render() {
+    let toBeDisplayed;
     const display = (
       <Layout>
         <Route path="/dashboard" render={() => <div>Dashboard</div>} />
@@ -51,12 +57,13 @@ class App extends Component {
         {/* <Settings /> */}
       </Layout>
     );
-    return (
-      <Auxillary>
-        {this.token || this.props.isAuthenticated || this.state.isAuthenticated ? display : <Route path="/" exact component={Auth} />}
 
-        {/* <button onClick={this.onSwitch}>Switch</button> */}
-      </Auxillary>
+    const authDisplay = <Route path="/" exact component={Auth} />
+
+    toBeDisplayed = this.props.isAuthenticated ? display : authDisplay
+
+    return (
+      this.props.loading ? <Spinner color="grey" /> : toBeDisplayed
     );
   }
 
@@ -68,4 +75,8 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.authenticated
 })
 
-export default connect(mapStateToProps)(withRouter(App));
+const mapDispatchToProps = dispatch => ({
+  authenticateCheckDispatch: () => dispatch(actions.authenticateCheck())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
