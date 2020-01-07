@@ -61,4 +61,4 @@ export {
 export { searchInvoice, clearInvoiceSearch, fetchinvoice, postInvoice } from './invoice';
 export { toggleGlobalModal, toggleLocalPopupSettings } from './modal';
 
-export { login, logout, authenticateCheck, createAccount } from './auth'
+export { login, logout, authenticateCheck, createAccount, closeAuthMessage } from './auth'

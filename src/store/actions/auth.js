@@ -62,6 +62,10 @@ export const authenticateCheck = () => ({
     type: actionTypes.AUTHENTICATE_CHECK
 })
 
+export const closeAuthMessage = () => ({
+    type: actionTypes.CLOSE_AUTH_MESSAGE
+})
+
 
 /********************************************* */
 

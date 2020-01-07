@@ -61,7 +61,16 @@ class Employee extends Component {
         })
     }
 
+    closeAuthMessHandler = () => {
+        this.props.closeAuthMessDispatch()
+    }
+
     render() {
+        const retMessage = this.props.message ?
+            (<div className={styles.returnMessage} >
+                {this.props.message}
+                <span onClick={this.closeAuthMessHandler}>X</span>
+            </div>) : null
         const body = (
             <div className={styles.out}>
                 <div className={styles.circle} />
@@ -98,6 +107,7 @@ class Employee extends Component {
                         </div>
                     </div>
                     <div className={[styles.formContainer, styles.SignUpContainer].join(' ')}>
+                        {retMessage}
                         <div className={styles.regTitle}>Create Account</div>
                         <div className={styles.buttonWrap}>
                             <Button register="icons">&#120307;</Button>
@@ -182,12 +192,14 @@ class Employee extends Component {
 
 const mapStateToProps = state => ({
     loading: state.auth.loading,
-    error: state.auth.error
+    error: state.auth.error,
+    message: state.auth.message
 })
 
 const mapDispatchToProps = dispatch => ({
     login: login => dispatch(actions.login(login)),
-    createAccDispatch: values => dispatch(actions.createAccount(values))
+    createAccDispatch: values => dispatch(actions.createAccount(values)),
+    closeAuthMessDispatch: () => dispatch(actions.closeAuthMessage())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Employee));

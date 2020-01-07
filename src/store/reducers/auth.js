@@ -12,7 +12,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.LOGIN_START:
             return { ...state, loading: true }
         case actionTypes.LOGIN_SUCCESS:
-            return { ...state, loading: false, authenticated: true }
+            return { ...state, loading: false, authenticated: true, message: '' }
         case actionTypes.LOGIN_FAIL:
             return { ...state, loading: false, error: true }
         case actionTypes.LOGOUT_START:
@@ -24,11 +24,13 @@ const reducer = (state = initialState, action) => {
         case actionTypes.AUTHENTICATE_CHECK:
             return { ...state, authenticated: true }
         case actionTypes.CREATE_ACCOUNT_START:
-            return { ...state, loading: true }
+            return { ...state, loading: true, message: '' }
         case actionTypes.CREATE_ACCOUNT_SUCCESS:
             return { ...state, loading: false, message: action.payload }
         case actionTypes.CREATE_ACCOUNT_FAIL:
             return { ...state, loading: false, error: true }
+        case actionTypes.CLOSE_AUTH_MESSAGE:
+            return { ...state, message: '' }
         default: return state
     }
 }
