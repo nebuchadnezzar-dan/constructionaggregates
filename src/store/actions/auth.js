@@ -61,3 +61,31 @@ export const logout = () => {
 export const authenticateCheck = () => ({
     type: actionTypes.AUTHENTICATE_CHECK
 })
+
+
+/********************************************* */
+
+export const createAccountStart = () => ({
+    type: actionTypes.CREATE_ACCOUNT_START
+})
+
+export const createAccountSuccess = (data) => ({
+    type: actionTypes.CREATE_ACCOUNT_SUCCESS,
+    payload: data
+})
+
+export const createAccountFail = () => ({
+    type: actionTypes.CREATE_ACCOUNT_FAIL
+})
+
+export const createAccount = (accountValue) => {
+    return async dispatch => {
+        try {
+            dispatch(createAccountStart())
+            const data = await axios.post('/auth', accountValue)
+            dispatch(createAccountSuccess(data.data))
+        } catch (e) {
+            dispatch(createAccountFail())
+        }
+    }
+}

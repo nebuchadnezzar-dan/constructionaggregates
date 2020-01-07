@@ -23,6 +23,13 @@ class Employee extends Component {
         signIn: {
             email: '',
             password: ''
+        },
+        createAcc: {
+            lastName: '',
+            firstName: '',
+            email: '',
+            contactNo: '',
+            password: ''
         }
     }
 
@@ -41,6 +48,17 @@ class Employee extends Component {
         this.props.history.push({ pathname: '/dashboard' })
         // console.log(event);
         // this.props.onAuth( this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup );
+    }
+
+    createSubmitHandler = (e) => {
+        e.preventDefault()
+        this.props.createAccDispatch({
+            lastName: this.state.createAcc.lastName,
+            firstName: this.state.createAcc.firstName,
+            email: this.state.createAcc.email,
+            contactNo: this.state.createAcc.contactNo,
+            password: this.state.createAcc.password
+        })
     }
 
     render() {
@@ -89,26 +107,35 @@ class Employee extends Component {
                         <div className={styles.midText}>or use your email for registration</div>
                         <div className={styles.registerField}>
                             <form className={styles.form}
-                                onSubmit={this.submitHandler}>
+                                onSubmit={this.createSubmitHandler}>
                                 <div className={styles.field}>
                                     <span><User /></span>
-                                    <input type="text" placeholder="Last Name" />
+                                    <input type="text" placeholder="Last Name"
+                                        value={this.state.createAcc.lastName}
+                                        onChange={this.editField.bind(this, { type: 'createAcc', from: 'lastName' })} />
                                 </div>
                                 <div className={styles.field}>
                                     <span><User1 /></span>
-                                    <input type="text" placeholder="First Name" />
+                                    <input type="text" placeholder="First Name"
+                                        value={this.state.createAcc.firstName}
+                                        onChange={this.editField.bind(this, { type: 'createAcc', from: 'firstName' })} />
                                 </div>
                                 <div className={styles.field}>
                                     <span><Email /></span>
-                                    <input type="email" placeholder="Email" />
+                                    <input type="email" placeholder="Email"
+                                        value={this.state.createAcc.email}
+                                        onChange={this.editField.bind(this, { type: 'createAcc', from: 'email' })} />
                                 </div>
                                 <div className={styles.field}>
                                     <span><Contact /></span>
-                                    <input type="text" placeholder="Contact No." />
+                                    <input type="text" placeholder="Contact No."
+                                        value={this.state.createAcc.contactNo}
+                                        onChange={this.editField.bind(this, { type: 'createAcc', from: 'contactNo' })} />
                                 </div>
                                 <div className={styles.field}>
                                     <span><Lock /></span>
-                                    <input type="password" placeholder="Password" />
+                                    <input type="password" placeholder="Password" value={this.state.createAcc.password}
+                                        onChange={this.editField.bind(this, { type: 'createAcc', from: 'password' })} />
                                 </div>
                                 <div className={styles.submit}>
                                     <Button register="reg">Sign Up</Button>
@@ -159,7 +186,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    login: login => dispatch(actions.login(login))
+    login: login => dispatch(actions.login(login)),
+    createAccDispatch: values => dispatch(actions.createAccount(values))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Employee));

@@ -121,6 +121,10 @@ export const LOGOUT_START = 'LOGOUT_START'
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 export const LOGOUT_FAIL = 'LOGOUT_FAIL'
 
+export const CREATE_ACCOUNT_START = 'CREATE_ACCOUNT_START'
+export const CREATE_ACCOUNT_SUCCESS = 'CREATE_ACCOUNT_SUCCESS'
+export const CREATE_ACCOUNT_FAIL = 'CREATE_ACCOUNT_FAIL'
+
 /********************************************************** */
 
 export const ADD_TRUCK = 'ADD_TRUCK';
