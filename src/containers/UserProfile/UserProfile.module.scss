@@ -1,0 +1,57 @@
+@import '../../styles/colors.scss';
+
+.userMain {
+    padding: 1.5rem 2rem;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: $box-shadows-1;
+    margin-top: 2rem;
+}
+
+.profile {
+    &Header{
+        background-color: $violet-solid;
+        padding: 1rem;
+        margin-top: 4rem;
+        color: #fff;
+    }
+    &Parent{
+        display: flex;
+        padding: 1.5rem 0;
+        border: 1px solid $violet-solid;
+    }
+    &Img{
+        flex: 0 0 35%;
+        text-align: center;
+
+        & img {
+            height: 30rem;
+            width: 30rem;
+        }
+    }
+    &Desc{
+        flex: 1;
+        padding: 1rem 2.5rem;
+        font-size: 1.8rem;
+        &Body{
+            & > div {
+                display: flex;
+                margin-bottom: 2rem;
+            }
+        }
+    }
+}
+
+.value{
+    flex: 1;
+}
+
+.label {
+    font-weight: 500;
+    flex: 0 0 20%;
+}
+
+.line {
+    margin: 2rem;
+    border: .5px solid $violet-light;
+}

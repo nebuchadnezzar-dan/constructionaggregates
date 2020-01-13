@@ -5,13 +5,15 @@ import { ReactComponent as Truck } from '../../../assets/svg/truck.svg';
 import { ReactComponent as Supply } from '../../../assets/svg/price-tag.svg';
 import { ReactComponent as Invoice } from '../../../assets/svg/calculator.svg';
 import { ReactComponent as Customer } from '../../../assets/svg/address-book.svg';
+import { ReactComponent as User } from '../../../assets/svg/user.svg'
 
 const head = ({ children, classname, svgname }) => {
   const svgName = {
     truck: <Truck />,
     supply: <Supply />,
     invoice: <Invoice />,
-    customer: <Customer />
+    customer: <Customer />,
+    user: <User />
   };
   return (
     <div className={[styles.head, styles[classname]].join(' ')}>

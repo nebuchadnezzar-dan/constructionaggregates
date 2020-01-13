@@ -14,6 +14,7 @@ import Truck from './containers/settings/TruckBuilder/TruckBuilder';
 import Supply from './containers/settings/Supply/Supply';
 import Transaction from './containers/Invoice/Transactions/Transaction/Transaction';
 import Auth from './containers/Auth/Auth';
+import UserProfile from './containers/UserProfile/UserProfile'
 
 import Spinner from './components/UI/Spinner/Spinner'
 
@@ -48,7 +49,7 @@ class App extends Component {
         {/* <Route path="/settings" component={Settings} /> */}
         <Route path="/settings/truck" component={Truck} />
         <Route path="/settings/supply" component={Supply} />
-        <Route path="/user" render={() => <div>User</div>} />
+        <Route path="/user" component={UserProfile} />
         <Route path="/pos" exact component={Invoice} />
         <Route path="/pos/:id/invoice" component={Transaction} />
         <Route path="/customers" component={Customers} />
