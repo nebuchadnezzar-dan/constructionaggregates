@@ -11,7 +11,38 @@ import Head from '../../components/UI/Head/Head'
 import HeadChild from '../../components/UI/HeadChild/HeadChild'
 import Button from '../../components/UI/Button/Button'
 
+
+const fields = [{
+    name: 'lastName',
+    type: 'text',
+    placeholder: 'Last Name',
+}, {
+    name: 'firstName',
+    type: 'text',
+    placeholder: 'First Name',
+}, {
+    name: 'email',
+    type: 'email',
+    placeholder: 'Email',
+}, {
+    name: 'contactNo',
+    type: 'text',
+    placeholder: 'Place Holder'
+}
+]
+
 class UserProfile extends Component {
+
+
+    state = {
+        editMode: false,
+        inputValue: {
+            lastName: '',
+            firstName: '',
+            email: '',
+            contactNo: ''
+        }
+    }
 
     componentDidMount() {
         storeRoute(this.props.location.pathname)
@@ -19,7 +50,53 @@ class UserProfile extends Component {
         this.props.activeRouteDispatch(route)
     }
 
+    editFieldHandler = (name, e) => {
+        this.setState({ inputValue: { ...this.state.inputValue, [name]: e.target.value } })
+    }
+
+    toggleEditHandler = () => {
+        this.setState({
+            editMode: !this.state.editMode, inputValue: {
+                ...this.state.inputValue, lastName: 'Daniel', firstName: 'Banasen', email: 'email ko to', contactNo: 'contact number ko to'
+            }
+        })
+    }
+
     render() {
+
+        const scope = {
+            lastName: 'Daniel',
+            firstName: 'Banasen',
+            email: 'email ko to',
+            contactNo: 'contact number ko to'
+        }
+
+        // let lastName, firstName, email, contactNo
+        // let lastName = 'Daniel'
+        // let firstName = 'Banasen'
+        // let email = 'email ko to'
+        // let contactNo = 'contac number ko to'
+
+        if (this.state.editMode) {
+            fields.forEach(e => {
+                scope[e.name] = <input type={e.type}
+                    placeholder={e.placeholder}
+                    value={this.state.inputValue[e.name]}
+                    onChange={this.editFieldHandler.bind(this, e.name)} />
+                // console.log(eval(e.name))
+            }
+            )
+            // lastName = <input type="text" placeholder="Last Name" value={this.state.inputValue.lastName} />
+            // firstName = <input type="text" placeholder="First Name" value={this.state.inputValue.firstName} />
+            // email = <input type="email" placeholder="Email" value={this.state.inputValue.email} />
+            // contactNo = <input type="text" placeholder="Contact Number" value={this.state.inputValue.contactNo} />
+        } else {
+            scope.lastName = 'Daniel'
+            scope.firstName = 'Banasen'
+            scope.email = 'email ko to'
+            scope.contactNo = 'contact number ko to'
+        }
+
         return (
             <div className={styles.userMain}>
                 <Head classname="violet" svgname="user">
@@ -37,23 +114,23 @@ class UserProfile extends Component {
                         <div className={styles.profileDescBody}>
                             <div>
                                 <div className={styles.label}>Last Name</div>
-                                <div className={styles.value}>lorem ipsum</div>
+                                <div className={styles.value}>{scope.lastName}</div>
                             </div>
                             <div>
                                 <div className={styles.label}>First Name</div>
-                                <div className={styles.value}>lorem ipsum</div>
+                                <div className={styles.value}>{scope.firstName}</div>
                             </div>
                             <div>
                                 <div className={styles.label}>Email</div>
-                                <div className={styles.value}>lorem ipsum</div>
+                                <div className={styles.value}>{scope.email}</div>
                             </div>
                             <div>
                                 <div className={styles.label}>Contact No.</div>
-                                <div className={styles.value}>lorem ipsum</div>
+                                <div className={styles.value}>{scope.contactNo}</div>
                             </div>
                             <hr className={styles.line} />
                             <div>
-                                <Button color="blue">Edit</Button>
+                                <Button color="blue" click={this.toggleEditHandler}>Edit</Button>
                             </div>
                         </div>
                     </div>

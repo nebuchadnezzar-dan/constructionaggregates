@@ -1,4 +1,5 @@
 @import '../../styles/colors.scss';
+@import '../../styles/utility.scss';
 
 .userMain {
     padding: 1.5rem 2rem;
@@ -37,6 +38,12 @@
             & > div {
                 display: flex;
                 margin-bottom: 2rem;
+            }
+
+            & input {
+                @include inputWithSearch;
+                border: 1px solid $violet-light;
+                width: 90%;
             }
         }
     }
