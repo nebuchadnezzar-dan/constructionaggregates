@@ -9,7 +9,8 @@ const initialState = {
     localModalDeleteSettings: false,
     localModalCustomerForm: false,
     localModalCustomerTable: false,
-    localModalTransaction: false
+    localModalTransaction: false,
+    localModalProfile: false
 };
 
 const defaultState = {
@@ -20,7 +21,8 @@ const defaultState = {
     localModalDeleteSettings: false,
     localModalCustomerForm: false,
     localModalCustomerTable: false,
-    localModalTransaction: false
+    localModalTransaction: false,
+    localModalProfile: false
 }
 
 const reducer = (state = initialState, action) => {

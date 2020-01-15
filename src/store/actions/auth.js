@@ -21,6 +21,7 @@ export const login = (loginData) => {
             dispatch(loginStart())
             const data = await axios.post('/auth/login', loginData)
             window.sessionStorage.setItem('token', 'Bearer ' + data.data.token)
+            window.sessionStorage.setItem('id', data.data.id)
             dispatch(loginSuccess())
         } catch (e) {
             dispatch(loginFail())

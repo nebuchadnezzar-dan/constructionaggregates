@@ -127,6 +127,19 @@ export const CREATE_ACCOUNT_FAIL = 'CREATE_ACCOUNT_FAIL'
 
 /********************************************************** */
 
+
+/**************************************PROFILE REQUEST******** */
+
+export const FETCH_PROFILE_START = 'FETCH_PROFILE_START'
+export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS'
+export const FETCH_PROFILE_FAIL = 'FETCH_PROFILE_FAIL'
+
+export const EDIT_PROFILE_START = 'EDIT_PROFILE_START'
+export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS'
+export const EDIT_PROFILE_FAIL = 'EDIT_PROFILE_FAIL'
+
+/********************************************************* */
+
 export const ADD_TRUCK = 'ADD_TRUCK';
 export const REMOVE_TRUCK = 'REMOVE_TRUCK';
 export const VALUE_CHANGE_TRUCK = 'VALUE_CHANGE_TRUCK';
