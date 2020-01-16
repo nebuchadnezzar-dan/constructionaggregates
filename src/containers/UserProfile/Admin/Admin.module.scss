@@ -1,0 +1,55 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/utility.scss';
+
+.Admin{
+    &Table {
+        & table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+            & thead {
+              background-color: $violet-light;
+              color: #fff;
+              & th {
+                padding: 2rem;
+                font-size: 1.8rem;
+                text-transform: uppercase;
+              }
+            }
+            & tbody {
+              background-color: $gainsboro;
+            }
+          }
+    }
+}
+
+
+.even {
+    background-color: $superlightgrey;
+  }
+  
+  .odd {
+    background-color: #fff;
+  }
+
+  .searchWrapper {
+    display: flex;
+    margin: auto;
+    margin-bottom: 2rem;
+    width: 80%;
+  }
+  
+  .search {
+    position: relative;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .searchIcon {
+    @include searchIcon;
+  }
+  
+  .input {
+    @include inputWithSearch;
+    border: 1px solid $violet-light;
+  }

@@ -1,0 +1,57 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/utility.scss';
+
+
+.profile {
+    &Header{
+        background-color: $violet-solid;
+        padding: 1rem;
+        margin-top: 4rem;
+        color: #fff;
+    }
+    &Parent{
+        display: flex;
+        padding: 1.5rem 0;
+        border: 1px solid $violet-solid;
+    }
+    &Img{
+        flex: 0 0 35%;
+        text-align: center;
+
+        & img {
+            height: 30rem;
+            width: 30rem;
+        }
+    }
+    &Desc{
+        flex: 1;
+        padding: 1rem 2.5rem;
+        font-size: 1.8rem;
+        &Body{
+            & > div {
+                display: flex;
+                margin-bottom: 2rem;
+            }
+
+            & input {
+                @include inputWithSearch;
+                border: 1px solid $violet-light;
+                width: 90%;
+            }
+        }
+    }
+}
+
+.value{
+    flex: 1;
+}
+
+.label {
+    font-weight: 500;
+    flex: 0 0 20%;
+}
+
+.line {
+    margin: 2rem;
+    border: .5px solid $violet-light;
+}

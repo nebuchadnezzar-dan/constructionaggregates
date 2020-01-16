@@ -13,193 +13,51 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 import Head from '../../components/UI/Head/Head'
 import HeadChild from '../../components/UI/HeadChild/HeadChild'
-import Button from '../../components/UI/Button/Button'
-import Auxillary from '../../hoc/Auxillary/Auxillary'
-import Spinner from '../../components/UI/Spinner/Spinner'
-import Modal from '../../components/UI/Modal/Modal'
-import Confirmation from '../../components/UI/Confirmation/Confirmation'
+// import Button from '../../components/UI/Button/Button'
+// import Auxillary from '../../hoc/Auxillary/Auxillary'
+// import Spinner from '../../components/UI/Spinner/Spinner'
 import ErrorBody from '../../components/UI/ErrorBody/ErrorBody'
 
-
-const fields = [{
-    name: 'lastName',
-    type: 'text',
-    placeholder: 'Last Name',
-}, {
-    name: 'firstName',
-    type: 'text',
-    placeholder: 'First Name',
-}, {
-    name: 'email',
-    type: 'email',
-    placeholder: 'Email',
-}, {
-    name: 'contactNo',
-    type: 'text',
-    placeholder: 'Place Holder'
-}
-]
+import Admin from './Admin/Admin'
+import Profile from './Profile/Profile'
 
 class UserProfile extends Component {
 
 
     state = {
-        editMode: 'view',
-        inputValue: {
-            lastName: '',
-            firstName: '',
-            email: '',
-            contactNo: ''
-        },
-        feedback: false,
-        confirmation: false,
+        view: 'form'
     }
 
     componentDidMount() {
         storeRoute(this.props.location.pathname)
         const route = this.props.location.pathname.match(/[a-zA-z]+/g)
         this.props.activeRouteDispatch(route)
-        this.props.fetchProfileDispatch(sessionStorage.getItem('id'))
+        // this.props.fetchProfileDispatch(sessionStorage.getItem('id'))
     }
 
-    editFieldHandler = (name, e) => {
-        this.setState({ inputValue: { ...this.state.inputValue, [name]: e.target.value } })
-    }
-
-    toggleEditHandler = (mode) => {
-        const user = this.props.user
-        this.setState({
-            editMode: mode, inputValue: {
-                ...this.state.inputValue, lastName: user.lastName, firstName: user.firstName, email: user.email, contactNo: user.contactNo
-            }
-        })
-    }
-
-    onSendPostRequest = async () => {
-        this.props.globalPopupDispatch();
-        if (this.state.button === 'edit') {
-            this.props.editProfileDispatch({ ...this.state.inputValue, userId: sessionStorage.getItem('id') })
-            this.props.localPopupDispatchDispatch({ from: 'localModalProfile', value: true, global: true });
-        } else {
-            await this.props.localPopupDispatchDispatch({ from: 'localModalDeleteSettings', value: true, global: true });
+    onToggleView = value => {
+        this.setState({ view: value });
+        if (value === 'form') {
+            this.props.fetchProfileDispatch(sessionStorage.getItem('id'))
+            // this.props.fetchTruckDispatch(this.state.currentpage);
+            // this.props.toggleGlobalModalDispatch();
         }
-        this.setState({ confirmation: false, feedback: true, editMode: 'view' });
-    }
-
-    onCloseModalHandler = () => {
-        this.props.globalPopupDispatch();
-        this.setState({ confirmation: false, feedback: false });
-    }
-
-    onConfirm = button => {
-        this.setState({ confirmation: true, feedback: false, button });
-        this.props.localPopupDispatchDispatch({ from: 'localModalProfile', value: true, global: true });
-
-    }
+    };
 
     render() {
-        const user = this.props.user
-        const scope = {
-            lastName: user.lastName,
-            firstName: user.firstName,
-            email: user.email,
-            contactNo: user.contactNo
-        }
-
-        const button = this.state.editMode === 'view' ? (
-            <Auxillary>
-                <Button color="blue"
-                    click={this.toggleEditHandler.bind(null, 'edit')}>
-                    Edit
-                </Button>
-            </Auxillary>
-        ) : (
-                <Auxillary>
-                    <Button color="orange"
-                        click={this.toggleEditHandler.bind(null, 'view')}>
-                        Cancel
-                </Button>
-                    <Button color="green"
-                        click={this.onConfirm.bind(null, 'edit')}>
-                        Save
-                </Button>
-                </Auxillary>
-            )
-
-        if (this.state.editMode === 'edit') {
-            fields.forEach(e => {
-                scope[e.name] = <input type={e.type}
-                    placeholder={e.placeholder}
-                    value={this.state.inputValue[e.name]}
-                    onChange={this.editFieldHandler.bind(this, e.name)} />
-            }
-            )
-        } else {
-            scope.lastName = user.lastName
-            scope.firstName = user.firstName
-            scope.email = user.email
-            scope.contactNo = user.contactNo
-        }
-
-        const modalBody = (this.props.localPopup && this.props.globalPopup) || this.props.deletedModal ?
-            <Modal>
-                <Confirmation
-                    confirmation={this.state.confirmation}
-                    error={this.props.putError}
-                    proceed={this.onSendPostRequest.bind(null)}
-                    feedback={this.state.feedback}
-                    okClose={this.onCloseModalHandler.bind(null)}
-
-                />
-            </Modal>
-            : null;
-
-        const mainBody = this.props.loading ? <Spinner color="grey" /> : (
-            <Auxillary>
-                <Head classname="violet" svgname="user">
-                    <HeadChild childName="Admin">User</HeadChild>
-                </Head>
-                <div className={styles.profileHeader}>User Profile</div>
-                <div className={styles.profileParent}>
-                    <div className={styles.profileImg}>
-                        <div>
-                            <img src="https://img2.thejournal.ie/inline/3656556/original/?width=400&version=3656556" />
-                        </div>
-                        <Button color="violet">Upload</Button>
-                    </div>
-                    <div className={styles.profileDesc}>
-                        <div className={styles.profileDescBody}>
-                            <div>
-                                <div className={styles.label}>Last Name</div>
-                                <div className={styles.value}>{scope.lastName}</div>
-                            </div>
-                            <div>
-                                <div className={styles.label}>First Name</div>
-                                <div className={styles.value}>{scope.firstName}</div>
-                            </div>
-                            <div>
-                                <div className={styles.label}>Email</div>
-                                <div className={styles.value}>{scope.email}</div>
-                            </div>
-                            <div>
-                                <div className={styles.label}>Contact No.</div>
-                                <div className={styles.value}>{scope.contactNo}</div>
-                            </div>
-                            <hr className={styles.line} />
-                            <div>
-                                {button}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </Auxillary>
-        )
+        const mainBody = this.state.view === 'form' ? <Profile /> : <Admin />
 
         let mainBodyError = this.props.error ? <ErrorBody>{this.props.children}</ErrorBody> : mainBody;
 
         return (
             <div className={styles.userMain}>
-                {modalBody}
+                <Head classname="violet" svgname="user">
+                    <HeadChild childName="Admin"
+                        forClassName={this.state.view}
+                        dispatchClickView={this.onToggleView.bind(null, 'view')}
+                        dispatchClickForm={this.onToggleView.bind(null, 'form')}
+                        noChild={+sessionStorage.getItem('role') === 1 ? false : true}>User</HeadChild>
+                </Head>
                 {mainBodyError}
             </div>
         )
