@@ -140,6 +140,14 @@ export const EDIT_PROFILE_FAIL = 'EDIT_PROFILE_FAIL'
 
 /********************************************************* */
 
+/********************************USERS******************* */
+
+export const FETCH_USERS_START = 'FETCH_USERS_START'
+export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS'
+export const FETCH_USERS_FAIL = 'FETCH_USERS_FAIL'
+
+/********************************************************* */
+
 export const ADD_TRUCK = 'ADD_TRUCK';
 export const REMOVE_TRUCK = 'REMOVE_TRUCK';
 export const VALUE_CHANGE_TRUCK = 'VALUE_CHANGE_TRUCK';

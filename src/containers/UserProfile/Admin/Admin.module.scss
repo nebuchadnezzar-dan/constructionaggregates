@@ -1,36 +1,10 @@
 @import '../../../styles/colors.scss';
 @import '../../../styles/utility.scss';
 
-.Admin{
-    &Table {
-        & table {
-            width: 100%;
-            text-align: center;
-            border-collapse: collapse;
-            & thead {
-              background-color: $violet-light;
-              color: #fff;
-              & th {
-                padding: 2rem;
-                font-size: 1.8rem;
-                text-transform: uppercase;
-              }
-            }
-            & tbody {
-              background-color: $gainsboro;
-            }
-          }
-    }
-}
+// .Admin{
 
+// }
 
-.even {
-    background-color: $superlightgrey;
-  }
-  
-  .odd {
-    background-color: #fff;
-  }
 
   .searchWrapper {
     display: flex;

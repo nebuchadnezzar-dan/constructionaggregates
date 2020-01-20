@@ -18,6 +18,7 @@ import modal from './store/reducers/modal';
 import invoice from './store/reducers/invoice';
 import auth from './store/reducers/auth'
 import profile from './store/reducers/profile'
+import users from './store/reducers/users'
 
 import * as serviceWorker from './serviceWorker';
 
@@ -33,7 +34,8 @@ const rootReducers = combineReducers({
   modal: modal,
   invoice: invoice,
   auth: auth,
-  profile: profile
+  profile: profile,
+  users: users
 });
 
 const store = createStore(
