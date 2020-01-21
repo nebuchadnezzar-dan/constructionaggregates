@@ -5,7 +5,8 @@ const initialState = {
     roles: '',
     pages: '',
     loading: false,
-    erro: false
+    error: false,
+    putError: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -17,6 +18,19 @@ const reducer = (state = initialState, action) => {
             return { ...state, loading: false, users: action.payload.users, roles: action.payload.roles, pages: action.payload.pages }
         case actionTypes.FETCH_USERS_FAIL:
             return { ...state, error: true, loading: false }
+        case actionTypes.EDIT_USER_ROLE_START:
+            return { ...state, error: false, putError: false, loading: true }
+        case actionTypes.EDIT_USER_ROLE_SUCCESS:
+            const userCopy = [...state.users]
+            const userId = userCopy.findIndex(el => el.id === action.payload.id)
+            userCopy[userId] = action.payload
+
+            return {
+                ...state, loading: false,
+                users: userCopy
+            }
+        case actionTypes.EDIT_USER_ROLE_FAIL:
+            return { ...state, loading: false, putError: true }
         default: return state
     }
 

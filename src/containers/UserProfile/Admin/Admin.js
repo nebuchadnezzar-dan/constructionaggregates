@@ -30,7 +30,7 @@ class Admin extends Component {
     };
 
     render() {
-        const table = this.props.loading ? <Spinner color="grey" /> : <AdminTable users={this.props.users} />
+        const table = this.props.loading ? <Spinner color="grey" /> : <AdminTable users={this.props.users} roles={this.props.roles} />
         return (
             <div className={styles.Admin}>
                 <div className={styles.searchWrapper}>

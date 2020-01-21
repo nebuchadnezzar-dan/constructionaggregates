@@ -33,3 +33,32 @@ export const fetchUser = (page) => {
 }
 
 /************************************** */
+
+/*******************EDIT USER ROLE************ */
+
+const editUserRoleStart = () => ({
+    type: actionTypes.EDIT_USER_ROLE_START
+})
+
+const editUserRoleSuccess = (user) => ({
+    type: actionTypes.EDIT_USER_ROLE_SUCCESS,
+    payload: user
+})
+
+const editUserRoleFail = () => ({
+    type: actionTypes.EDIT_USER_ROLE_FAIL
+})
+
+export const editUserRole = (id, role) => {
+    return async dispatch => {
+        try {
+            dispatch(editUserRoleStart())
+            const data = await axios.put('/users/admin/edit', ({ id, role }), getHeader())
+            dispatch(editUserRoleSuccess(data.data))
+        } catch (e) {
+            dispatch(editUserRoleFail())
+        }
+    }
+}
+
+/********************************************* */
