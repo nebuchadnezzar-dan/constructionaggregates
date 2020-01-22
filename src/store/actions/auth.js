@@ -11,8 +11,9 @@ export const loginSuccess = () => ({
     type: actionTypes.LOGIN_SUCCESS
 })
 
-export const loginFail = () => ({
-    type: actionTypes.LOGIN_FAIL
+export const loginFail = (message) => ({
+    type: actionTypes.LOGIN_FAIL,
+    payload: message
 })
 
 export const login = (loginData) => {
@@ -20,10 +21,15 @@ export const login = (loginData) => {
         try {
             dispatch(loginStart())
             const data = await axios.post('/auth/login', loginData)
-            window.sessionStorage.setItem('token', 'Bearer ' + data.data.token)
-            window.sessionStorage.setItem('id', data.data.id)
-            window.sessionStorage.setItem('role', data.data.role)
-            dispatch(loginSuccess())
+            if (data.data.error) {
+                dispatch(loginFail(data.data.error))
+            } else {
+                window.sessionStorage.setItem('token', 'Bearer ' + data.data.token)
+                window.sessionStorage.setItem('id', data.data.id)
+                window.sessionStorage.setItem('role', data.data.role)
+                dispatch(loginSuccess())
+            }
+
         } catch (e) {
             dispatch(loginFail())
         }

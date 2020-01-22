@@ -45,7 +45,7 @@ class Employee extends Component {
     submitHandler = async (event) => {
         event.preventDefault();
         await this.props.login({ email: this.state.signIn.email, password: this.state.signIn.password })
-        this.props.history.push({ pathname: '/dashboard' })
+        if (this.props.error) this.props.history.push({ pathname: '/dashboard' })
         // console.log(event);
         // this.props.onAuth( this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup );
     }
@@ -71,6 +71,12 @@ class Employee extends Component {
                 {this.props.message}
                 <span onClick={this.closeAuthMessHandler}>X</span>
             </div>) : null
+        const loginFeedback = this.props.message && this.props.error ? (
+            <div className={styles.feedError}>
+                {this.props.message}
+                <span onClick={this.closeAuthMessHandler}>X</span>
+            </div>
+        ) : null
         const body = (
             <div className={styles.out}>
                 <div className={styles.circle} />
@@ -180,6 +186,7 @@ class Employee extends Component {
                                     <Button register="reg">Sign In</Button>
                                 </div>
                             </form>
+                            {loginFeedback}
                         </div>
                     </div>
                 </div>

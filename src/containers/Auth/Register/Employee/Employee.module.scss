@@ -310,10 +310,31 @@
     // cursor: pointer;
 
     & span {
+        left: -7px;
+    }
+
+}
+
+.feedError {
+    margin-top: 2rem;
+    color: #fff;
+    padding: .5rem 0;
+    background-color: $red-light;
+    border: 1px solid $red-solid;
+    border-radius: 5px;
+    position: relative;
+
+    
+    & span {
+        right: -7px;
+    }
+}
+
+.feedError, .returnMessage {
+    & span {
         display: inline-block;
         position: absolute;
         top: -7px;
-        left: -7px;
         background-color: $red-solid;
         border-radius: 50%;
         height: 2rem;
@@ -430,5 +451,3 @@
         padding: 1.3rem 5rem;
     }
 }
-
-
