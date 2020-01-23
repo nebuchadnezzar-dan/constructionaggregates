@@ -65,4 +65,4 @@ export { login, logout, authenticateCheck, createAccount, closeAuthMessage } fro
 
 export { fetchProfile, editProfile } from './profile'
 
-export { fetchUser, editUserRole } from './users'
+export { fetchUser, editUserRole, searchUsers } from './users'

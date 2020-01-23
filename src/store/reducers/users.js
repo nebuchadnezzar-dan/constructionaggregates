@@ -9,13 +9,20 @@ const initialState = {
     putError: false
 }
 
+const removeSelf = (user) => {
+    const userCopy = [...user]
+    const removeId = userCopy.findIndex(el => el.id === +sessionStorage.getItem('id'))
+    userCopy.splice(removeId, 1)
+    return userCopy
+}
+
 const reducer = (state = initialState, action) => {
 
     switch (action.type) {
         case actionTypes.FETCH_USERS_START:
             return { ...state, error: false, loading: true }
         case actionTypes.FETCH_USERS_SUCCESS:
-            return { ...state, loading: false, users: action.payload.users, roles: action.payload.roles, pages: action.payload.pages }
+            return { ...state, loading: false, users: removeSelf(action.payload.users), roles: action.payload.roles, pages: action.payload.pages }
         case actionTypes.FETCH_USERS_FAIL:
             return { ...state, error: true, loading: false }
         case actionTypes.EDIT_USER_ROLE_START:
@@ -31,6 +38,12 @@ const reducer = (state = initialState, action) => {
             }
         case actionTypes.EDIT_USER_ROLE_FAIL:
             return { ...state, loading: false, putError: true }
+        case actionTypes.SEARCH_USERS_START:
+            return { ...state, loading: true, error: false, putError: false }
+        case actionTypes.SEARCH_USERS_SUCCESS:
+            return { ...state, loading: false, pages: action.payload.pages, users: removeSelf(action.payload.users) }
+        case actionTypes.SEARCH_USERS_FAIL:
+            return { ...state, loading: false, error: true }
         default: return state
     }
 

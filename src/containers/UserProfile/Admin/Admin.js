@@ -16,7 +16,8 @@ class Admin extends Component {
     state = {
         currentpage: 1,
         pageIndex: 5,
-        sortValue: 'date'
+        sortValue: 'date',
+        searchBarValue: ''
     }
 
     componentDidMount() {
@@ -27,7 +28,18 @@ class Admin extends Component {
         this.setState({ currentpage: page, pageIndex });
         // this.props.fetchCustomerCreditHistoryDispatch(this.props.data.id, page, this.state.shownHistory, this.state.sortValue);
         this.props.fetchUsersDispatch(1)
-    };
+    }
+
+    onChangeSearchBarHandler = (e) => {
+        this.setState({ searchBarValue: e.target.value })
+    }
+
+    onSearchUserHandler = () => {
+        this.props.searchUsersDispatch(this.state.searchBarValue, this.state.currentpage)
+    }
+
+
+
 
     render() {
         const table = false ? <Spinner color="grey" /> : <AdminTable users={this.props.users} roles={this.props.roles} />
@@ -40,19 +52,19 @@ class Admin extends Component {
                             className={styles.input}
                             placeholder="Customer"
                             type="text"
-                        // value={this.state.customerSearchForm}
-                        // onChange={this.searchFormHandler}
+                            value={this.state.searchBarValue}
+                            onChange={this.onChangeSearchBarHandler}
                         // onKeyDown={this.onSearchPress}
                         />
                     </div>
                     <Button color="violet"
-                    // click={this.onSearchClick} 
+                        click={this.onSearchUserHandler}
                     // disabled={this.state.customerSearchForm.length < 3 ? true : false}
                     >
                         Search
                     </Button>
                 </div>
-                {table}
+                {this.props.users.length > 0 ? table : <div>Sorry, no matches found...</div>}
                 <Pagination
                     currentpage={this.props.pages < this.state.currentpage ? 1 : this.state.currentpage}
                     pages={this.props.pages}
@@ -77,7 +89,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchUsersDispatch: (page) => dispatch(actions.fetchUser(page))
+    fetchUsersDispatch: (page) => dispatch(actions.fetchUser(page)),
+    searchUsersDispatch: (keyword, page) => dispatch(actions.searchUsers(keyword, page))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin)

@@ -150,6 +150,10 @@ export const EDIT_USER_ROLE_START = 'EDIT_USER_ROLE_START'
 export const EDIT_USER_ROLE_SUCCESS = 'EDIT_USER_ROLE_SUCCESS'
 export const EDIT_USER_ROLE_FAIL = 'EDIT_USER_ROLE_FAIL'
 
+export const SEARCH_USERS_START = 'SEARCH_USER_START'
+export const SEARCH_USERS_SUCCESS = 'SEARCH_USERS_SUCCESS'
+export const SEARCH_USERS_FAIL = 'SEARCH_USERS_FAIL'
+
 /********************************************************* */
 
 export const ADD_TRUCK = 'ADD_TRUCK';

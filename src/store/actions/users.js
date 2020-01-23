@@ -62,3 +62,32 @@ export const editUserRole = (id, role) => {
 }
 
 /********************************************* */
+
+/*********************SEARCH USERS*************** */
+
+const searchUserStart = () => ({
+    type: actionTypes.SEARCH_USERS_START
+})
+
+const searchUserSuccess = (users, pages) => ({
+    type: actionTypes.SEARCH_USERS_SUCCESS,
+    payload: { users, pages }
+})
+
+const searchUsersFail = () => ({
+    type: actionTypes.SEARCH_USERS_FAIL
+})
+
+export const searchUsers = (keyword, page) => {
+    return async dispatch => {
+        try {
+            dispatch(searchUserStart())
+            const data = await axios.get(`/users/admin/search?keyword=${keyword}&page=${page}`, getHeader())
+            dispatch(searchUserSuccess(data.data.users, data.data.pages))
+        } catch (e) {
+            dispatch(searchUsersFail())
+        }
+    }
+}
+
+/************************************************ */
