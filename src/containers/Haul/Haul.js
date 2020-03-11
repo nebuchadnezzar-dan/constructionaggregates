@@ -13,6 +13,7 @@ import HeadChild from '../../components/UI/HeadChild/HeadChild'
 import Truck from '../../components/POS/Truck/Truck'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import InputSearch from '../../components/UI/InputSearch/InputSearch'
+import Button from '../../components/UI/Button/Button'
 // import Input
 
 class Haul extends Component {
@@ -60,6 +61,7 @@ class Haul extends Component {
                 </div>
               ) )}              
             </div>
+            <Button color="green">Save</Button>
           </div>
         </>
     )
