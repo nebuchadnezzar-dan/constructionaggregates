@@ -4,3 +4,8 @@ export const addSuppliesToHaul = supply => ({
   type: actionTypes.ADD_SUPPLIES_TO_HAUL,
   payload: supply
 })
+
+export const editInputSupplyHaul = (id, value, from) => ({
+  type: actionTypes.EDIT_INPUT_SUPPLY_HAUL,
+  id, value, from
+})

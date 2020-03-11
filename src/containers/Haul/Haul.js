@@ -26,6 +26,7 @@ class Haul extends Component {
 
   inputChangeHandler = (from, id, e) => {
     console.log(from, id, e.target.value)
+    this.props.editSupplyHaulDispatch(id, e.target.value, from)
   }
 
   render() {
@@ -55,7 +56,7 @@ class Haul extends Component {
                 <div key={supply.id}>
                   <label>{supply.name}</label>
                   <input className={[styles.inputElement, styles.green].join(' ')} type="number" placeholder="Qty" value={supply.qty} onChange={this.inputChangeHandler.bind(this, 'qty', supply.id)} />
-                  <input className={[styles.inputElement, styles.green].join(' ')} type="number" placeholder="Qty" value={supply.amount} onChange={this.inputChangeHandler.bind(this, 'amount', supply.id)} />
+                  <input className={[styles.inputElement, styles.green].join(' ')} type="number" placeholder="Amount" value={supply.amount} onChange={this.inputChangeHandler.bind(this, 'amount', supply.id)} />
                 </div>
               ) )}              
             </div>
@@ -81,7 +82,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   activeRouteDispatch: routes => dispatch(actions.activeRoute(routes)),
-  fetchTruckDispatch: () => dispatch(actions.fetchTruck(1))
+  fetchTruckDispatch: () => dispatch(actions.fetchTruck(1)),
+  editSupplyHaulDispatch: (id, value, from) => dispatch(actions.editInputSupplyHaul(id, value, from))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Haul)

@@ -12,6 +12,8 @@ const reducer = (state = initialState, action) => {
       return {...state, 
               supplies: state.supplies.concat(action.payload),
               suppliesInput: suppliesMap }
+    case actionTypes.EDIT_INPUT_SUPPLY_HAUL:
+      return {...state, suppliesInput: {...state.suppliesInput, [action.id]: {...state.suppliesInput[action.id], [action.from]: action.value} }}
     default: return state
   }
 }
