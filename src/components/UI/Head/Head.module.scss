@@ -42,8 +42,8 @@
   background: $blue-head;
   @include head-shadows($blue-head-shadows);
 }
-
-span {
-  // letter-spacing: 0;
-  // margin-left: -2rem;
+.sea {
+  background: $sea-head;
+  @include head-shadows($blue-head-shadows);
 }
+

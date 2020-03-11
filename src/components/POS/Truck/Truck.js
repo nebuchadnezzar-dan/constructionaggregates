@@ -43,7 +43,7 @@ class Truck extends Component {
   };
 
   render() {
-    const disabled = this.props.activeCustomer.length === 0 ? true : false;
+    const disabled = (this.props.activeCustomer.length === 0 && this.props.from === 'invoices' ) ? true : false;
     return (
       <Auxillary>
         <div className={styles.search}>

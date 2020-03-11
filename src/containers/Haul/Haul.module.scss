@@ -8,3 +8,12 @@
   margin-top: 2rem;
   position: relative;
 }
+
+.form {
+  margin-top: 1rem;
+  padding: 1rem;
+
+  & h4{
+    margin: 1rem 0;
+  }
+}

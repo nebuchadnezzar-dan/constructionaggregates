@@ -35,6 +35,7 @@ $orange-solid: #fb8c00;
 $red-solid: #e53935;
 $violet-solid: #8e24aa;
 $blue-solid: #00acc1;
+$sea-solid: #00fb8c;
 
 // HEAD LIGHT
 $green-light: #66bb6a;
@@ -42,6 +43,7 @@ $orange-light: #ffa726;
 $red-light: #ef5350;
 $violet-light: #ab47bc;
 $blue-light: #26c6da;
+$sea-light: #19fb97;
 
 // HEAD
 $green-head: linear-gradient(60deg, $green-solid, $green-light);
@@ -49,6 +51,7 @@ $orange-head: linear-gradient(60deg, $orange-solid, $orange-light);
 $red-head: linear-gradient(60deg, $red-solid, $red-light);
 $violet-head: linear-gradient(60deg, $violet-solid, $violet-light);
 $blue-head: linear-gradient(60deg, $blue-solid, $blue-light);
+$sea-head: linear-gradient(60deg, $sea-solid, $sea-light);
 
 //HEAD SHADOWS:
 $green-head-shadows: rgba(76, 175, 80, 0.4);

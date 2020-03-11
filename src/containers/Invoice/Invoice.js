@@ -150,7 +150,7 @@ class Invoice extends Component {
           <div className={styles.itemInvoice}>
             <InputSearch
               elementConfig={{ placeholder: 'Item' }}
-              data={this.props.supplies}
+              // data={this.props.supplies}
               component="supplies"
             />
           </div>
@@ -161,7 +161,7 @@ class Invoice extends Component {
       <div className={styles.hr} />
       <div className={styles.invoiceForm}>
         <div className={styles.truckComponentWrapper}>
-          <Truck />
+          <Truck from="invoices" />
         </div>
         <div className={styles.addressWrap}>
           <div className={styles.addressLabel}>Deliver to:</div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Head.module.scss';
 
+import { IoIosExit } from 'react-icons/io'
 import { ReactComponent as Truck } from '../../../assets/svg/truck.svg';
 import { ReactComponent as Supply } from '../../../assets/svg/price-tag.svg';
 import { ReactComponent as Invoice } from '../../../assets/svg/calculator.svg';
@@ -13,7 +14,8 @@ const head = ({ children, classname, svgname }) => {
     supply: <Supply />,
     invoice: <Invoice />,
     customer: <Customer />,
-    user: <User />
+    user: <User />,
+    haul: <IoIosExit />
   };
   return (
     <div className={[styles.head, styles[classname]].join(' ')}>
