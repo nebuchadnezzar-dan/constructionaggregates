@@ -65,7 +65,7 @@ class InputSearch extends Component {
       let value = e.target.value;
       if (this.state.filteredSuppliesState.length !== -1) {
         value =
-          this.state.component === 'supplies'
+          this.state.component === 'supplies' || this.props.component === 'haul'
             ? copyFiltered[currentItemIndex].name
             : `${copyFiltered[currentItemIndex].lastName}, ${
             copyFiltered[currentItemIndex].firstName
@@ -101,13 +101,13 @@ class InputSearch extends Component {
         copyFiltered.length > 0 &&
         this.state.focusedItemIndex !== ''
       ) {
-        this.state.component === 'supplies'
-          ? this.props.onAddItemsToBuyDispatch(
-            this.state.filteredSuppliesState[this.state.focusedItemIndex]
-          )
-          : this.props.onSetCustomerDispatch(
-            this.state.filteredSuppliesState[this.state.focusedItemIndex]
-          );
+          if (this.state.component === 'supplies') {
+            this.props.onAddItemsToBuyDispatch(this.state.filteredSuppliesState[this.state.focusedItemIndex])
+          } else if (this.state.component === 'customer') {
+            this.props.onSetCustomerDispatch(this.state.filteredSuppliesState[this.state.focusedItemIndex])
+          } else if (this.state.component === 'haul') {
+            this.props.addSuppliesToHaulDispatch(this.state.filteredSuppliesState[this.state.focusedItemIndex])
+          }
       }
       this.setState({ searchForm: '', focusedItemIndex: '', hoveredItem: '' });
     }
@@ -117,13 +117,13 @@ class InputSearch extends Component {
     if (e.target.value.length > 2 && this.props.component === 'customer') {
       this.props.searchCustomerDispatch(e.target.value);
     }
-    if (e.target.value.length > 1 && this.props.component === 'supplies') {
+    if (e.target.value.length > 1 && (this.props.component === 'supplies' || this.props.component === 'haul')) {
       this.props.searchSupplyDispatch(e.target.value)
     }
     // this.setState({inputSupplies: }) 
     const copiedState = this.props.component === 'customer' ? [...this.props.customer] : [...this.props.supplies];
     let filter;
-    if (this.state.component === 'supplies')
+    if (this.state.component === 'supplies' || this.props.component === 'haul')
       filter = copiedState.filter(material =>
         material.name.toLowerCase().includes(e.target.value.toLowerCase())
       );
@@ -155,12 +155,14 @@ class InputSearch extends Component {
   };
   onFocusInput = () => {
     if (this.state.hoveredItem !== '') {
-      const tobePassed = this.state.filteredSuppliesState[
-        this.state.hoveredItem
-      ];
-      this.state.component === 'supplies'
-        ? this.props.onAddItemsToBuyDispatch(tobePassed)
-        : this.props.onSetCustomerDispatch(tobePassed);
+      const tobePassed = this.state.filteredSuppliesState[this.state.hoveredItem];
+      if(this.state.component === 'supplies') {
+        this.props.onAddItemsToBuyDispatch(tobePassed)
+      }else if(this.state.component === 'customer') {
+        this.props.onSetCustomerDispatch(tobePassed)
+      }else if(this.state.component === 'haul') {
+        this.props.addSuppliesToHaulDispatch(tobePassed)
+      }
     }
     this.setState({
       hideSuggestClick: true,
@@ -188,7 +190,7 @@ class InputSearch extends Component {
                 styles[i === this.state.focusedItemIndex ? 'isActive' : null]
               ].join(' ')}
             >
-              {this.state.component === 'supplies'
+              {this.state.component === 'supplies' || this.props.component === 'haul'
                 ? supply.name
                 : `${supply.lastName}, ${supply.firstName}`}
             </div>
@@ -233,7 +235,8 @@ const mapDispatchToProps = dispatch => ({
   onSetCustomerDispatch: customer => dispatch(actions.setCustomer(customer)),
   onPopUpShowDispatch: () => dispatch(actions.togglePopup(true)),
   searchCustomerDispatch: search => dispatch(actions.searchCustomer(1, search)),
-  searchSupplyDispatch: search => dispatch(actions.searchSupply(search))
+  searchSupplyDispatch: search => dispatch(actions.searchSupply(search)),
+  addSuppliesToHaulDispatch: supply => dispatch(actions.addSuppliesToHaul(supply))
 });
 
 export default connect(

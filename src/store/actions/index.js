@@ -66,3 +66,5 @@ export { login, logout, authenticateCheck, createAccount, closeAuthMessage } fro
 export { fetchProfile, editProfile } from './profile'
 
 export { fetchUser, editUserRole, searchUsers } from './users'
+
+export { addSuppliesToHaul } from './haul'

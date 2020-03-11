@@ -41,8 +41,7 @@ class Haul extends Component {
             <h4>Supplies to Haul</h4>
             <InputSearch
               elementConfig={{ placeholder: 'Item' }}
-              from="haul"
-              component="supplies"
+              component="haul"
             />
           </div>
         </>
