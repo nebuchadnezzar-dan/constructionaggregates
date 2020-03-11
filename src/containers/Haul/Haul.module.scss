@@ -17,3 +17,14 @@
     margin: 1rem 0;
   }
 }
+
+.inputElement {
+  padding: 1rem;
+  border-radius: 3px;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.green {
+  @include input-color($green-light, $green-solid);
+}

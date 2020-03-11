@@ -6,11 +6,14 @@ import * as actions from '../../store/actions/index'
 
 import styles from './Haul.module.scss'
 
+import _ from 'lodash'
+
 import Head from '../../components/UI/Head/Head'
 import HeadChild from '../../components/UI/HeadChild/HeadChild'
 import Truck from '../../components/POS/Truck/Truck'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import InputSearch from '../../components/UI/InputSearch/InputSearch'
+// import Input
 
 class Haul extends Component {
 
@@ -19,6 +22,10 @@ class Haul extends Component {
     const route = this.props.location.pathname.match(/[a-zA-z]+/g);
     this.props.activeRouteDispatch(route);
     this.props.fetchTruckDispatch();
+  }
+
+  inputChangeHandler = (from, id, e) => {
+    console.log(from, id, e.target.value)
   }
 
   render() {
@@ -43,6 +50,15 @@ class Haul extends Component {
               elementConfig={{ placeholder: 'Item' }}
               component="haul"
             />
+            <div className={styles.items}>
+              {_.map(this.props.inputSupplies, supply => (
+                <div key={supply.id}>
+                  <label>{supply.name}</label>
+                  <input className={[styles.inputElement, styles.green].join(' ')} type="number" placeholder="Qty" value={supply.qty} onChange={this.inputChangeHandler.bind(this, 'qty', supply.id)} />
+                  <input className={[styles.inputElement, styles.green].join(' ')} type="number" placeholder="Qty" value={supply.amount} onChange={this.inputChangeHandler.bind(this, 'amount', supply.id)} />
+                </div>
+              ) )}              
+            </div>
           </div>
         </>
     )
@@ -59,7 +75,8 @@ class Haul extends Component {
 
 const mapStateToProps = state => ({
   fetchLoadingTruck: state.truckSettings.loading,
-  fetchErrorTruck: state.truckSettings.error
+  fetchErrorTruck: state.truckSettings.error,
+  inputSupplies: state.haul.suppliesInput
 })
 
 const mapDispatchToProps = dispatch => ({
