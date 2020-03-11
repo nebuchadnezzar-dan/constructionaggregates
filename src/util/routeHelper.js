@@ -3,7 +3,7 @@ export const routes = {
     user: 'user',
     pos: 'point of sale',
     customers: 'customers',
-    notifications: 'notifications',
+    haul: 'haul',
     support: 'support',
     invoice: 'invoice',
     truck: 'truck',

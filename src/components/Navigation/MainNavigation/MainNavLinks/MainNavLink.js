@@ -8,8 +8,9 @@ import { ReactComponent as User } from '../../../../assets/svg/user.svg';
 import { ReactComponent as POS } from '../../../../assets/svg/barcode.svg';
 import { ReactComponent as Customers } from '../../../../assets/svg/users.svg';
 import { ReactComponent as Icons } from '../../../../assets/svg/location.svg';
-import { ReactComponent as Notifications } from '../../../../assets/svg/bell.svg';
 import { ReactComponent as Support } from '../../../../assets/svg/sphere.svg';
+
+import { IoIosExit } from 'react-icons/io'
 
 import Auxillary from '../../../../hoc/Auxillary/Auxillary';
 
@@ -31,7 +32,7 @@ class MainNavLinks extends Component {
       pos: <POS />,
       customers: <Customers />,
       icons: <Icons />,
-      notifications: <Notifications />,
+      haul: <IoIosExit />,
       support: <Support />
     };
     const SVGComponent = svgName[name];

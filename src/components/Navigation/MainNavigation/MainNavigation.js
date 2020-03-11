@@ -30,8 +30,8 @@ const mainNavigation = () => {
             Settings
           </NavLinks>
 
-          <NavLinks name="notifications" link="/notifications">
-            Notifcations
+          <NavLinks name="haul" link="/haul">
+            Haul
           </NavLinks>
 
           <NavLinks name="support" link="/support">
