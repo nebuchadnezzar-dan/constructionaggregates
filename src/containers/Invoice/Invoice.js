@@ -179,11 +179,11 @@ class Invoice extends Component {
           <POSButtons />
         </div>
         <div className={styles.cashierName}>
-          <p>Mia Khalifa</p>
+          <p>Jane Doe</p>
           <p>Employee</p>
         </div>
       </div>
-    </div>;
+    </div>
 
     let mainBody = <Auxillary>
       {this.props.children}

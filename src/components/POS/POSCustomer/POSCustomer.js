@@ -42,7 +42,7 @@ class POSCustomer extends Component {
       <div className={styles.customerWrapper}>
         <div className={styles.customerImgWrapper}>
           <img
-            src="https://img2.thejournal.ie/inline/3656556/original/?width=400&version=3656556"
+            src="https://via.placeholder.com/150"
             alt="ph hub"
             className={styles.customerImg}
           />

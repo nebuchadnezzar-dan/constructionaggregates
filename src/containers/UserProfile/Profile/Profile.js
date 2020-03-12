@@ -149,7 +149,7 @@ class Profile extends Component {
                         <div>
                             <img
                                 alt="Profile Pic of User"
-                                src="https://img2.thejournal.ie/inline/3656556/original/?width=400&version=3656556" />
+                                src="https://via.placeholder.com/400" />
                         </div>
                         <Button color="violet">Upload</Button>
                     </div>
