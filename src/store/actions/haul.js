@@ -9,3 +9,8 @@ export const editInputSupplyHaul = (id, value, from) => ({
   type: actionTypes.EDIT_INPUT_SUPPLY_HAUL,
   id, value, from
 })
+
+export const setTruckForHaul = truck => ({
+  type: actionTypes.SET_TRUCK_FOR_HAUL,
+  truck
+})

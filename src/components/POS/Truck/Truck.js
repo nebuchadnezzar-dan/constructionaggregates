@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../../store/actions/index';
+import _ from 'lodash'
 
 import styles from './Truck.module.scss';
 import Auxillary from '../../../hoc/Auxillary/Auxillary';
@@ -39,11 +40,22 @@ class Truck extends Component {
   };
 
   onTruckClickHandler = truck => {
-    this.props.setTruckDispatch({ id: truck.id, plateNo: truck.plateNo });
+    if(this.props.from==='invoices') {
+      this.props.setTruckDispatch({ id: truck.id, plateNo: truck.plateNo });
+    }else if(this.props.from === 'haul') {
+      this.props.setTruckForHaulDispatch({ id: truck.id, plateNo: truck.plateNo })
+    }
+    
   };
 
   render() {
     const disabled = (this.props.activeCustomer.length === 0 && this.props.from === 'invoices' ) ? true : false;
+    let activeTruck
+    if(this.props.from === 'invoices') {
+      activeTruck = this.props.activeTruck
+    } else if(this.props.from === 'haul') {
+      activeTruck = _.values(this.props.activeTruckForHaul)
+    }
     return (
       <Auxillary>
         <div className={styles.search}>
@@ -60,8 +72,8 @@ class Truck extends Component {
         </div>
         <div className={styles.truckLabel}>
           {'Plate No: '}
-          {this.props.activeTruck.length > 0 ? (
-            <span>{this.props.activeTruck.map(el => el.plateNo).join(',')}</span>
+          {activeTruck.length > 0 ? (
+            <span>{activeTruck.map(el => el.plateNo).join(',')}</span>
           ) : (
               <span>Please choose a Truck/s to deliver the goods</span>
             )}
@@ -74,7 +86,12 @@ class Truck extends Component {
                 .includes(this.props.truckSearchForm.toLowerCase())
             )
             .map((truck, i) => {
-              const exist = this.props.activeTruck.findIndex(el => el.id === truck.id);
+              let exist
+              if(this.props.from === 'invoices') {
+                exist = this.props.activeTruck.findIndex(el => el.id === truck.id);
+              }else if (this.props.from === 'haul') {
+                exist = Object.keys(this.props.activeTruckForHaul).findIndex(el => +el === truck.id)
+              }
               return (
                 <div
                   key={i}
@@ -100,6 +117,7 @@ class Truck extends Component {
 const mapStateToProps = state => ({
   trucks: state.truckSettings.availableTrucks,
   activeTruck: state.invoicePOS.trucks,
+  activeTruckForHaul: state.haul.trucks,
   truckSearchForm: state.invoicePOS.truckSearchInput,
   activeCustomer: state.invoicePOS.customer
 });
@@ -108,6 +126,7 @@ const mapDispatchToProps = dispatch => ({
   setTruckDispatch: truck => dispatch(actions.setTruck(truck)),
   editTruckSearchFormDispatch: value =>
     dispatch(actions.editTruckSearchForm(value)),
+  setTruckForHaulDispatch: truck => dispatch(actions.setTruckForHaul(truck))
 
 });
 

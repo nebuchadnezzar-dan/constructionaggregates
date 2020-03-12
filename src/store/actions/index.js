@@ -67,4 +67,4 @@ export { fetchProfile, editProfile } from './profile'
 
 export { fetchUser, editUserRole, searchUsers } from './users'
 
-export { addSuppliesToHaul, editInputSupplyHaul } from './haul'
+export { addSuppliesToHaul, editInputSupplyHaul, setTruckForHaul } from './haul'
