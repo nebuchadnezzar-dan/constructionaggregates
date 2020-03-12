@@ -18,6 +18,19 @@
   }
 }
 
+.rowWrapper{
+  margin-top: 1rem;
+  display: flex;
+
+  & label {
+    flex: 0 0 10%;
+  }
+}
+
+.svg {
+  fill: #fff;
+}
+
 .inputElement {
   padding: 1rem;
   border-radius: 3px;

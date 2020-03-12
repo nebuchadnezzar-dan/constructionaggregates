@@ -4,13 +4,16 @@ import _ from 'lodash'
 const initialState = {
   supplies: [],
   suppliesInput: {},
-  trucks: {}
+  trucks: {},
+  message:'',
+  loading: false,
+  error: false
 }
 
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case actionTypes.ADD_SUPPLIES_TO_HAUL:
-      const suppliesMap = {...state.suppliesInput, [action.payload.id]: { qty: 0, amount: 0, id: action.payload.id, name: action.payload.name }}
+      const suppliesMap = {...state.suppliesInput, [action.payload.id]: { qty: '', amount: '', id: action.payload.id, name: action.payload.name }}
       return {...state, 
               supplies: state.supplies.concat(action.payload),
               suppliesInput: suppliesMap }
@@ -24,8 +27,13 @@ const reducer = (state = initialState, action) => {
       } else {
         mappedTruck[action.truck.id] = action.truck
       }
-      // const mappedTruck = _.mapKeys(action.truck, truck=>truck.id )
       return {...state, trucks: mappedTruck}
+    case actionTypes.POST_HAUL_START:
+        return {...state, loading: true}
+    case actionTypes.POST_HAUL_SUCCESS:
+        return {...state, loading: false, message: action.haul}
+    case actionTypes.POST_INVOICE_FAIL:
+        return {...state, loading:false, error: true}
     default: return state
   }
 }

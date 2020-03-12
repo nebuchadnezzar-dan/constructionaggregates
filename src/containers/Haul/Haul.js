@@ -16,6 +16,8 @@ import InputSearch from '../../components/UI/InputSearch/InputSearch'
 import Button from '../../components/UI/Button/Button'
 // import Input
 
+import { IoIosRemoveCircleOutline } from "react-icons/io"
+
 class Haul extends Component {
 
   componentDidMount(){
@@ -26,8 +28,17 @@ class Haul extends Component {
   }
 
   inputChangeHandler = (from, id, e) => {
-    console.log(from, id, e.target.value)
     this.props.editSupplyHaulDispatch(id, e.target.value, from)
+  }
+
+  submitButtonHandler = () => {
+    // console.log(this.props.trucks, this.props.inputSupplies)
+    const trucks = Object.keys(this.props.trucks)
+    const supplies = _.values(this.props.inputSupplies)
+
+    // console.log({trucks, supplies})
+
+    this.props.postHaulDispatch({trucks, supplies})
   }
 
   render() {
@@ -54,14 +65,15 @@ class Haul extends Component {
             />
             <div className={styles.items}>
               {_.map(this.props.inputSupplies, supply => (
-                <div key={supply.id}>
+                <div key={supply.id} className={styles.rowWrapper}>
                   <label>{supply.name}</label>
                   <input className={[styles.inputElement, styles.green].join(' ')} type="number" placeholder="Qty" value={supply.qty} onChange={this.inputChangeHandler.bind(this, 'qty', supply.id)} />
                   <input className={[styles.inputElement, styles.green].join(' ')} type="number" placeholder="Amount" value={supply.amount} onChange={this.inputChangeHandler.bind(this, 'amount', supply.id)} />
+                  <Button color="red"><IoIosRemoveCircleOutline className={styles.svg}/></Button>
                 </div>
               ) )}              
             </div>
-            <Button color="green">Save</Button>
+            <Button color="green" click={this.submitButtonHandler} >Save</Button>
           </div>
         </>
     )
@@ -79,13 +91,15 @@ class Haul extends Component {
 const mapStateToProps = state => ({
   fetchLoadingTruck: state.truckSettings.loading,
   fetchErrorTruck: state.truckSettings.error,
-  inputSupplies: state.haul.suppliesInput
+  inputSupplies: state.haul.suppliesInput,
+  trucks: state.haul.trucks
 })
 
 const mapDispatchToProps = dispatch => ({
   activeRouteDispatch: routes => dispatch(actions.activeRoute(routes)),
   fetchTruckDispatch: () => dispatch(actions.fetchTruck(1)),
-  editSupplyHaulDispatch: (id, value, from) => dispatch(actions.editInputSupplyHaul(id, value, from))
+  editSupplyHaulDispatch: (id, value, from) => dispatch(actions.editInputSupplyHaul(id, value, from)),
+  postHaulDispatch: haul => dispatch(actions.postHaul(haul))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Haul)

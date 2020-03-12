@@ -156,6 +156,15 @@ export const SEARCH_USERS_FAIL = 'SEARCH_USERS_FAIL'
 
 /********************************************************* */
 
+
+/******************************HAUL*********************** */
+
+export const POST_HAUL_START = 'POST_HAUL_START'
+export const POST_HAUL_SUCCESS = 'POST_HAUL_SUCCESS'
+export const POST_HAUL_FAIL = 'POST_HAUL_FAIL'
+
+/******************************************************** */
+
 export const ADD_TRUCK = 'ADD_TRUCK';
 export const REMOVE_TRUCK = 'REMOVE_TRUCK';
 export const VALUE_CHANGE_TRUCK = 'VALUE_CHANGE_TRUCK';
