@@ -32,13 +32,14 @@ class Haul extends Component {
   }
 
   submitButtonHandler = () => {
-    // console.log(this.props.trucks, this.props.inputSupplies)
     const trucks = Object.keys(this.props.trucks)
     const supplies = _.values(this.props.inputSupplies)
 
-    // console.log({trucks, supplies})
-
     this.props.postHaulDispatch({trucks, supplies})
+  }
+
+  removeButtonHandler = id => {
+    this.props.removeSupplyDispatch(id)
   }
 
   render() {
@@ -69,7 +70,7 @@ class Haul extends Component {
                   <label>{supply.name}</label>
                   <input className={[styles.inputElement, styles.green].join(' ')} type="number" placeholder="Qty" value={supply.qty} onChange={this.inputChangeHandler.bind(this, 'qty', supply.id)} />
                   <input className={[styles.inputElement, styles.green].join(' ')} type="number" placeholder="Amount" value={supply.amount} onChange={this.inputChangeHandler.bind(this, 'amount', supply.id)} />
-                  <Button color="red"><IoIosRemoveCircleOutline className={styles.svg}/></Button>
+                  <Button color="red" click={this.removeButtonHandler.bind(null, supply.id)}><IoIosRemoveCircleOutline className={styles.svg}/></Button>
                 </div>
               ) )}              
             </div>
@@ -99,7 +100,8 @@ const mapDispatchToProps = dispatch => ({
   activeRouteDispatch: routes => dispatch(actions.activeRoute(routes)),
   fetchTruckDispatch: () => dispatch(actions.fetchTruck(1)),
   editSupplyHaulDispatch: (id, value, from) => dispatch(actions.editInputSupplyHaul(id, value, from)),
-  postHaulDispatch: haul => dispatch(actions.postHaul(haul))
+  postHaulDispatch: haul => dispatch(actions.postHaul(haul)),
+  removeSupplyDispatch: id => dispatch(actions.removeSupplyHaul(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Haul)

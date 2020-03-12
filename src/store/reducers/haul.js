@@ -17,6 +17,9 @@ const reducer = (state = initialState, action) => {
       return {...state, 
               supplies: state.supplies.concat(action.payload),
               suppliesInput: suppliesMap }
+    case actionTypes.REMOVE_SUPPLY_HAUL:
+      const mappedSupplies = _.omitBy(state.suppliesInput, supply => supply.id === +action.id)
+      return {...state, suppliesInput: mappedSupplies}
     case actionTypes.EDIT_INPUT_SUPPLY_HAUL:
       return {...state, suppliesInput: {...state.suppliesInput, [action.id]: {...state.suppliesInput[action.id], [action.from]: action.value} }}
     case actionTypes.SET_TRUCK_FOR_HAUL:

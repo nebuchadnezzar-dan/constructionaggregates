@@ -18,6 +18,11 @@ export const setTruckForHaul = truck => ({
   truck
 })
 
+export const removeSupplyHaul = id => ({
+  type: actionTypes.REMOVE_SUPPLY_HAUL,
+  id
+})
+
 /*********************POST********** */
 
 export const postHaulStart = () => ({
@@ -38,7 +43,6 @@ export const postHaul = haulSend => {
     try{
       dispatch(postHaulStart())
       const data = await axios.post('/haul', haulSend, getHeader())
-      console.log(data)
       dispatch(postHaulSuccess(data.data))
     }catch(e){
       dispatch(postHaulFail())
