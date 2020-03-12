@@ -163,6 +163,10 @@ export const POST_HAUL_START = 'POST_HAUL_START'
 export const POST_HAUL_SUCCESS = 'POST_HAUL_SUCCESS'
 export const POST_HAUL_FAIL = 'POST_HAUL_FAIL'
 
+export const GET_HAULS_START = 'GET_HAULS_START'
+export const GET_HAULS_SUCCESS = 'GET_HAULS_SUCCESS'
+export const GET_HAULS_FAIL = 'GET_HAULS_FAIL'
+
 /******************************************************** */
 
 export const ADD_TRUCK = 'ADD_TRUCK';

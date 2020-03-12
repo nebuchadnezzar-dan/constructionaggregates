@@ -71,4 +71,5 @@ export { addSuppliesToHaul,
         editInputSupplyHaul, 
         setTruckForHaul, 
         removeSupplyHaul, 
+        getHauls,
         postHaul } from './haul'

@@ -1,0 +1,30 @@
+@import '../../../styles/colors.scss';
+
+.hauls {
+  margin-top: 2rem;
+  & table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    & thead {
+      background-color: $sea-light;
+      color: #fff;
+      & th {
+        padding: 2rem;
+        font-size: 1.8rem;
+        text-transform: uppercase;
+      }
+    }
+    & tbody {
+      background-color: $gainsboro;
+    }
+  }
+}
+
+.odd {
+  background-color: $superlightgrey;
+}
+
+.even {
+  background-color: #fff;
+}

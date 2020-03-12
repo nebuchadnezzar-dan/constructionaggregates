@@ -5,9 +5,14 @@ const initialState = {
   supplies: [],
   suppliesInput: {},
   trucks: {},
+  suppliesTable: [],
+  truckTable: [],
+  hauls: [],
   message:'',
   loading: false,
-  error: false
+  error: false,
+  fetchLoading: false,
+  fetchError: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -36,7 +41,13 @@ const reducer = (state = initialState, action) => {
     case actionTypes.POST_HAUL_SUCCESS:
         return {...state, loading: false, message: action.haul}
     case actionTypes.POST_INVOICE_FAIL:
-        return {...state, loading:false, error: true}
+        return {...state, loading:false, fetchError: true}
+    case actionTypes.GET_HAULS_START:
+        return {...state, fetchLoading:true}
+    case actionTypes.GET_HAULS_SUCCESS:
+        return {...state, fetchLoading: false, hauls: action.hauls}
+    case actionTypes.GET_HAULS_FAIL:
+        return {...state, fetchLoading:false, fetchError:true}
     default: return state
   }
 }

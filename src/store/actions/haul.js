@@ -51,3 +51,32 @@ export const postHaul = haulSend => {
 }
 
 /********************************** */
+
+/************************GET ALL ******/
+
+export const getHaulsStart = () => ({
+  type: actionTypes.GET_HAULS_START
+})
+
+export const getHaulsSuccess = hauls => ({
+  type: actionTypes.GET_HAULS_SUCCESS,
+  hauls
+})
+
+export const getHaulsFail = () => ({
+  type: actionTypes.GET_HAULS_FAIL
+})
+
+export const getHauls = () => {
+  return async dispatch => {
+    try {
+      dispatch(getHaulsStart())
+      const data = await axios.get('/haul', getHeader())
+      dispatch(getHaulsSuccess(data.data))
+    }catch(e) {
+      dispatch(getHaulsFail())
+    }
+  }
+}
+
+/*********************************** */
