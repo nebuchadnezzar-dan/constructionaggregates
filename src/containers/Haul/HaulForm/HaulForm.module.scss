@@ -1,0 +1,34 @@
+@import '../../../styles/colors.scss';
+
+.form {
+  margin-top: 1rem;
+  padding: 1rem;
+
+  & h4{
+    margin: 1rem 0;
+  }
+}
+
+.rowWrapper{
+  margin-top: 1rem;
+  display: flex;
+
+  & label {
+    flex: 0 0 10%;
+  }
+}
+
+.svg {
+  fill: #fff;
+}
+
+.inputElement {
+  padding: 1rem;
+  border-radius: 3px;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.green {
+  @include input-color($green-light, $green-solid);
+}
